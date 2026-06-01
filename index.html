@@ -341,9 +341,28 @@ textarea { resize: vertical; min-height: 56px; }
 .legend-item { display: flex; align-items: center; gap: 5px; }
 .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
 
+/* Toast */
+#toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; flex-direction: column; gap: 8px; align-items: center; pointer-events: none; }
+.toast { background: var(--surface3); color: var(--text); border: 1px solid var(--border2); border-radius: var(--radius-btn); padding: 10px 20px; font-size: 13px; font-weight: 500; box-shadow: var(--shadow); animation: toastIn 0.2s ease, toastOut 0.3s ease 2s forwards; white-space: nowrap; }
+.toast.success { border-color: var(--green); color: var(--green); }
+.toast.error   { border-color: var(--red);   color: var(--red);   }
+@keyframes toastIn  { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* Tab fade */
+.section.active { animation: fadeInTab 0.18s ease; }
+@keyframes fadeInTab { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Spending bar */
+.spending-bar-wrap  { grid-column: span 3; margin-top: 4px; }
+.spending-bar-label { font-size: 11px; color: var(--text3); display: flex; justify-content: space-between; margin-bottom: 5px; }
+.spending-bar-track { height: 3px; background: var(--surface3); border-radius: 2px; overflow: hidden; }
+.spending-bar-fill  { height: 100%; border-radius: 2px; transition: width 0.4s ease, background 0.3s ease; }
+
 @media (max-width: 600px) {
   .metrics { grid-template-columns: 1fr 1fr; }
   .metrics .metric-card:last-child { grid-column: span 2; }
+  .spending-bar-wrap { grid-column: span 2; }
   .form-grid { grid-template-columns: 1fr; }
   .metric-val { font-size: 18px; }
 }
@@ -379,11 +398,15 @@ textarea { resize: vertical; min-height: 56px; }
 </head>
 <body>
 <div id="splash"><div class="splash-zoom"><img src="MyMoney_Logo_transparente_11.png" alt="My Money"></div></div>
+<div id="toast-container"></div>
 
 <header class="app-header">
   <div class="header-inner">
     <h1 class="app-title"><span class="title-my">My</span> <span class="title-money">Money</span></h1>
-    <select class="month-select" id="month-filter"></select>
+    <div style="display:flex;gap:6px;">
+      <select class="month-select" id="year-filter" onchange="updateMonthFilter()"></select>
+      <select class="month-select" id="month-filter" onchange="updateAll()"></select>
+    </div>
   </div>
 </header>
 
@@ -400,6 +423,10 @@ textarea { resize: vertical; min-height: 56px; }
     <div class="metric-card">
       <div class="metric-label">Balance</div>
       <div class="metric-val" id="m-balance">$0</div>
+    </div>
+    <div class="spending-bar-wrap" id="spending-bar-wrap" style="display:none;">
+      <div class="spending-bar-label"><span>Presupuesto consumido</span><span id="spending-pct">0%</span></div>
+      <div class="spending-bar-track"><div class="spending-bar-fill" id="spending-bar-fill"></div></div>
     </div>
   </div>
 
@@ -469,6 +496,8 @@ textarea { resize: vertical; min-height: 56px; }
       <select id="hf-cat" onchange="renderHistory()" style="font-size:13px;">
         <option value="all">Todas las categorías</option>
       </select>
+      <input type="text" id="hf-search" placeholder="Buscar..." oninput="renderHistory()" style="font-size:13px;width:130px;" />
+      <button class="btn btn-ghost" onclick="exportCSV()" style="font-size:13px;padding:6px 12px;border:1px solid var(--border2);color:var(--text2);">↓ CSV</button>
       <div class="view-toggle">
         <button class="vtbtn active" id="vb-day"   onclick="setView('day')">Día</button>
         <button class="vtbtn"        id="vb-month" onclick="setView('month')">Mes</button>
@@ -496,6 +525,12 @@ textarea { resize: vertical; min-height: 56px; }
       </div>
       <div id="chart-trend-wrapper" style="position:relative;width:100%;height:220px;">
         <canvas id="chart-trend" role="img" aria-label="Tendencia mensual">Evolución mensual.</canvas>
+      </div>
+    </div>
+    <div class="card" style="margin-top:8px;">
+      <h2 class="card-title">Balance acumulado</h2>
+      <div id="chart-balance-wrapper" style="position:relative;width:100%;height:220px;">
+        <canvas id="chart-balance" role="img" aria-label="Balance acumulado">Evolución del balance diario.</canvas>
       </div>
     </div>
   </div>
@@ -530,9 +565,19 @@ const INGRESO_IBGS = ['rgba(76,175,80,0.15)','rgba(91,155,213,0.15)','rgba(155,1
 let entries = JSON.parse(localStorage.getItem('mg_expenses') || '[]');
 let currentType = 'gasto';
 let view = 'day';
-let catChart = null, trendChart = null;
+let catChart = null, trendChart = null, balanceChart = null;
+let editingId = null;
 
 function save() { localStorage.setItem('mg_expenses', JSON.stringify(entries)); }
+
+function showToast(msg, type = '') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => t.remove(), 2400);
+}
 
 function monthKey(d) { return d.slice(0, 7); }
 function monthLabel(k) {
@@ -547,14 +592,32 @@ function fmt(n) {
 }
 
 function initMonthFilter() {
-  const sel = document.getElementById('month-filter');
-  const cur = new Date().toISOString().slice(0, 7);
-  const keys = new Set(entries.map(e => monthKey(e.date)));
-  keys.add(cur);
-  const sorted = [...keys].sort().reverse();
-  sel.innerHTML = sorted.map(k => `<option value="${k}">${monthLabel(k)}</option>`).join('');
-  if (!sel.value) sel.value = cur;
-  sel.onchange = updateAll;
+  const curFull = new Date().toISOString().slice(0, 7);
+  const curYear = curFull.slice(0, 4);
+  const allKeys = new Set(entries.map(e => monthKey(e.date)));
+  allKeys.add(curFull);
+
+  const years   = [...new Set([...allKeys].map(k => k.slice(0, 4)))].sort().reverse();
+  const yearSel = document.getElementById('year-filter');
+  const prevYear = yearSel.value;
+  yearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
+  yearSel.value = years.includes(prevYear) ? prevYear : curYear;
+
+  updateMonthFilter();
+}
+
+function updateMonthFilter() {
+  const curFull = new Date().toISOString().slice(0, 7);
+  const selYear = document.getElementById('year-filter').value;
+  const allKeys = new Set(entries.map(e => monthKey(e.date)));
+  allKeys.add(curFull);
+
+  const months = [...allKeys].filter(k => k.startsWith(selYear)).sort().reverse();
+  const sel    = document.getElementById('month-filter');
+  const prev   = sel.value;
+  sel.innerHTML = months.map(k => `<option value="${k}">${monthLabel(k).replace(' ' + selYear, '')}</option>`).join('');
+  sel.value = months.includes(prev) ? prev : (months[0] || '');
+  updateAll();
 }
 
 function updateMetrics() {
@@ -569,6 +632,19 @@ function updateMetrics() {
   const balEl = document.getElementById('m-balance');
   balEl.textContent = (balance >= 0 ? '+' : '-') + fmt(balance);
   balEl.className   = 'metric-val ' + (balance >= 0 ? 'ok' : 'over');
+
+  const barWrap = document.getElementById('spending-bar-wrap');
+  const fill    = document.getElementById('spending-bar-fill');
+  const pct     = document.getElementById('spending-pct');
+  if (totalIngresos > 0) {
+    barWrap.style.display = '';
+    const pctNum = Math.round(totalGastos / totalIngresos * 100);
+    fill.style.width      = Math.min(pctNum, 100) + '%';
+    fill.style.background = pctNum >= 100 ? 'var(--red)' : pctNum >= 80 ? '#E8A020' : 'var(--green)';
+    pct.textContent       = pctNum + '%';
+  } else {
+    barWrap.style.display = 'none';
+  }
 }
 
 function setEntryType(type) {
@@ -629,6 +705,8 @@ function renderHistory() {
     const t = e.type || 'gasto';
     return (tf === 'all' || t === tf) && (catf === 'all' || e.category === catf);
   });
+  const search = (document.getElementById('hf-search')?.value || '').toLowerCase().trim();
+  if (search) list = list.filter(e => (e.desc||'').toLowerCase().includes(search) || (e.note||'').toLowerCase().includes(search));
   list.sort((a,b) => b.date.localeCompare(a.date));
 
   const container = document.getElementById('history-container');
@@ -678,6 +756,7 @@ function rowHTML(e) {
     </div>
     <div class="exp-right">
       <div class="exp-amount" style="color:${amountColor}">${prefix}${fmt(e.amount)}</div>
+      <button class="btn btn-ghost" onclick="editEntry('${e.id}')" title="Editar">✎</button>
       <button class="btn btn-ghost" onclick="delEntry('${e.id}')" title="Eliminar">✕</button>
     </div>
   </div>`;
@@ -687,6 +766,7 @@ function renderCharts() {
   const mes = monthEntries();
   renderCatChart(mes);
   renderTrendChart();
+  renderBalanceChart();
 }
 
 function renderCatChart(mes) {
@@ -764,8 +844,17 @@ function addEntry() {
   const subcategory   = document.getElementById('f-subcategory').value;
   const date          = document.getElementById('f-date').value;
   const note          = document.getElementById('f-note').value.trim();
-  if (!desc || !amount || !date || amount <= 0) { alert('Completá descripción, monto y fecha'); return; }
-  entries.push({ id: Date.now().toString(), type: currentType, desc, amount, paymentMethod, category, subcategory, date, note });
+  if (!desc || !amount || !date || amount <= 0) { showToast('Completá descripción, monto y fecha', 'error'); return; }
+  if (editingId) {
+    const idx = entries.findIndex(e => e.id === editingId);
+    if (idx >= 0) entries[idx] = { ...entries[idx], desc, amount, paymentMethod, category, subcategory, date, note };
+    editingId = null;
+    document.getElementById('submit-btn').textContent = currentType === 'gasto' ? 'Registrar gasto' : 'Registrar ingreso';
+    showToast('Movimiento actualizado', 'success');
+  } else {
+    entries.push({ id: Date.now().toString(), type: currentType, desc, amount, paymentMethod, category, subcategory, date, note });
+    showToast('Movimiento registrado', 'success');
+  }
   save();
   document.getElementById('f-desc').value   = '';
   document.getElementById('f-amount').value = '';
@@ -779,6 +868,79 @@ function delEntry(id) {
   if (!confirm('Eliminar este movimiento?')) return;
   entries = entries.filter(e => e.id !== id);
   save(); initMonthFilter(); updateAll();
+  showToast('Movimiento eliminado');
+}
+
+function editEntry(id) {
+  const e = entries.find(e => e.id === id);
+  if (!e) return;
+  editingId = id;
+  setEntryType(e.type || 'gasto');
+  document.getElementById('f-desc').value        = e.desc;
+  document.getElementById('f-amount').value      = e.amount;
+  document.getElementById('f-payment').value     = e.paymentMethod || '';
+  document.getElementById('f-category').value    = e.category;
+  updateSubcats();
+  document.getElementById('f-subcategory').value = e.subcategory || '';
+  document.getElementById('f-date').value        = e.date;
+  document.getElementById('f-note').value        = e.note || '';
+  document.getElementById('submit-btn').textContent = 'Guardar cambios';
+  showTab('nuevo');
+}
+
+function exportCSV() {
+  const mes = monthEntries();
+  if (!mes.length) { showToast('Sin datos para exportar', 'error'); return; }
+  const headers = ['Fecha','Tipo','Descripción','Categoría','Subcategoría','Forma de pago','Monto','Nota'];
+  const rows = mes.map(e => [
+    e.date, e.type||'gasto', e.desc, e.category, e.subcategory||'', e.paymentMethod||'', e.amount, e.note||''
+  ].map(v => `"${String(v).replace(/"/g,'""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,﻿' + encodeURIComponent(csv);
+  a.download = `MyMoney_${selectedMonth()}.csv`;
+  a.click();
+  showToast('CSV exportado', 'success');
+}
+
+function renderBalanceChart() {
+  const mes           = monthEntries();
+  const [y, m]        = selectedMonth().split('-').map(Number);
+  const daysInMon     = new Date(y, m, 0).getDate();
+  const todayStr      = new Date().toISOString().slice(0, 10);
+  const curMonth      = selectedMonth();
+  const isCurrentMonth = curMonth === new Date().toISOString().slice(0, 7);
+
+  let cumulative = 0;
+  const labels = [], data = [];
+  for (let d = 1; d <= daysInMon; d++) {
+    const dateStr = `${curMonth}-${String(d).padStart(2, '0')}`;
+    if (isCurrentMonth && dateStr > todayStr) break;
+    mes.filter(e => e.date === dateStr).forEach(e => {
+      cumulative += (e.type||'gasto') === 'ingreso' ? e.amount : -e.amount;
+    });
+    labels.push(d);
+    data.push(Math.round(cumulative));
+  }
+
+  if (balanceChart) { balanceChart.destroy(); balanceChart = null; }
+  const wrapper = document.getElementById('chart-balance-wrapper');
+  if (!labels.length) { wrapper.innerHTML = '<div class="empty" style="padding:2rem">Sin datos este mes</div>'; return; }
+  if (!document.getElementById('chart-balance')) {
+    wrapper.innerHTML = '<canvas id="chart-balance" role="img" aria-label="Balance acumulado">Evolución del balance diario.</canvas>';
+  }
+  balanceChart = new Chart(document.getElementById('chart-balance'), {
+    type: 'line',
+    data: { labels, datasets: [{ data, borderColor: '#C9A84C', backgroundColor: 'rgba(201,168,76,0.10)', borderWidth: 2, fill: true, tension: 0.3, pointRadius: 2, pointBackgroundColor: '#C9A84C' }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' Balance: ' + fmt(ctx.raw) } } },
+      scales: {
+        x: { ticks: { font:{size:10,family:'DM Sans'}, color:'#6B6B6B' }, grid: { display: false }, border: { display: false } },
+        y: { reverse: true, ticks: { font:{size:10,family:'DM Sans'}, color:'#6B6B6B', callback: v => fmt(v) }, grid: { color:'rgba(255,255,255,0.04)' }, border: { display: false } }
+      }
+    }
+  });
 }
 
 function showTab(name) {
