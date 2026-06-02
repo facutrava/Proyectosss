@@ -245,6 +245,20 @@ textarea { resize: vertical; min-height: 56px; }
 }
 .btn-ghost:hover { color: var(--red); border-color: var(--red-light); }
 
+.freq-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  background: var(--surface3);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.freq-btn:hover { border-color: var(--accent); color: var(--accent); }
+
 /* Entry type toggle */
 .type-toggle {
   display: flex;
@@ -552,11 +566,13 @@ textarea { resize: vertical; min-height: 56px; }
       <div class="form-grid">
         <div class="form-group" style="grid-column:span 2;">
           <label class="form-label">Descripción</label>
-          <input type="text" id="f-desc" placeholder="Ej: Supermercado, sueldo..." />
+          <input type="text" id="f-desc" placeholder="Ej: Supermercado, sueldo..." list="desc-suggestions" autocomplete="off" />
+          <datalist id="desc-suggestions"></datalist>
         </div>
         <div class="form-group">
           <label class="form-label">Monto</label>
           <input type="number" id="f-amount" placeholder="0.00" min="0" step="0.01" style="font-variant-numeric:tabular-nums;" />
+          <div id="freq-amounts" style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;"></div>
         </div>
         <div class="form-group">
           <label class="form-label">Forma de pago</label>
@@ -1011,6 +1027,26 @@ function updateSubcats() {
   document.getElementById('f-subcategory').innerHTML = (cats[cat]?.subs || []).map(s => `<option value="${s}">${s}</option>`).join('');
 }
 
+function updateDescSuggestions() {
+  const dl = document.getElementById('desc-suggestions');
+  if (!dl) return;
+  const unique = [...new Set(entries.map(e => e.desc).filter(Boolean))].sort();
+  dl.innerHTML = unique.map(d => `<option value="${d}">`).join('');
+}
+
+function renderFreqAmounts() {
+  const wrap = document.getElementById('freq-amounts');
+  if (!wrap) return;
+  const mes = monthEntries();
+  const freq = {};
+  mes.forEach(e => { freq[e.amount] = (freq[e.amount] || 0) + 1; });
+  const top3 = Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0,3).map(([v]) => parseFloat(v));
+  if (!top3.length) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = top3.map(v =>
+    `<button type="button" class="freq-btn" onclick="document.getElementById('f-amount').value=${v}">${fmt(v)}</button>`
+  ).join('');
+}
+
 function getCatData(entry) {
   const type = entry.type || 'gasto';
   const cats = type === 'gasto' ? GASTO_CATS : INGRESO_CATS;
@@ -1218,6 +1254,7 @@ async function addEntry() {
   const note          = document.getElementById('f-note').value.trim();
   if (!desc || !amount || !date || amount <= 0) { showToast('Completá descripción, monto y fecha', 'error'); return; }
   const uid = currentUser.id;
+  const btn = document.getElementById('submit-btn');
   if (editingId) {
     const idx = entries.findIndex(e => e.id === editingId);
     if (idx >= 0) {
@@ -1227,7 +1264,6 @@ async function addEntry() {
       entries[idx] = updated;
     }
     editingId = null;
-    document.getElementById('submit-btn').textContent = currentType === 'gasto' ? 'Registrar gasto' : 'Registrar ingreso';
     showToast('Movimiento actualizado', 'success');
   } else {
     const entry = { id: Date.now().toString(), type: currentType, desc, amount, paymentMethod, currency, category, subcategory, date, note };
@@ -1236,12 +1272,20 @@ async function addEntry() {
     entries.push(entry);
     showToast('Movimiento registrado', 'success');
   }
+  btn.textContent = '✓ Guardado';
+  btn.style.background = 'var(--green)';
+  btn.style.boxShadow = '0 2px 8px rgba(76,175,80,0.25)';
   document.getElementById('f-desc').value   = '';
   document.getElementById('f-amount').value = '';
   document.getElementById('f-note').value   = '';
   initMonthFilter();
   updateAll();
-  showTab('historial');
+  setTimeout(() => {
+    btn.style.background = '';
+    btn.style.boxShadow = '';
+    btn.textContent = currentType === 'gasto' ? 'Registrar gasto' : 'Registrar ingreso';
+    showTab('historial');
+  }, 900);
 }
 
 async function delEntry(id) {
@@ -1293,6 +1337,7 @@ function showTab(name) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.getElementById('tab-' + name).classList.add('active');
   if (name === 'graficos') renderCharts();
+  if (name === 'nuevo') renderFreqAmounts();
 }
 
 function setView(v) {
@@ -1305,6 +1350,8 @@ function setView(v) {
 function updateAll() {
   updateMetrics();
   renderHistory();
+  updateDescSuggestions();
+  renderFreqAmounts();
   if (document.getElementById('tab-graficos').classList.contains('active')) renderCharts();
 }
 
@@ -1313,6 +1360,17 @@ document.getElementById('splash').addEventListener('animationend', e => e.target
 document.getElementById('f-date').value = todayAR();
 updateCatSelect();
 onTypeFilterChange();
+
+document.getElementById('f-desc').addEventListener('change', function() {
+  const val = this.value.trim();
+  if (!val) return;
+  const match = entries.filter(e => e.desc === val).sort((a,b) => b.date.localeCompare(a.date))[0];
+  if (!match) return;
+  setEntryType(match.type || 'gasto');
+  document.getElementById('f-category').value = match.category;
+  updateSubcats();
+  document.getElementById('f-subcategory').value = match.subcategory || '';
+});
 
 sb.auth.onAuthStateChange(async (event, session) => {
   if (session) {
