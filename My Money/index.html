@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
@@ -656,7 +656,7 @@ textarea { resize: vertical; min-height: 56px; }
         </div>
         <div class="form-group">
           <label class="form-label">Monto</label>
-          <input type="number" id="f-amount" placeholder="0.00" min="0" step="0.01" style="font-variant-numeric:tabular-nums;" />
+          <input type="text" inputmode="decimal" id="f-amount" placeholder="0,00" style="font-variant-numeric:tabular-nums;" />
           <div id="freq-amounts" style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;"></div>
         </div>
         <div class="form-group">
@@ -799,7 +799,7 @@ const GASTO_CATS = {
 
 const INGRESO_CATS = {
   'Fijos':       { icon: '💼', subs: ['Sueldo','Renta de alquiler'] },
-  'Variables':   { icon: '📈', subs: ['Negocio','Prestamos'] },
+  'Variables':   { icon: '📈', subs: ['Negocio','Deuda de terceros','Comisiones'] },
   'Inversiones': { icon: '💰', subs: ['Plazo fijo','FCI','ETF','Staking','ON','Intereses fijos'] }
 };
 
@@ -1036,7 +1036,11 @@ function selectedMonth() { return document.getElementById('month-filter').value;
 function monthEntries()  { return entries.filter(e => monthKey(e.date) === selectedMonth()); }
 
 function fmt(n) {
-  return '$' + Math.round(Math.abs(n)).toLocaleString('es-AR');
+  return '$' + Math.abs(n).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function parseAmount(str) {
+  // Formato argentino: punto=miles, coma=decimal (ej: "1.500,50" → 1500.50)
+  return parseFloat(String(str).replace(/\./g, '').replace(',', '.')) || 0;
 }
 
 function initMonthFilter() {
@@ -1179,7 +1183,7 @@ function renderFreqAmounts() {
   const top3 = Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0,3).map(([v]) => parseFloat(v));
   if (!top3.length) { wrap.innerHTML = ''; return; }
   wrap.innerHTML = top3.map(v =>
-    `<button type="button" class="freq-btn" onclick="document.getElementById('f-amount').value=${v}">${fmt(v)}</button>`
+    `<button type="button" class="freq-btn" onclick="document.getElementById('f-amount').value='${String(v).replace('.', ',')}'">${fmt(v)}</button>`
   ).join('');
 }
 
@@ -1672,7 +1676,7 @@ function renderTrendChart() {
 
 async function addEntry() {
   const desc          = document.getElementById('f-desc').value.trim();
-  const amount        = parseFloat(document.getElementById('f-amount').value);
+  const amount        = parseAmount(document.getElementById('f-amount').value);
   const paymentMethod = document.getElementById('f-payment').value;
   const currency      = document.getElementById('f-currency').value;
   const category      = document.getElementById('f-category').value;
