@@ -885,7 +885,7 @@ async function dbFetch(method, path, body) {
 
 async function loadEntries() {
   try {
-    const data = await dbFetch('GET', 'entries?select=*&order=date.desc');
+    const data = await dbFetch('GET', 'entries?select=*&order=date.desc,id.desc');
     entries = data.map(fromRow);
     loadBudgets();
     loadGoals();
@@ -1241,7 +1241,7 @@ function renderHistory() {
   });
   const search = (document.getElementById('hf-search')?.value || '').toLowerCase().trim();
   if (search) list = list.filter(e => (e.desc||'').toLowerCase().includes(search) || (e.note||'').toLowerCase().includes(search));
-  list.sort((a,b) => b.date.localeCompare(a.date));
+  list.sort((a,b) => b.date.localeCompare(a.date) || b.id.localeCompare(a.id));
 
   const container = document.getElementById('history-container');
   const footer = document.getElementById('history-footer');
@@ -1696,7 +1696,7 @@ async function addEntry() {
     const entry = { id: Date.now().toString(), type: currentType, desc, amount, paymentMethod, currency, category, subcategory, date, note };
     try { await dbFetch('POST', 'entries', toRow(entry, uid)); }
     catch(e) { showToast('Error al guardar', 'error'); return; }
-    entries.push(entry);
+    entries.unshift(entry);
     showToast('Movimiento registrado', 'success');
   }
   btn.textContent = '✓ Guardado';
@@ -1711,7 +1711,6 @@ async function addEntry() {
     btn.style.background = '';
     btn.style.boxShadow = '';
     btn.textContent = currentType === 'gasto' ? 'Registrar gasto' : 'Registrar ingreso';
-    showTab('historial');
   }, 900);
 }
 
