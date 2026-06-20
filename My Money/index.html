@@ -122,7 +122,7 @@ body {
 .metric-val.expense { color: var(--red); }
 .metric-val.ok      { color: var(--accent); }
 .metric-val.over    { color: var(--red); }
-.metric-val.credit  { color: #5AC8FA; }
+.metric-val.invest  { color: #32D74B; }
 
 .metric-delta { font-size: 11px; margin-top: 5px; font-weight: 500; min-height: 14px; }
 .metric-delta.up   { color: var(--green); }
@@ -626,9 +626,9 @@ textarea { resize: vertical; min-height: 56px; }
       <div class="metric-delta" id="m-balance-delta"></div>
     </div>
     <div class="metric-card">
-      <div class="metric-label">A plazo 💳</div>
-      <div class="metric-val credit" id="m-plazo">$0</div>
-      <div class="metric-delta" id="m-plazo-delta"></div>
+      <div class="metric-label">Invertido 📈</div>
+      <div class="metric-val invest" id="m-invertido">$0</div>
+      <div class="metric-delta" id="m-invertido-delta"></div>
     </div>
     <div class="spending-bar-wrap" id="spending-bar-wrap" style="display:none;">
       <div class="spending-bar-label"><span id="spending-bar-text">Presupuesto consumido</span><span id="spending-pct">0%</span></div>
@@ -811,6 +811,7 @@ const GASTO_CATS = {
   'Mascotas':        { icon: '🐾', subs: ['Alimento','Veterinaria','Otros'] },
   'Educación':       { icon: '📚', subs: ['Facultad','Cursos','Otros'] },
   'Deudas':          { icon: '💳', subs: ['Tarjeta de crédito','Prestamos','Deudas a terceros'] },
+  'Inversiones':     { icon: '📈', subs: ['FCI','Plazo fijo','ON','ETF','Cripto','CDRs','Acciones'] },
   'Otros':           { icon: '📦', subs: ['Ropa y accesorios','Calzado','E-commerce','Regalos'] }
 };
 
@@ -1117,32 +1118,32 @@ function setDelta(id, cur, pre, invertColors) {
 
 function updateMetrics() {
   const mes = monthEntries();
-  const totalIngresos   = mes.filter(e => (e.type||'gasto') === 'ingreso').reduce((s,e) => s + e.amount, 0);
-  const gastosAll       = mes.filter(e => (e.type||'gasto') === 'gasto');
-  const totalGastos     = gastosAll.reduce((s,e) => s + e.amount, 0);
-  const totalGastoPlazo = gastosAll.filter(e => e.paymentMethod === 'Crédito').reduce((s,e) => s + e.amount, 0);
-  const balance         = totalIngresos - (totalGastos - totalGastoPlazo);
+  const totalIngresos  = mes.filter(e => (e.type||'gasto') === 'ingreso').reduce((s,e) => s + e.amount, 0);
+  const gastosAll      = mes.filter(e => (e.type||'gasto') === 'gasto');
+  const totalGastos    = gastosAll.reduce((s,e) => s + e.amount, 0);
+  const totalInvertido = gastosAll.filter(e => e.category === 'Inversiones').reduce((s,e) => s + e.amount, 0);
+  const balance        = totalIngresos - totalGastos;
 
   const balEl = document.getElementById('m-balance');
   balEl.className = 'metric-val ' + (balance >= 0 ? 'ok' : 'over');
 
-  animateNumber(document.getElementById('m-ingresos'), totalIngresos,    v => fmt(v));
-  animateNumber(document.getElementById('m-gastos'),   totalGastos,      v => fmt(v));
-  animateNumber(document.getElementById('m-plazo'),    totalGastoPlazo,  v => fmt(v));
+  animateNumber(document.getElementById('m-ingresos'),  totalIngresos,  v => fmt(v));
+  animateNumber(document.getElementById('m-gastos'),    totalGastos,    v => fmt(v));
+  animateNumber(document.getElementById('m-invertido'), totalInvertido, v => fmt(v));
   animateNumber(balEl, Math.abs(balance), v => (balance >= 0 ? '+' : '-') + fmt(v));
 
   // Tendencia vs mes anterior
-  const prevKey       = prevMonthKey(selectedMonth());
-  const prev          = entries.filter(e => monthKey(e.date) === prevKey);
-  const prevIng       = prev.filter(e => (e.type||'gasto') === 'ingreso').reduce((s,e) => s + e.amount, 0);
-  const prevGast      = prev.filter(e => (e.type||'gasto') === 'gasto').reduce((s,e) => s + e.amount, 0);
-  const prevPlazo     = prev.filter(e => (e.type||'gasto') === 'gasto' && e.paymentMethod === 'Crédito').reduce((s,e) => s + e.amount, 0);
-  const prevBal       = prevIng - (prevGast - prevPlazo);
+  const prevKey        = prevMonthKey(selectedMonth());
+  const prev           = entries.filter(e => monthKey(e.date) === prevKey);
+  const prevIng        = prev.filter(e => (e.type||'gasto') === 'ingreso').reduce((s,e) => s + e.amount, 0);
+  const prevGast       = prev.filter(e => (e.type||'gasto') === 'gasto').reduce((s,e) => s + e.amount, 0);
+  const prevInvertido  = prev.filter(e => (e.type||'gasto') === 'gasto' && e.category === 'Inversiones').reduce((s,e) => s + e.amount, 0);
+  const prevBal        = prevIng - prevGast;
 
-  setDelta('m-ingresos-delta', totalIngresos,   prevIng,    false);
-  setDelta('m-gastos-delta',   totalGastos,     prevGast,   true);
-  setDelta('m-plazo-delta',    totalGastoPlazo, prevPlazo,  true);
-  setDelta('m-balance-delta',  balance,         prevBal,    false);
+  setDelta('m-ingresos-delta',  totalIngresos,  prevIng,       false);
+  setDelta('m-gastos-delta',    totalGastos,    prevGast,      true);
+  setDelta('m-invertido-delta', totalInvertido, prevInvertido, false);
+  setDelta('m-balance-delta',   balance,        prevBal,       false);
 
   // Barra de presupuesto consumido
   const barWrap    = document.getElementById('spending-bar-wrap');
