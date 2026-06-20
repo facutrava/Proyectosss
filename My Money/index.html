@@ -13,6 +13,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -827,6 +829,109 @@ textarea { resize: vertical; min-height: 56px; }
   color: var(--text2); padding: 4px 10px; cursor: pointer; transition: all 0.15s;
 }
 .btn-signout:hover { border-color: var(--red); color: var(--red); }
+
+/* Balance Hero */
+.balance-hero {
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+  border: 1px solid rgba(201,168,76,0.15);
+  border-radius: var(--radius);
+  padding: 20px 20px 16px;
+  text-align: center;
+  margin-bottom: 8px;
+  position: relative;
+}
+.balance-hero-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 8px;
+}
+.balance-hero-amount {
+  font-size: 48px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.balance-hero-amount.ok   { color: var(--accent); }
+.balance-hero-amount.over { color: var(--red); }
+
+/* Métricas secundarias */
+.metrics-secondary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.metric-sec {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+.metric-sec-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 4px;
+}
+.metric-sec-val {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+.metric-sec-val.income  { color: var(--green); }
+.metric-sec-val.expense { color: var(--red); }
+.metric-sec-val.invest  { color: #32D74B; }
+
+@media (max-width: 600px) {
+  .balance-hero-amount { font-size: 36px; }
+  .metrics-secondary { grid-template-columns: repeat(3, 1fr); }
+  .metric-sec-val { font-size: 14px; }
+}
+
+/* Onboarding */
+.ob-option {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  padding: 11px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+}
+.ob-option:hover    { border-color: var(--accent); }
+.ob-option.selected { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+.ob-budget-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.ob-budget-label { flex: 1; font-size: 13px; color: var(--text2); }
+.ob-budget-input {
+  width: 110px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  text-align: right;
+  color: var(--text);
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 6px 10px;
+  outline: none;
+}
+.ob-budget-input:focus { border-color: var(--accent); }
 </style>
 </head>
 <body>
@@ -899,6 +1004,55 @@ textarea { resize: vertical; min-height: 56px; }
   </div>
 </div>
 
+<div id="onboarding-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:2000;align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:380px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 8px 40px rgba(0,0,0,0.6);">
+
+    <!-- Progress dots -->
+    <div style="display:flex;gap:6px;justify-content:center;">
+      <div class="ob-dot" id="ob-dot-1" style="width:8px;height:8px;border-radius:50%;background:var(--accent);transition:all .2s;"></div>
+      <div class="ob-dot" id="ob-dot-2" style="width:8px;height:8px;border-radius:50%;background:var(--border2);transition:all .2s;"></div>
+      <div class="ob-dot" id="ob-dot-3" style="width:8px;height:8px;border-radius:50%;background:var(--border2);transition:all .2s;"></div>
+    </div>
+
+    <!-- Paso 1 -->
+    <div id="ob-step-1">
+      <div style="font-size:22px;text-align:center;margin-bottom:4px;">👋</div>
+      <div style="font-size:17px;font-weight:700;text-align:center;margin-bottom:6px;">¡Bienvenido a MyMoney!</div>
+      <p style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:16px;">Para empezar, ¿cuánto ganás aproximadamente por mes?</p>
+      <label style="font-size:12px;font-weight:500;color:var(--text2);">Ingreso mensual neto (ARS)</label>
+      <input type="number" id="ob-income" placeholder="Ej: 300000" style="margin-top:6px;font-size:16px;" />
+      <p style="font-size:11px;color:var(--text3);margin-top:6px;">Solo se usa para sugerir un presupuesto inicial. Podés cambiarlo cuando quieras.</p>
+    </div>
+
+    <!-- Paso 2 -->
+    <div id="ob-step-2" style="display:none;">
+      <div style="font-size:22px;text-align:center;margin-bottom:4px;">🎯</div>
+      <div style="font-size:17px;font-weight:700;text-align:center;margin-bottom:6px;">¿Qué querés lograr?</div>
+      <p style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:14px;">Seleccioná tu objetivo principal</p>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <button class="ob-option" data-val="ahorrar" onclick="selectObGoal(this)">💰 Ahorrar más cada mes</button>
+        <button class="ob-option" data-val="invertir" onclick="selectObGoal(this)">📈 Hacer crecer mis inversiones</button>
+        <button class="ob-option" data-val="deudas"  onclick="selectObGoal(this)">💳 Salir de deudas</button>
+        <button class="ob-option" data-val="control" onclick="selectObGoal(this)">📊 Registrar y entender mis gastos</button>
+      </div>
+    </div>
+
+    <!-- Paso 3 -->
+    <div id="ob-step-3" style="display:none;">
+      <div style="font-size:22px;text-align:center;margin-bottom:4px;">⚙️</div>
+      <div style="font-size:17px;font-weight:700;text-align:center;margin-bottom:6px;">Tu presupuesto inicial</div>
+      <p style="font-size:13px;color:var(--text2);text-align:center;margin-bottom:14px;">Sugerido en base a tu ingreso. Podés ajustarlo después.</p>
+      <div id="ob-budget-list" style="display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- Botones -->
+    <div style="display:flex;gap:8px;margin-top:4px;">
+      <button id="ob-skip-btn" onclick="closeOnboarding(true)" style="font-family:'DM Sans',sans-serif;font-size:13px;flex:1;padding:10px;background:none;border:1px solid var(--border2);border-radius:10px;color:var(--text3);cursor:pointer;">Saltear</button>
+      <button id="ob-next-btn" onclick="obNext()" style="font-family:'DM Sans',sans-serif;font-size:13px;flex:2;padding:10px;background:var(--accent);border:none;border-radius:10px;color:#000;font-weight:600;cursor:pointer;">Continuar →</button>
+    </div>
+  </div>
+</div>
+
 <header class="app-header">
   <div class="header-inner">
     <h1 class="app-title"><span class="title-my">My</span> <span class="title-money">Money</span></h1>
@@ -917,36 +1071,42 @@ textarea { resize: vertical; min-height: 56px; }
 </header>
 
 <main class="main">
-  <div class="metrics">
-    <div class="metric-card">
-      <div class="metric-label">Ingresos</div>
-      <div class="metric-val income" id="m-ingresos">$0</div>
+  <!-- Hero Balance -->
+  <div class="balance-hero" id="balance-hero">
+    <div class="balance-hero-label">Balance del mes</div>
+    <div class="balance-hero-amount" id="m-balance">$0</div>
+    <div class="metric-delta" id="m-balance-delta"></div>
+    <div id="balance-insight" style="display:none;"></div>
+  </div>
+
+  <!-- Métricas secundarias -->
+  <div class="metrics-secondary">
+    <div class="metric-sec">
+      <div class="metric-sec-label">Ingresos</div>
+      <div class="metric-sec-val income" id="m-ingresos">$0</div>
       <div class="metric-delta" id="m-ingresos-delta"></div>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">Gastos</div>
-      <div class="metric-val expense" id="m-gastos">$0</div>
+    <div class="metric-sec">
+      <div class="metric-sec-label">Gastos</div>
+      <div class="metric-sec-val expense" id="m-gastos">$0</div>
       <div class="metric-delta" id="m-gastos-delta"></div>
-      <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);">
-        <div class="metric-label" style="margin-bottom:3px;">A plazo 💳</div>
-        <div class="metric-val" id="m-plazo" style="font-size:17px;color:#5AC8FA;">$0</div>
+      <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);">
+        <div class="metric-sec-label" style="margin-bottom:2px;">A plazo 💳</div>
+        <div style="font-size:14px;font-weight:600;color:#5AC8FA;font-variant-numeric:tabular-nums;" id="m-plazo">$0</div>
         <div class="metric-delta" id="m-plazo-delta"></div>
       </div>
     </div>
-    <div class="metric-card">
-      <div class="metric-label">Balance</div>
-      <div class="metric-val" id="m-balance">$0</div>
-      <div class="metric-delta" id="m-balance-delta"></div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-label">Invertido 📈</div>
-      <div class="metric-val invest" id="m-invertido">$0</div>
+    <div class="metric-sec">
+      <div class="metric-sec-label">Invertido 📈</div>
+      <div class="metric-sec-val invest" id="m-invertido">$0</div>
       <div class="metric-delta" id="m-invertido-delta"></div>
     </div>
-    <div class="spending-bar-wrap" id="spending-bar-wrap" style="display:none;">
-      <div class="spending-bar-label"><span id="spending-bar-text">Presupuesto consumido</span><span id="spending-pct">0%</span></div>
-      <div class="spending-bar-track"><div class="spending-bar-fill" id="spending-bar-fill"></div></div>
-    </div>
+  </div>
+
+  <!-- Spending bar (span completo) -->
+  <div class="spending-bar-wrap" id="spending-bar-wrap" style="display:none;">
+    <div class="spending-bar-label"><span id="spending-bar-text">Presupuesto consumido</span><span id="spending-pct">0%</span></div>
+    <div class="spending-bar-track"><div class="spending-bar-fill" id="spending-bar-fill"></div></div>
   </div>
 
   <div class="weekly-card" id="weekly-summary" style="display:none;"></div>
@@ -1080,10 +1240,17 @@ textarea { resize: vertical; min-height: 56px; }
     <div class="card">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
         <h2 class="card-title" style="margin:0;">Por categoría</h2>
-        <div class="view-toggle">
+        <div class="view-toggle" style="display:flex;gap:4px;align-items:center;">
           <button class="vtbtn active" id="gc-gasto"     onclick="setChartType('gasto')">Gastos</button>
           <button class="vtbtn"        id="gc-ingreso"   onclick="setChartType('ingreso')">Ingresos</button>
           <button class="vtbtn"        id="gc-inversion" onclick="setChartType('inversion')">Inversiones</button>
+          <div style="position:relative;display:inline-block;">
+            <button class="vtbtn" onclick="togglePdfMenu()" id="pdf-btn">📄 PDF</button>
+            <div id="pdf-menu" style="display:none;position:absolute;right:0;top:110%;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);min-width:140px;z-index:50;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.4);">
+              <button onclick="exportPDF('mes')"   style="display:block;width:100%;text-align:left;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;background:none;border:none;color:var(--text);cursor:pointer;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='none'">📅 Mes actual</button>
+              <button onclick="exportPDF('anual')" style="display:block;width:100%;text-align:left;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;background:none;border:none;color:var(--text);cursor:pointer;" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='none'">📆 Año completo</button>
+            </div>
+          </div>
         </div>
       </div>
       <div id="chart-cat-wrapper" style="position:relative;width:100%;height:260px;">
@@ -1232,6 +1399,8 @@ textarea { resize: vertical; min-height: 56px; }
     <span class="bnav-icon">💼</span><span>Patrimonio</span>
   </button>
 </nav>
+
+<div id="pdf-content" style="position:fixed;left:-9999px;top:0;width:700px;background:#ffffff;padding:32px;font-family:'DM Sans',sans-serif;color:#111;font-size:13px;"></div>
 
 <script>
 const GASTO_CATS = {
@@ -1575,7 +1744,7 @@ function updateMetrics() {
   const balance         = totalIngresos - totalGastos - totalInvertido;
 
   const balEl = document.getElementById('m-balance');
-  balEl.className = 'metric-val ' + (balance >= 0 ? 'ok' : 'over');
+  balEl.className = 'balance-hero-amount ' + (balance >= 0 ? 'ok' : 'over');
 
   animateNumber(document.getElementById('m-ingresos'),  totalIngresos,   v => fmt(v));
   animateNumber(document.getElementById('m-gastos'),    totalGastos,     v => fmt(v));
@@ -2713,9 +2882,21 @@ function renderInsights() {
     }
   });
 
-  if (!insights.length) { card.style.display = 'none'; return; }
+  if (!insights.length) {
+    card.style.display = 'none';
+    const heroInsight = document.getElementById('balance-insight');
+    if (heroInsight) heroInsight.style.display = 'none';
+    return;
+  }
   list.innerHTML = insights.map(i => `<div class="insight-item">${i}</div>`).join('');
   card.style.display = '';
+
+  // Mostrar el insight más relevante en el hero
+  const heroInsight = document.getElementById('balance-insight');
+  if (heroInsight) {
+    heroInsight.innerHTML = `<div style="font-size:11px;color:var(--accent);margin-top:8px;opacity:0.85;">${insights[0]}</div>`;
+    heroInsight.style.display = '';
+  }
 }
 
 /* ===== 5. PATRIMONIO ===== */
@@ -3158,6 +3339,254 @@ function saveTipoCambio() {
   localStorage.setItem('mm-tc-' + uid, JSON.stringify(tipoCambio));
 }
 
+/* ===== FEATURE: EXPORTACIÓN PDF ===== */
+function togglePdfMenu() {
+  const m = document.getElementById('pdf-menu');
+  m.style.display = m.style.display === 'none' ? 'block' : 'none';
+  document.addEventListener('click', function closePdf(e) {
+    if (!document.getElementById('pdf-btn').contains(e.target)) {
+      m.style.display = 'none';
+      document.removeEventListener('click', closePdf);
+    }
+  }, { once: false });
+}
+
+async function exportPDF(mode) {
+  document.getElementById('pdf-menu').style.display = 'none';
+  showToast('Generando PDF...', '');
+
+  const { jsPDF } = window.jspdf;
+  const container = document.getElementById('pdf-content');
+
+  if (mode === 'mes') {
+    const mes = monthEntries();
+    const totalIngresos  = mes.filter(e => e.type === 'ingreso').reduce((s,e) => s + e.amount, 0);
+    const gastosAll      = mes.filter(e => (e.type||'gasto') === 'gasto');
+    const totalGastos    = gastosAll.filter(e => e.paymentMethod !== 'Crédito').reduce((s,e) => s + e.amount, 0);
+    const totalPlazo     = gastosAll.filter(e => e.paymentMethod === 'Crédito').reduce((s,e) => s + e.amount, 0);
+    const totalInvertido = mes.filter(e => e.type === 'inversion').reduce((s,e) => s + e.amount, 0);
+    const balance        = totalIngresos - totalGastos - totalInvertido;
+    const byCat = {};
+    gastosAll.forEach(e => { byCat[e.category] = (byCat[e.category]||0) + e.amount; });
+    const sortedCats = Object.entries(byCat).sort((a,b) => b[1]-a[1]);
+    const totalGastosAll = gastosAll.reduce((s,e) => s + e.amount, 0);
+    const mesLabel = document.getElementById('month-select')?.options[document.getElementById('month-select')?.selectedIndex]?.text || selectedMonth();
+
+    container.innerHTML = buildPdfMes(mesLabel, totalIngresos, totalGastos, totalPlazo, totalInvertido, balance, sortedCats, totalGastosAll, mes.length);
+  } else {
+    const year = selectedMonth().slice(0,4);
+    const yearEntries = entries.filter(e => e.date.startsWith(year));
+    const meses = {};
+    yearEntries.forEach(e => {
+      const mk = e.date.slice(0,7);
+      if (!meses[mk]) meses[mk] = { ingresos:0, gastos:0, invertido:0 };
+      if (e.type === 'ingreso') meses[mk].ingresos += e.amount;
+      else if (e.type === 'inversion') meses[mk].invertido += e.amount;
+      else meses[mk].gastos += e.amount;
+    });
+    const totalIng = yearEntries.filter(e=>e.type==='ingreso').reduce((s,e)=>s+e.amount,0);
+    const totalGas = yearEntries.filter(e=>(e.type||'gasto')==='gasto').reduce((s,e)=>s+e.amount,0);
+    const totalInv = yearEntries.filter(e=>e.type==='inversion').reduce((s,e)=>s+e.amount,0);
+    const byCatYear = {};
+    yearEntries.filter(e=>(e.type||'gasto')==='gasto').forEach(e=>{ byCatYear[e.category]=(byCatYear[e.category]||0)+e.amount; });
+    const sortedCatsYear = Object.entries(byCatYear).sort((a,b)=>b[1]-a[1]);
+
+    container.innerHTML = buildPdfAnual(year, meses, totalIng, totalGas, totalInv, sortedCatsYear, yearEntries.length);
+  }
+
+  await new Promise(r => setTimeout(r, 100));
+
+  try {
+    const canvas = await html2canvas(container, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pdfW = pdf.internal.pageSize.getWidth();
+    const pdfH = (canvas.height * pdfW) / canvas.width;
+    const pageH = pdf.internal.pageSize.getHeight();
+    let y = 0;
+    while (y < pdfH) {
+      if (y > 0) pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, -y, pdfW, pdfH);
+      y += pageH;
+    }
+    const fname = mode === 'mes' ? `MyMoney-${selectedMonth()}.pdf` : `MyMoney-${selectedMonth().slice(0,4)}.pdf`;
+    pdf.save(fname);
+    showToast('PDF descargado ✓', 'success');
+  } catch(e) {
+    showToast('Error al generar PDF', 'error');
+  }
+  container.innerHTML = '';
+}
+
+function buildPdfMes(mesLabel, ing, gas, plazo, inv, bal, cats, totalGas, count) {
+  const fmtN = n => '$' + Math.round(n).toLocaleString('es-AR');
+  const balColor = bal >= 0 ? '#4CAF50' : '#EF5350';
+  const catsRows = cats.map(([cat, amt]) => {
+    const pct = totalGas > 0 ? Math.round(amt/totalGas*100) : 0;
+    const w = Math.min(pct, 100);
+    const color = {'Comida':'#FF9F0A','Transporte':'#5AC8FA','Salud':'#FF6B6B','Entretenimiento':'#BF5AF2','Deporte':'#34C759','Hogar':'#FFD60A','Mascotas':'#FF8C00','Educación':'#30D5C8','Deudas':'#FF453A','Inversiones':'#C9A84C','Otros':'#8E8E93'}[cat] || '#8E8E93';
+    return `<tr><td style="padding:6px 0;font-size:12px;color:#333;">${cat}</td><td style="padding:6px 8px;"><div style="width:100%;height:6px;background:#eee;border-radius:3px;"><div style="width:${w}%;height:100%;background:${color};border-radius:3px;"></div></div></td><td style="padding:6px 0;font-size:12px;font-weight:600;text-align:right;color:#111;">${fmtN(amt)}</td><td style="padding:6px 0 6px 8px;font-size:11px;color:#999;">${pct}%</td></tr>`;
+  }).join('');
+  return `<div style="font-family:'DM Sans',sans-serif;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid #eee;">
+      <div><div style="font-size:22px;font-weight:800;">My<span style="color:#C9A84C;">Money</span></div><div style="font-size:12px;color:#999;margin-top:3px;">Resumen mensual — ${mesLabel}</div></div>
+      <div style="text-align:right;"><div style="font-size:11px;color:#999;margin-bottom:2px;">Balance del mes</div><div style="font-size:28px;font-weight:800;color:${balColor};">${bal>=0?'+':''}${fmtN(bal)}</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
+      <div style="background:#f8f8f8;border-radius:8px;padding:12px;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:600;letter-spacing:.05em;margin-bottom:4px;">Ingresos</div><div style="font-size:18px;font-weight:700;color:#4CAF50;">${fmtN(ing)}</div></div>
+      <div style="background:#f8f8f8;border-radius:8px;padding:12px;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:600;letter-spacing:.05em;margin-bottom:4px;">Gastos</div><div style="font-size:18px;font-weight:700;color:#EF5350;">${fmtN(gas)}</div></div>
+      <div style="background:#f8f8f8;border-radius:8px;padding:12px;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:600;letter-spacing:.05em;margin-bottom:4px;">A plazo 💳</div><div style="font-size:18px;font-weight:700;color:#5AC8FA;">${fmtN(plazo)}</div></div>
+      <div style="background:#f8f8f8;border-radius:8px;padding:12px;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:600;letter-spacing:.05em;margin-bottom:4px;">Invertido</div><div style="font-size:18px;font-weight:700;color:#32D74B;">${fmtN(inv)}</div></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Gastos por categoría (${count} movimientos)</div>
+    <table style="width:100%;border-collapse:collapse;">${catsRows}</table>
+    <div style="margin-top:20px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#ccc;text-align:center;">Generado con MyMoney · mymoneyyy.netlify.app</div>
+  </div>`;
+}
+
+function buildPdfAnual(year, meses, totalIng, totalGas, totalInv, cats, count) {
+  const fmtN = n => '$' + Math.round(n).toLocaleString('es-AR');
+  const MONTH_NAMES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const bal = totalIng - totalGas - totalInv;
+  const balColor = bal >= 0 ? '#4CAF50' : '#EF5350';
+  const monthRows = Object.entries(meses).sort().map(([mk, d]) => {
+    const m = parseInt(mk.slice(5))-1;
+    const b = d.ingresos - d.gastos - d.invertido;
+    return `<tr style="border-bottom:1px solid #f0f0f0;">
+      <td style="padding:7px 0;font-size:12px;color:#333;font-weight:500;">${MONTH_NAMES[m]}</td>
+      <td style="padding:7px 0;font-size:12px;color:#4CAF50;text-align:right;">${fmtN(d.ingresos)}</td>
+      <td style="padding:7px 0;font-size:12px;color:#EF5350;text-align:right;">${fmtN(d.gastos)}</td>
+      <td style="padding:7px 0;font-size:12px;color:#32D74B;text-align:right;">${fmtN(d.invertido)}</td>
+      <td style="padding:7px 0;font-size:12px;font-weight:700;text-align:right;color:${b>=0?'#4CAF50':'#EF5350'};">${b>=0?'+':''}${fmtN(b)}</td>
+    </tr>`;
+  }).join('');
+  const catsRows = cats.slice(0,8).map(([cat, amt]) => {
+    const pct = totalGas > 0 ? Math.round(amt/totalGas*100) : 0;
+    const w = Math.min(pct,100);
+    const color = {'Comida':'#FF9F0A','Transporte':'#5AC8FA','Salud':'#FF6B6B','Entretenimiento':'#BF5AF2','Deporte':'#34C759','Hogar':'#FFD60A','Mascotas':'#FF8C00','Educación':'#30D5C8','Deudas':'#FF453A','Inversiones':'#C9A84C','Otros':'#8E8E93'}[cat]||'#8E8E93';
+    return `<tr><td style="padding:5px 0;font-size:11px;color:#333;">${cat}</td><td style="padding:5px 8px;"><div style="width:100%;height:5px;background:#eee;border-radius:2px;"><div style="width:${w}%;height:100%;background:${color};border-radius:2px;"></div></div></td><td style="padding:5px 0;font-size:11px;font-weight:600;text-align:right;">${fmtN(amt)}</td><td style="padding:5px 0 5px 8px;font-size:10px;color:#999;">${pct}%</td></tr>`;
+  }).join('');
+  return `<div style="font-family:'DM Sans',sans-serif;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid #eee;">
+      <div><div style="font-size:22px;font-weight:800;">My<span style="color:#C9A84C;">Money</span></div><div style="font-size:12px;color:#999;margin-top:3px;">Resumen anual ${year}</div></div>
+      <div style="text-align:right;"><div style="font-size:11px;color:#999;margin-bottom:2px;">Balance anual</div><div style="font-size:28px;font-weight:800;color:${balColor};">${bal>=0?'+':''}${fmtN(bal)}</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;">
+      <div style="background:#f8f8f8;border-radius:8px;padding:12px;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:600;margin-bottom:4px;">Total ingresos</div><div style="font-size:18px;font-weight:700;color:#4CAF50;">${fmtN(totalIng)}</div></div>
+      <div style="background:#f8f8f8;border-radius:8px;padding:12px;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:600;margin-bottom:4px;">Total gastos</div><div style="font-size:18px;font-weight:700;color:#EF5350;">${fmtN(totalGas)}</div></div>
+      <div style="background:#f8f8f8;border-radius:8px;padding:12px;"><div style="font-size:9px;color:#999;text-transform:uppercase;font-weight:600;margin-bottom:4px;">Total invertido</div><div style="font-size:18px;font-weight:700;color:#32D74B;">${fmtN(totalInv)}</div></div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Resumen por mes (${count} movimientos totales)</div>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+      <tr style="border-bottom:2px solid #eee;"><th style="text-align:left;font-size:10px;color:#999;padding-bottom:6px;">Mes</th><th style="text-align:right;font-size:10px;color:#4CAF50;padding-bottom:6px;">Ingresos</th><th style="text-align:right;font-size:10px;color:#EF5350;padding-bottom:6px;">Gastos</th><th style="text-align:right;font-size:10px;color:#32D74B;padding-bottom:6px;">Invertido</th><th style="text-align:right;font-size:10px;color:#999;padding-bottom:6px;">Balance</th></tr>
+      ${monthRows}
+    </table>
+    <div style="font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Top categorías de gasto</div>
+    <table style="width:100%;border-collapse:collapse;">${catsRows}</table>
+    <div style="margin-top:20px;padding-top:12px;border-top:1px solid #eee;font-size:9px;color:#ccc;text-align:center;">Generado con MyMoney · mymoneyyy.netlify.app</div>
+  </div>`;
+}
+
+/* ===== FEATURE: ONBOARDING ===== */
+let obStep = 1;
+let obGoal = '';
+
+function checkOnboarding() {
+  const uid = currentUser?.id || 'local';
+  const done = localStorage.getItem('mm-ob-done-' + uid);
+  if (done) return;
+  const hasBudgets = Object.keys(budgets).some(k => budgets[k] > 0);
+  if (entries.length === 0 && !hasBudgets) {
+    openOnboarding();
+  } else {
+    localStorage.setItem('mm-ob-done-' + uid, '1');
+  }
+}
+
+function openOnboarding() {
+  obStep = 1;
+  obGoal = '';
+  updateObStep();
+  document.getElementById('onboarding-modal').style.display = 'flex';
+}
+
+function closeOnboarding(skip) {
+  document.getElementById('onboarding-modal').style.display = 'none';
+  const uid = currentUser?.id || 'local';
+  localStorage.setItem('mm-ob-done-' + uid, '1');
+  if (!skip) {
+    document.querySelectorAll('.ob-budget-input').forEach(inp => {
+      const cat = inp.dataset.cat;
+      const val = parseFloat(inp.value) || 0;
+      if (cat && val > 0) budgets[cat] = val;
+    });
+    if (currentUser) {
+      localStorage.setItem('mymoney_budgets_' + currentUser.id, JSON.stringify(budgets));
+    }
+    updateMetrics();
+    showToast('¡Todo listo! Empezá a registrar tus movimientos 🚀', 'success');
+  }
+}
+
+function obNext() {
+  if (obStep === 1) {
+    const income = parseFloat(document.getElementById('ob-income')?.value) || 0;
+    if (income <= 0) { showToast('Ingresá un monto válido', 'error'); return; }
+    obStep = 2;
+    updateObStep();
+  } else if (obStep === 2) {
+    if (!obGoal) { showToast('Seleccioná un objetivo', 'error'); return; }
+    obStep = 3;
+    buildObBudget();
+    updateObStep();
+  } else if (obStep === 3) {
+    closeOnboarding(false);
+  }
+}
+
+function selectObGoal(btn) {
+  document.querySelectorAll('.ob-option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  obGoal = btn.dataset.val;
+}
+
+function updateObStep() {
+  [1,2,3].forEach(i => {
+    document.getElementById('ob-step-' + i).style.display = i === obStep ? '' : 'none';
+    const dot = document.getElementById('ob-dot-' + i);
+    dot.style.background = i === obStep ? 'var(--accent)' : i < obStep ? 'var(--green)' : 'var(--border2)';
+    dot.style.width = i === obStep ? '24px' : '8px';
+    dot.style.borderRadius = i === obStep ? '4px' : '50%';
+  });
+  const nextBtn = document.getElementById('ob-next-btn');
+  const skipBtn = document.getElementById('ob-skip-btn');
+  if (obStep === 3) {
+    nextBtn.textContent = '¡Listo! Empezar 🚀';
+    skipBtn.textContent = 'Sin presupuesto por ahora';
+  } else {
+    nextBtn.textContent = 'Continuar →';
+    skipBtn.textContent = 'Saltear';
+  }
+}
+
+function buildObBudget() {
+  const income = parseFloat(document.getElementById('ob-income')?.value) || 0;
+  const pcts = obGoal === 'ahorrar'  ? { 'Comida':25,'Transporte':10,'Hogar':20,'Entretenimiento':5,'Salud':8,'Deporte':5,'Educación':5,'Otros':5 }
+              : obGoal === 'invertir' ? { 'Comida':25,'Transporte':10,'Hogar':18,'Entretenimiento':4,'Salud':6,'Deporte':4,'Educación':4,'Otros':4 }
+              : obGoal === 'deudas'   ? { 'Comida':28,'Transporte':12,'Hogar':20,'Entretenimiento':3,'Salud':6,'Deporte':3,'Educación':3,'Otros':3 }
+              :                        { 'Comida':30,'Transporte':12,'Hogar':20,'Entretenimiento':8,'Salud':7,'Deporte':5,'Educación':5,'Otros':5 };
+  const container = document.getElementById('ob-budget-list');
+  container.innerHTML = Object.entries(pcts).map(([cat, pct]) => {
+    const def = Math.round(income * pct / 100);
+    const icon = {'Comida':'🍔','Transporte':'🚗','Hogar':'🏠','Entretenimiento':'🎬','Salud':'💊','Deporte':'⚽','Educación':'📚','Otros':'📦'}[cat] || '📦';
+    return `<div class="ob-budget-row">
+      <span style="font-size:16px;">${icon}</span>
+      <span class="ob-budget-label">${cat}</span>
+      <input class="ob-budget-input" type="number" value="${def}" data-cat="${cat}" placeholder="0" />
+    </div>`;
+  }).join('');
+}
+
 /* Boot */
 document.getElementById('splash').addEventListener('animationend', e => e.target.remove());
 document.getElementById('f-date').value = todayAR();
@@ -3183,6 +3612,7 @@ sb.auth.onAuthStateChange(async (event, session) => {
     showApp(session.user);
     await loadProfile(session.user);
     await loadEntries();
+    checkOnboarding();
   } else {
     currentUser = null;
     accessToken = null;
