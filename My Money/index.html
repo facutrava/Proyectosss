@@ -1076,7 +1076,6 @@ textarea { resize: vertical; min-height: 56px; }
     <h1 class="app-title"><span class="title-my">My</span> <span class="title-money">Money</span></h1>
     <div style="display:flex;gap:6px;align-items:center;">
       <span id="streak-badge" class="streak-badge" style="display:none;"></span>
-      <select class="month-select" id="year-filter" onchange="updateMonthFilter()"></select>
       <select class="month-select" id="month-filter" onchange="updateAll()"></select>
       <button class="btn-theme" id="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">🌙</button>
       <div id="user-info">
@@ -1700,31 +1699,14 @@ function fmt(n) {
 
 function initMonthFilter() {
   const curFull = todayAR().slice(0, 7);
-  const curYear = curFull.slice(0, 4);
   const allKeys = new Set(entries.map(e => monthKey(e.date)));
   allKeys.add(curFull);
 
-  const years   = [...new Set([...allKeys].map(k => k.slice(0, 4)))].sort().reverse();
-  const yearSel = document.getElementById('year-filter');
-  const prevYear = yearSel.value;
-  yearSel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
-  yearSel.value = years.includes(prevYear) ? prevYear : curYear;
-
-  updateMonthFilter();
-}
-
-function updateMonthFilter() {
-  const curFull = todayAR().slice(0, 7);
-  const selYear = document.getElementById('year-filter').value;
-  const allKeys = new Set(entries.map(e => monthKey(e.date)));
-  allKeys.add(curFull);
-
-  const months = [...allKeys].filter(k => k.startsWith(selYear)).sort().reverse();
+  const months = [...allKeys].sort().reverse();
   const sel    = document.getElementById('month-filter');
   const prev   = sel.value;
-  sel.innerHTML = months.map(k => `<option value="${k}">${monthLabel(k).replace(' ' + selYear, '')}</option>`).join('');
+  sel.innerHTML = months.map(k => `<option value="${k}">${monthLabel(k)}</option>`).join('');
   sel.value = months.includes(prev) ? prev : (months[0] || '');
-  updateAll();
 }
 
 function animateNumber(el, target, formatter, duration = 480) {
@@ -1827,7 +1809,8 @@ function updateCatSelect() {
     sel.innerHTML = `<option value="Inversiones">📈 Inversiones</option>`;
   } else {
     const cats = currentType === 'gasto' ? GASTO_CATS : INGRESO_CATS;
-    sel.innerHTML = Object.keys(cats).map(c => `<option value="${c}">${cats[c].icon} ${c}</option>`).join('');
+    const keys = Object.keys(cats).filter(c => !(currentType === 'gasto' && c === 'Inversiones'));
+    sel.innerHTML = keys.map(c => `<option value="${c}">${cats[c].icon} ${c}</option>`).join('');
   }
   updateSubcats();
 }
