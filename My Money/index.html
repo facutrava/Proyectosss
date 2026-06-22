@@ -317,11 +317,11 @@ textarea { resize: vertical; min-height: 56px; }
 }
 .freq-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-.pay-chip { background: var(--bg3); border: 1px solid var(--border2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text2); cursor: pointer; transition: all .15s; }
-.pay-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
-.split-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-.split-row span { font-size: 12px; color: var(--text2); min-width: 110px; }
-.split-row input { flex: 1; }
+.payment-row { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 8px; }
+.payment-row-remove { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 15px; padding: 7px 2px; line-height: 1; flex-shrink: 0; }
+.payment-row-inner { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.payment-row-inner select, .payment-row-inner input { width: 100%; box-sizing: border-box; }
+.add-payment-btn { font-size: 12px; color: var(--accent); background: none; border: none; cursor: pointer; padding: 0; font-family: 'DM Sans', sans-serif; font-weight: 600; }
 
 /* Budget modal */
 .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem; }
@@ -1214,15 +1214,8 @@ textarea { resize: vertical; min-height: 56px; }
         </div>
         <div class="form-group" style="grid-column:span 2;">
           <label class="form-label">Forma de pago</label>
-          <div id="payment-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
-            <button type="button" class="pay-chip" data-method="Efectivo"      onclick="togglePayChip('Efectivo')">Efectivo</button>
-            <button type="button" class="pay-chip" data-method="Débito"        onclick="togglePayChip('Débito')">Débito</button>
-            <button type="button" class="pay-chip" data-method="Crédito"       onclick="togglePayChip('Crédito')">Crédito</button>
-            <button type="button" class="pay-chip" data-method="Transferencia" onclick="togglePayChip('Transferencia')">Transferencia</button>
-            <button type="button" class="pay-chip" data-method="Mercado Pago"  onclick="togglePayChip('Mercado Pago')">Mercado Pago</button>
-            <button type="button" class="pay-chip" data-method="USD"           onclick="togglePayChip('USD')">USD</button>
-          </div>
-          <div id="payment-splits"></div>
+          <div id="payment-rows"></div>
+          <button type="button" class="add-payment-btn" onclick="addPaymentRow()">+ Agregar otro</button>
         </div>
         <div class="form-group">
           <label class="form-label">Categoría</label>
@@ -1614,6 +1607,7 @@ async function loadEntries() {
     loadPatrimonio();
     loadTemplates();
     loadInvValores();
+    renderPaymentRows();
     initMonthFilter(); updateAll();
   } catch(e) { showToast('Error al cargar datos', 'error'); }
 }
@@ -2773,33 +2767,35 @@ function renderInvProgress(mes) {
 }
 
 /* Payment chips */
-let selectedPayments = [];
+const PAYMENT_METHODS = ['Efectivo', 'Débito', 'Crédito', 'Transferencia', 'Mercado Pago', 'USD'];
+let selectedPayments = [{ method: 'Efectivo', amount: '' }];
 
-function togglePayChip(method) {
-  const idx = selectedPayments.findIndex(p => p.method === method);
-  if (idx >= 0) selectedPayments.splice(idx, 1);
-  else selectedPayments.push({ method, amount: '' });
-  renderPayChips();
-  renderPaymentSplits();
-}
-
-function renderPayChips() {
-  document.querySelectorAll('.pay-chip').forEach(btn => {
-    btn.classList.toggle('active', selectedPayments.some(p => p.method === btn.dataset.method));
-  });
-}
-
-function renderPaymentSplits() {
-  const container = document.getElementById('payment-splits');
+function renderPaymentRows() {
+  const container = document.getElementById('payment-rows');
   if (!container) return;
-  if (selectedPayments.length < 2) { container.innerHTML = ''; return; }
-  container.innerHTML = selectedPayments.map((p, i) =>
-    `<div class="split-row">
-      <span>${p.method}</span>
-      <input type="number" placeholder="Monto" min="0" step="any" value="${p.amount}"
-             oninput="selectedPayments[${i}].amount=this.value" />
-    </div>`
-  ).join('');
+  container.innerHTML = selectedPayments.map((p, i) => `
+    <div class="payment-row">
+      ${i > 0
+        ? `<button type="button" class="payment-row-remove" onclick="removePaymentRow(${i})">✕</button>`
+        : `<div style="width:22px;flex-shrink:0;"></div>`}
+      <div class="payment-row-inner">
+        <select onchange="selectedPayments[${i}].method=this.value">
+          ${PAYMENT_METHODS.map(m => `<option value="${m}"${p.method===m?' selected':''}>${m}</option>`).join('')}
+        </select>
+        <input type="number" placeholder="Importe" min="0" step="any" value="${p.amount||''}"
+               oninput="selectedPayments[${i}].amount=this.value" />
+      </div>
+    </div>`).join('');
+}
+
+function addPaymentRow() {
+  selectedPayments.push({ method: 'Efectivo', amount: '' });
+  renderPaymentRows();
+}
+
+function removePaymentRow(i) {
+  selectedPayments.splice(i, 1);
+  renderPaymentRows();
 }
 
 function getPaymentData() {
@@ -2811,16 +2807,17 @@ function getPaymentData() {
 }
 
 function setPaymentData(paymentMethod) {
-  selectedPayments = [];
-  if (!paymentMethod) { renderPayChips(); renderPaymentSplits(); return; }
+  if (!paymentMethod) {
+    selectedPayments = [{ method: 'Efectivo', amount: '' }];
+    renderPaymentRows(); return;
+  }
   try {
     const parsed = JSON.parse(paymentMethod);
     if (Array.isArray(parsed)) {
       selectedPayments = parsed.map(p => ({ method: p.method, amount: p.amount != null ? p.amount : '' }));
     } else { selectedPayments = [{ method: paymentMethod, amount: '' }]; }
   } catch { selectedPayments = [{ method: paymentMethod, amount: '' }]; }
-  renderPayChips();
-  renderPaymentSplits();
+  renderPaymentRows();
 }
 
 function formatPayment(paymentMethod) {
@@ -2878,9 +2875,8 @@ async function addEntry() {
   document.getElementById('f-amount').value = '';
   const noteEl = document.getElementById('f-note');
   if (noteEl) noteEl.value = '';
-  selectedPayments = [];
-  renderPayChips();
-  renderPaymentSplits();
+  selectedPayments = [{ method: 'Efectivo', amount: '' }];
+  renderPaymentRows();
   initMonthFilter();
   updateAll();
   setTimeout(() => {
