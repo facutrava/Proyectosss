@@ -317,6 +317,12 @@ textarea { resize: vertical; min-height: 56px; }
 }
 .freq-btn:hover { border-color: var(--accent); color: var(--accent); }
 
+.pay-chip { background: var(--bg3); border: 1px solid var(--border2); border-radius: 20px; padding: 4px 12px; font-size: 12px; font-family: 'DM Sans', sans-serif; color: var(--text2); cursor: pointer; transition: all .15s; }
+.pay-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+.split-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.split-row span { font-size: 12px; color: var(--text2); min-width: 110px; }
+.split-row input { flex: 1; }
+
 /* Budget modal */
 .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem; }
 .modal-box { background:var(--surface);border:1px solid var(--border2);border-radius:16px;width:100%;max-width:420px;max-height:85vh;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 8px 32px rgba(0,0,0,0.5); }
@@ -1206,16 +1212,17 @@ textarea { resize: vertical; min-height: 56px; }
           <input type="number" id="f-amount" placeholder="0" min="0" step="any" />
           <div id="freq-amounts" style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;"></div>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="grid-column:span 2;">
           <label class="form-label">Forma de pago</label>
-          <select id="f-payment">
-            <option value="Efectivo">Efectivo</option>
-            <option value="Débito">Débito</option>
-            <option value="Crédito">Crédito</option>
-            <option value="Transferencia">Transferencia</option>
-            <option value="Mercado Pago">Mercado Pago</option>
-            <option value="USD">USD</option>
-          </select>
+          <div id="payment-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+            <button type="button" class="pay-chip" data-method="Efectivo"      onclick="togglePayChip('Efectivo')">Efectivo</button>
+            <button type="button" class="pay-chip" data-method="Débito"        onclick="togglePayChip('Débito')">Débito</button>
+            <button type="button" class="pay-chip" data-method="Crédito"       onclick="togglePayChip('Crédito')">Crédito</button>
+            <button type="button" class="pay-chip" data-method="Transferencia" onclick="togglePayChip('Transferencia')">Transferencia</button>
+            <button type="button" class="pay-chip" data-method="Mercado Pago"  onclick="togglePayChip('Mercado Pago')">Mercado Pago</button>
+            <button type="button" class="pay-chip" data-method="USD"           onclick="togglePayChip('USD')">USD</button>
+          </div>
+          <div id="payment-splits"></div>
         </div>
         <div class="form-group">
           <label class="form-label">Categoría</label>
@@ -2018,7 +2025,7 @@ function renderHistory() {
     return (tf === 'all' || t === tf) &&
            (catf === 'all' || e.category === catf) &&
            (subcatf === 'all' || e.subcategory === subcatf) &&
-           (payf === 'all' || (e.paymentMethod || '') === payf);
+           (payf === 'all' || paymentMatchesFilter(e.paymentMethod, payf));
   });
   const search = (document.getElementById('hf-search')?.value || '').toLowerCase().trim();
   if (search) list = list.filter(e => (e.desc||'').toLowerCase().includes(search) || (e.note||'').toLowerCase().includes(search));
@@ -2097,7 +2104,7 @@ function rowHTML(e) {
   const amountColor = isInversion ? 'var(--accent)' : (isIncome ? '#4CAF50' : '#EF5350');
   const prefix      = isIncome ? '+' : '-';
   const subLabel    = e.subcategory || e.category;
-  const payment     = e.paymentMethod || '';
+  const payment     = formatPayment(e.paymentMethod || '');
   const currency    = e.currency || 'ARS';
   // S1-B: fondo de categoría sutil
   let rowBg = '';
@@ -2765,10 +2772,80 @@ function renderInvProgress(mes) {
   }).join('');
 }
 
+/* Payment chips */
+let selectedPayments = [];
+
+function togglePayChip(method) {
+  const idx = selectedPayments.findIndex(p => p.method === method);
+  if (idx >= 0) selectedPayments.splice(idx, 1);
+  else selectedPayments.push({ method, amount: '' });
+  renderPayChips();
+  renderPaymentSplits();
+}
+
+function renderPayChips() {
+  document.querySelectorAll('.pay-chip').forEach(btn => {
+    btn.classList.toggle('active', selectedPayments.some(p => p.method === btn.dataset.method));
+  });
+}
+
+function renderPaymentSplits() {
+  const container = document.getElementById('payment-splits');
+  if (!container) return;
+  if (selectedPayments.length < 2) { container.innerHTML = ''; return; }
+  container.innerHTML = selectedPayments.map((p, i) =>
+    `<div class="split-row">
+      <span>${p.method}</span>
+      <input type="number" placeholder="Monto" min="0" step="any" value="${p.amount}"
+             oninput="selectedPayments[${i}].amount=this.value" />
+    </div>`
+  ).join('');
+}
+
+function getPaymentData() {
+  if (selectedPayments.length === 0) return '';
+  if (selectedPayments.length === 1) return selectedPayments[0].method;
+  return JSON.stringify(selectedPayments.map(p =>
+    p.amount !== '' ? { method: p.method, amount: parseFloat(p.amount) } : { method: p.method }
+  ));
+}
+
+function setPaymentData(paymentMethod) {
+  selectedPayments = [];
+  if (!paymentMethod) { renderPayChips(); renderPaymentSplits(); return; }
+  try {
+    const parsed = JSON.parse(paymentMethod);
+    if (Array.isArray(parsed)) {
+      selectedPayments = parsed.map(p => ({ method: p.method, amount: p.amount != null ? p.amount : '' }));
+    } else { selectedPayments = [{ method: paymentMethod, amount: '' }]; }
+  } catch { selectedPayments = [{ method: paymentMethod, amount: '' }]; }
+  renderPayChips();
+  renderPaymentSplits();
+}
+
+function formatPayment(paymentMethod) {
+  if (!paymentMethod) return '';
+  try {
+    const parsed = JSON.parse(paymentMethod);
+    if (Array.isArray(parsed)) return parsed.map(p => p.amount != null ? `${p.method} ${fmt(p.amount)}` : p.method).join(' + ');
+  } catch {}
+  return paymentMethod;
+}
+
+function paymentMatchesFilter(paymentMethod, filterValue) {
+  if (filterValue === 'all') return true;
+  if (!paymentMethod) return false;
+  try {
+    const parsed = JSON.parse(paymentMethod);
+    if (Array.isArray(parsed)) return parsed.some(p => p.method === filterValue);
+  } catch {}
+  return paymentMethod === filterValue;
+}
+
 async function addEntry() {
   const desc          = document.getElementById('f-desc').value.trim();
   const amount        = parseFloat(document.getElementById('f-amount').value);
-  const paymentMethod = document.getElementById('f-payment').value;
+  const paymentMethod = getPaymentData();
   const currency      = document.getElementById('f-currency').value;
   const category      = document.getElementById('f-category').value;
   const subcategory   = document.getElementById('f-subcategory').value;
@@ -2801,6 +2878,9 @@ async function addEntry() {
   document.getElementById('f-amount').value = '';
   const noteEl = document.getElementById('f-note');
   if (noteEl) noteEl.value = '';
+  selectedPayments = [];
+  renderPayChips();
+  renderPaymentSplits();
   initMonthFilter();
   updateAll();
   setTimeout(() => {
@@ -2828,7 +2908,7 @@ function editEntry(id) {
   setEntryType(e.type || 'gasto');
   document.getElementById('f-desc').value        = e.desc;
   document.getElementById('f-amount').value      = e.amount;
-  document.getElementById('f-payment').value     = e.paymentMethod || '';
+  setPaymentData(e.paymentMethod || '');
   document.getElementById('f-currency').value    = e.currency || 'ARS';
   document.getElementById('f-category').value    = e.category;
   updateSubcats();
@@ -3151,7 +3231,7 @@ function saveTemplate() {
     type: currentType,
     desc,
     amount,
-    paymentMethod: document.getElementById('f-payment').value,
+    paymentMethod: getPaymentData(),
     currency: document.getElementById('f-currency').value,
     category: document.getElementById('f-category').value,
     subcategory: document.getElementById('f-subcategory').value
@@ -3175,7 +3255,7 @@ function applyTemplate(i) {
   setEntryType(t.type);
   document.getElementById('f-desc').value = t.desc;
   if (t.amount > 0) document.getElementById('f-amount').value = t.amount;
-  document.getElementById('f-payment').value  = t.paymentMethod || 'Efectivo';
+  setPaymentData(t.paymentMethod || '');
   document.getElementById('f-currency').value = t.currency || 'ARS';
   document.getElementById('f-category').value = t.category;
   updateSubcats();
