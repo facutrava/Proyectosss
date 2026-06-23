@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis competitivo · Pet shops Argentina</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1C1A17;
+    --paper:#FAF6EC;
+    --paper-dim:#F1EADA;
+    --forest:#23402F;
+    --forest-dim:#3A5A45;
+    --clay:#B85C2E;
+    --clay-soft:#E7C8A8;
+    --line:#D9CFB6;
+    --good:#3A6B4A;
+    --bad:#A8442C;
+    --max-w:920px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Public Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--clay-soft); }
+
+  a{ color:var(--clay); }
+
+  .wrap{
+    max-width:var(--max-w);
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* ---------- HEADER ---------- */
+
+  header.hero{
+    background:
+      radial-gradient(900px 420px at 85% -10%, rgba(184,92,46,0.16), transparent 60%),
+      var(--forest);
+    color:var(--paper);
+    padding:84px 0 64px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:6px solid var(--clay);
+  }
+
+  header.hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(250,246,236,0.05) 0, rgba(250,246,236,0.05) 1px, transparent 1px, transparent 88px);
+    pointer-events:none;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--clay-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:22px;
+  }
+
+  .eyebrow::before{
+    content:"";
+    width:26px;
+    height:1px;
+    background:var(--clay-soft);
+    display:inline-block;
+  }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height:1.05;
+    margin:0 0 22px;
+    max-width:11ch;
+    letter-spacing:-0.01em;
+  }
+
+  .hero-sub{
+    max-width:52ch;
+    font-size:1.08rem;
+    color:#E6E1D2;
+  }
+
+  .hero-meta{
+    margin-top:40px;
+    display:flex;
+    gap:36px;
+    flex-wrap:wrap;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:#C9D6CC;
+  }
+  .hero-meta div span{
+    display:block;
+    color:var(--paper);
+    font-size:14px;
+    margin-top:4px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+
+  main{ padding:0 0 40px; }
+
+  section{
+    padding:56px 0;
+    border-bottom:1px solid var(--line);
+  }
+  section:last-of-type{ border-bottom:none; }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:8px;
+  }
+
+  .section-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--clay);
+  }
+
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  .section-intro{
+    max-width:64ch;
+    color:#4A463E;
+    margin-top:14px;
+  }
+
+  /* ---------- METHOD STRIP ---------- */
+
+  .method-grid{
+    margin-top:28px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .method-cell{
+    background:var(--paper);
+    padding:18px 20px;
+  }
+  .method-cell .k{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--forest-dim);
+  }
+  .method-cell .v{
+    font-family:'Fraunces', serif;
+    font-size:1.5rem;
+    margin-top:6px;
+  }
+
+  /* ---------- BRAND CARD ---------- */
+
+  .tier-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--forest-dim);
+    margin:44px 0 18px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .tier-label::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+  .tier-label:first-child{ margin-top:0; }
+
+  .brand{
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    border-left:4px solid var(--forest);
+    padding:26px 28px 28px;
+    margin-bottom:22px;
+  }
+
+  .brand-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+
+  .brand-name{
+    font-family:'Fraunces', serif;
+    font-size:1.4rem;
+    font-weight:600;
+  }
+
+  .brand-tag{
+    font-size:0.92rem;
+    color:#5C5848;
+    margin-top:3px;
+  }
+
+  .score{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    text-align:right;
+    color:var(--forest-dim);
+    white-space:nowrap;
+  }
+  .score .bar{
+    margin-top:6px;
+    width:140px;
+    height:6px;
+    background:var(--bad);
+    position:relative;
+    overflow:hidden;
+  }
+  .score .bar i{
+    position:absolute; left:0; top:0; bottom:0;
+    background:var(--good);
+    display:block;
+  }
+
+  .cols{
+    margin-top:20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+
+  .col h4{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+  }
+  .col.good h4{ color:var(--good); }
+  .col.bad h4{ color:var(--bad); }
+  .col h4::before{
+    content:"";
+    width:7px; height:7px;
+    border-radius:50%;
+    display:inline-block;
+  }
+  .col.good h4::before{ background:var(--good); }
+  .col.bad h4::before{ background:var(--bad); }
+
+  .col ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .col li{
+    margin-bottom:8px;
+    font-size:0.95rem;
+    color:#2E2B25;
+  }
+  .col li::marker{
+    color:#9A937C;
+  }
+
+  .insight{
+    margin-top:20px;
+    padding:14px 16px;
+    background:rgba(184,92,46,0.08);
+    border-left:3px solid var(--clay);
+    font-size:0.93rem;
+    color:#3D2E22;
+  }
+  .insight strong{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--clay);
+    display:block;
+    margin-bottom:5px;
+  }
+
+  /* ---------- PATTERN / TAKEAWAY ---------- */
+
+  .takeaway{
+    background:var(--forest);
+    color:var(--paper);
+    padding:38px 36px;
+    margin-top:28px;
+    position:relative;
+  }
+  .takeaway::before{
+    content:"☞";
+    font-size:1.6rem;
+    color:var(--clay-soft);
+    display:block;
+    margin-bottom:14px;
+  }
+  .takeaway h3{
+    font-family:'Fraunces', serif;
+    font-size:1.25rem;
+    margin:0 0 12px;
+  }
+  .takeaway p{
+    margin:0;
+    color:#E6E1D2;
+    max-width:64ch;
+  }
+
+  /* ---------- SOURCES ---------- */
+
+  .sources{
+    margin-top:18px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:#5C5848;
+    line-height:2;
+  }
+  .sources a{ color:var(--forest-dim); text-decoration:none; border-bottom:1px dotted var(--forest-dim); }
+
+  footer{
+    padding:32px 0 60px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:#8A8470;
+    text-align:center;
+  }
+
+  @media (max-width:640px){
+    .cols{ grid-template-columns:1fr; }
+    .method-grid{ grid-template-columns:1fr; }
+    .brand-head{ flex-direction:column; }
+    .score{ text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Análisis competitivo · Sector pet care</div>
+    <h1>Tiendas de mascotas en Argentina</h1>
+    <p class="hero-sub">Relevamiento de las principales cadenas y plataformas del país: qué hacen bien, dónde fallan, y qué espacio queda libre para una marca nueva.</p>
+    <div class="hero-meta">
+      <div>Alcance<span>Nacional</span></div>
+      <div>Marcas relevadas<span>11</span></div>
+      <div>Fuentes<span>Web, reseñas, reclamos</span></div>
+      <div>Fecha<span>Junio 2026</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="wrap">
+
+    <section>
+      <div class="section-head"><span class="section-num">00</span><h2>Metodología</h2></div>
+      <p class="section-intro">El relevamiento combina sitios oficiales de cada marca, portales de reclamos (tuquejasuma.com), reseñas de Google agregadas vía Masco Fans, y cobertura de medios (La Nación, guías locales). El objetivo no es rankear, sino identificar patrones explotables para una marca nueva.</p>
+      <div class="method-grid">
+        <div class="method-cell"><div class="k">Cadenas grandes</div><div class="v">4</div></div>
+        <div class="method-cell"><div class="k">Online-first</div><div class="v">4</div></div>
+        <div class="method-cell"><div class="k">Boutique / nicho</div><div class="v">3</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><span class="section-num">01</span><h2>Cadenas grandes — modelo todo en uno</h2></div>
+      <p class="section-intro">Tienda + veterinaria + peluquería bajo un mismo techo. Mayor escala, pero también mayor exposición pública a fallas.</p>
+
+      <div class="brand">
+        <div class="brand-head">
+          <div>
+            <div class="brand-name">Puppis</div>
+            <div class="brand-tag">~30+ locales · líder nacional · veterinaria + peluquería + adopciones</div>
+          </div>
+          <div class="score">Tienda física vs. online<div class="bar"><i style="width:70%"></i></div></div>
+        </div>
+        <div class="cols">
+          <div class="col good">
+            <h4>Fortalezas</h4>
+            <ul>
+              <li>Atención personalizada en local: empleados mencionados por nombre propio en reseñas positivas</li>
+              <li>Catálogo amplio, desde alimento estándar hasta dietas de prescripción veterinaria</li>
+              <li>Programa de fidelización ("Puppis One") con descuentos recurrentes</li>
+              <li>Horario extendido, incluidos fines de semana</li>
+            </ul>
+          </div>
+          <div class="col bad">
+            <h4>Debilidades</h4>
+            <ul>
+              <li>Tienda online y logística de entrega con quejas sistémicas y recurrentes</li>
+              <li>Atención al cliente reactiva ante reclamos, sin compensación real</li>
+              <li>Falta de personal en horarios pico → esperas largas</li>
+              <li>Precios percibidos como superiores a la media del mercado</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight"><strong>Lectura</strong>Brecha enorme entre experiencia física (buena) y digital (mala). Es la oportunidad más clara del mercado para una marca que nazca online-first y resuelva eso desde el día uno.</div>
+      </div>
+
+      <div class="brand">
+        <div class="brand-head">
+          <div>
+            <div class="brand-name">Centro Pet</div>
+            <div class="brand-tag">Desde 1999 · se autodefine "el pet shop más completo de Argentina"</div>
+          </div>
+          <div class="score">Reputación general<div class="bar"><i style="width:80%"></i></div></div>
+        </div>
+        <div class="cols">
+          <div class="col good">
+            <h4>Fortalezas</h4>
+            <ul>
+              <li>4.5 estrellas sobre más de 7.200 opiniones — volumen y consistencia altos</li>
+              <li>Personal elogiado por asesoramiento genuino, no solo despacho</li>
+              <li>Envíos a domicilio con buena puntualidad según la mayoría de clientes</li>
+              <li>Variedad amplia, incluye animales exóticos y especies poco comunes</li>
+            </ul>
+          </div>
+          <div class="col bad">
+            <h4>Debilidades</h4>
+            <ul>
+              <li>Sin entrada accesible para sillas de ruedas</li>
+              <li>Precios en zona premium, probablemente no competitivos en valor</li>
+              <li>Reclamos puntuales por cobros adicionales poco transparentes (seguros no solicitados)</li>
+              <li>Casos aislados de logística y stock, aunque minoritarios</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight"><strong>Lectura</strong>Mejor relación reputación/escala que Puppis. El punto débil de la transparencia en cobros es fácil de evitar desde el diseño del modelo de negocio.</div>
+      </div>
+
+      <div class="brand">
+        <div class="brand-head">
+          <div>
+            <div class="brand-name">TDM · Tienda de Mascotas</div>
+            <div class="brand-tag">35 sucursales · envío gratis a domicilio</div>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="col good">
+            <h4>Fortalezas</h4>
+            <ul>
+              <li>Cobertura geográfica amplia</li>
+              <li>Envío gratis como gancho comercial</li>
+            </ul>
+          </div>
+          <div class="col bad">
+            <h4>Debilidades</h4>
+            <ul>
+              <li>Sin diferenciación de marca clara más allá de precio/envío</li>
+              <li>Compite como commodity, no como experiencia</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="brand">
+        <div class="brand-head">
+          <div>
+            <div class="brand-name">Nutrican</div>
+            <div class="brand-tag">Locales en shoppings · marcas premium (Pro Plan, Royal Canin, Eukanuba)</div>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="col good">
+            <h4>Fortalezas</h4>
+            <ul>
+              <li>Tráfico garantizado por ubicación en centros comerciales</li>
+              <li>Asociación con marcas de alimento reconocidas</li>
+            </ul>
+          </div>
+          <div class="col bad">
+            <h4>Debilidades</h4>
+            <ul>
+              <li>Identidad de marca propia débil, depende de terceros</li>
+              <li>Poco margen de diferenciación más allá del surtido</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="brand">
+        <div class="brand-head">
+          <div>
+            <div class="brand-name">Veterinaria Alem</div>
+            <div class="brand-tag">Córdoba, Buenos Aires, Salta, Santiago del Estero</div>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="col good">
+            <h4>Fortalezas</h4>
+            <ul>
+              <li>Alcance regional fuerte en el NOA — relevante si tu marca compite ahí</li>
+              <li>Integración real con servicio veterinario</li>
+            </ul>
+          </div>
+          <div class="col bad">
+            <h4>Debilidades</h4>
+            <ul>
+              <li>Poca información pública sobre experiencia de cliente</li>
+              <li>Inversión limitada en reputación y presencia digital</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><span class="section-num">02</span><h2>Online-first / delivery</h2></div>
+      <p class="section-intro">Timberline, Mascotas Ya!, Pets Center y Petco Market compiten por practicidad y precio antes que por experiencia en local.</p>
+
+      <div class="brand">
+        <div class="brand-head">
+          <div>
+            <div class="brand-name">Timberline · Mascotas Ya! · Pets Center · Petco Market</div>
+            <div class="brand-tag">Segmento delivery / e-commerce especializado</div>
+          </div>
+        </div>
+        <div class="cols">
+          <div class="col good">
+            <h4>Fortalezas comunes</h4>
+            <ul>
+              <li>Entrega same-day en zonas urbanas (CABA / GBA)</li>
+              <li>Descuentos agresivos por transferencia/efectivo</li>
+              <li>Política de devoluciones documentada y clara (Pets Center: 7 días hábiles, devolución presencial)</li>
+            </ul>
+          </div>
+          <div class="col bad">
+            <h4>Debilidades comunes</h4>
+            <ul>
+              <li>Dependencia total de logística tercerizada (correo/transporte)</li>
+              <li>Es el punto de quiebre en casi todas las reseñas negativas del sector, no de una marca puntual</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight"><strong>Lectura</strong>No es un problema de un local: es estructural de la industria. Resolver logística propia o un partner confiable es una ventaja competitiva transversal, no solo frente a una marca.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><span class="section-num">03</span><h2>Boutique / nicho (CABA)</h2></div>
+      <p class="section-intro">Margoff (diseño y ropa para mascotas) y Mascotas de la Abadía (integral + exóticos) compiten por producto diferenciado, no por escala.</p>
+      <div class="brand">
+        <div class="cols">
+          <div class="col good">
+            <h4>Fortalezas</h4>
+            <ul>
+              <li>Nicho defendible, menos sensible a precio</li>
+              <li>Identidad de marca fuerte y reconocible</li>
+            </ul>
+          </div>
+          <div class="col bad">
+            <h4>Debilidades</h4>
+            <ul>
+              <li>Alcance geográfico muy limitado</li>
+              <li>Difícil de escalar fuera de barrios premium</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><span class="section-num">04</span><h2>Patrón clave para tu marca</h2></div>
+      <div class="takeaway">
+        <h3>La brecha física-digital es la oportunidad real</h3>
+        <p>El dolor más repetido en todas las cadenas grandes es la diferencia entre una buena experiencia en el local y una mala experiencia digital/logística, sumado a falta de transparencia en costos extra y comunicación reactiva ante reclamos. Una marca que resuelva logística confiable, comunicación proactiva del estado del pedido y una política de devolución clara desde el día uno parte con una ventaja diferencial real — no solo de precio.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><span class="section-num">05</span><h2>Fuentes</h2></div>
+      <div class="sources">
+        <div><a href="https://www.puppis.com.ar/" target="_blank">puppis.com.ar</a></div>
+        <div><a href="https://mascofans.com.ar/pet-shop/puppis-veterinaria-peluqueria-y-pet-shop-9/" target="_blank">mascofans.com.ar — análisis Puppis Elcano</a></div>
+        <div><a href="https://veterinariasanroque.com.ar/" target="_blank">veterinariasanroque.com.ar — sucursales Puppis</a></div>
+        <div><a href="https://tuquejasuma.com/puppis" target="_blank">tuquejasuma.com — reclamos Puppis</a></div>
+        <div><a href="https://www.glassdoor.com.ar/Evaluaciones/Puppis-Evaluaciones-E2787501.htm" target="_blank">glassdoor.com.ar — clima laboral Puppis</a></div>
+        <div><a href="https://www.centropet.com.ar/" target="_blank">centropet.com.ar</a></div>
+        <div><a href="https://mascofans.com.ar/pet-shop/pet-shop-centro-pet-argentina-veterinaria/" target="_blank">mascofans.com.ar — análisis Centro Pet</a></div>
+        <div><a href="https://tuquejasuma.com/centro-pet" target="_blank">tuquejasuma.com — reclamos Centro Pet</a></div>
+        <div><a href="https://www.minube.com.ar/rincon/centro-pet-spa-a462001" target="_blank">minube.com.ar — Centro Pet Spa</a></div>
+        <div><a href="https://www.tiendademascotas.com.ar/" target="_blank">tiendademascotas.com.ar</a></div>
+        <div><a href="https://www.timberline.com.ar/" target="_blank">timberline.com.ar</a></div>
+        <div><a href="https://tienda.mascotasya.com/" target="_blank">tienda.mascotasya.com</a></div>
+        <div><a href="https://petscenter.com.ar/politicas-de-envio/" target="_blank">petscenter.com.ar — política de envíos</a></div>
+        <div><a href="https://www.petcomarket.com.ar/" target="_blank">petcomarket.com.ar</a></div>
+        <div><a href="https://petplanetshop.com.ar/" target="_blank">petplanetshop.com.ar</a></div>
+        <div><a href="https://guiabuenosaires.com.ar/informacion-sobre-buenos-aires/los-mejores-pet-shop-en-buenos-aires/" target="_blank">guiabuenosaires.com.ar — top 5 pet shop BA</a></div>
+        <div><a href="https://www.lanacion.com.ar/sociedad/10-lugares-mimar-tu-mascota-nid2248557/" target="_blank">lanacion.com.ar — 10 lugares para mimar a tu mascota</a></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>Informe elaborado para uso interno · Análisis de marca personal</footer>
+
+</body>
+</html>

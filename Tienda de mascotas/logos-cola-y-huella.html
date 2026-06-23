@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amor Peludito · Cola + Huella</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bosque:#2D4A2A;
+  --arena:#D4C4A8;
+  --caramelo:#8B6240;
+  --crema:#F8F4EC;
+  --pizarra:#4A6B8A;
+  --ink:#1C1814;
+  --page:#0C0C0A;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--page);color:#fff;font-family:'DM Mono',monospace;-webkit-font-smoothing:antialiased;}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 44px;}
+
+/* ── HEADER ── */
+.site-header{padding:68px 0 48px;border-bottom:1px solid rgba(255,255,255,.07);}
+.h-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px;}
+.h-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--crema);letter-spacing:-.02em;margin-bottom:10px;}
+.h-sub{font-size:10.5px;color:rgba(255,255,255,.25);letter-spacing:.04em;line-height:1.9;}
+
+/* ── GROUP ── */
+.group{padding:60px 0;border-bottom:1px solid rgba(255,255,255,.06);}
+.group:last-of-type{border-bottom:none;}
+.group-header{margin-bottom:36px;}
+.g-eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--caramelo);display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.g-eyebrow::before{content:'';width:18px;height:1px;background:var(--caramelo);}
+.g-title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.3rem,2.2vw,1.8rem);color:var(--crema);letter-spacing:-.01em;margin-bottom:8px;}
+.g-desc{font-size:10.5px;color:rgba(255,255,255,.3);line-height:1.85;max-width:66ch;}
+
+/* ── CARD ROW ── */
+.cards{display:grid;gap:10px;}
+.cards.c3{grid-template-columns:repeat(3,1fr);}
+.cards.c4{grid-template-columns:repeat(4,1fr);}
+
+/* ── CARD ── */
+.card{border:1px solid rgba(255,255,255,.07);}
+.card-preview{
+  display:flex;align-items:center;justify-content:center;
+  padding:52px 24px;min-height:240px;position:relative;
+  flex-direction:column;gap:0;
+}
+.card-preview.xl{min-height:300px;padding:64px 24px;}
+.card-meta{
+  padding:12px 16px;border-top:1px solid rgba(255,255,255,.07);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.card-name{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.card-bg{font-size:9.5px;letter-spacing:.06em;color:rgba(255,255,255,.22);}
+
+/* FONDOS */
+.bg-dark{background:var(--page);}
+.bg-crema{background:var(--crema);}
+.bg-bosque{background:var(--bosque);}
+.bg-arena{background:var(--arena);}
+.bg-caramelo{background:var(--caramelo);}
+.bg-pizarra{background:var(--pizarra);}
+
+/* ── LOCKUP ── */
+.lk-h{display:flex;align-items:center;gap:14px;}
+.lk-v{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.wm .l1{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:1.9rem;letter-spacing:-.025em;line-height:1;}
+.wm .l2{display:block;font-family:'Fraunces',serif;font-weight:600;font-size:1.22rem;letter-spacing:.06em;line-height:1;margin-top:2px;}
+.wm.sm .l1{font-size:1.35rem;}
+.wm.sm .l2{font-size:.86rem;}
+.lk-rule{width:26px;height:1px;opacity:.3;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:rgba(255,255,255,.07);margin:0;}
+
+footer{padding:28px 0 52px;font-size:10px;color:rgba(255,255,255,.18);letter-spacing:.06em;line-height:1.9;}
+
+@media(max-width:780px){
+  .cards.c3,.cards.c4{grid-template-columns:1fr 1fr;}
+  .wrap{padding:0 24px;}
+}
+@media(max-width:480px){
+  .cards.c3,.cards.c4{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- HEADER -->
+<div class="site-header">
+  <div class="h-eyebrow">Exploración de símbolo</div>
+  <div class="h-title">Amor Peludito — Cola &amp; Huella</div>
+  <div class="h-sub">
+    Tres lecturas de la cola (de abstracto a directo) + tres versiones de huella de perro.<br>
+    Paleta: Verde Bosque #2D4A2A · Caramelo #8B6240 · Arena #D4C4A8 · Crema #F8F4EC
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     GRUPO A — ESPIRAL DE COLA
+══════════════════════════════════════════ -->
+
+<div class="group">
+  <div class="group-header">
+    <div class="g-eyebrow">Grupo A · Espiral de cola</div>
+    <div class="g-title">De abstracto a directo</div>
+    <div class="g-desc">Tres iteraciones sobre el mismo concepto de cola en espiral. A1 es la versión más pura y abstracta. A2 agrega un punto de anclaje que la lee inmediatamente como cola. A3 incluye la silueta del cuerpo para que no quede ninguna duda.</div>
+  </div>
+
+  <!-- A1: Espiral pura (referencia) -->
+  <div style="margin-bottom:10px;">
+    <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px;padding-left:2px;">A1 — Espiral pura (referencia abstracta)</div>
+    <div class="cards c4">
+
+      <div class="card">
+        <div class="card-preview xl bg-dark">
+          <svg viewBox="0 0 56 72" fill="none" style="width:68px;height:87px;color:var(--crema);">
+            <path d="M8 66 C 4 44 10 22 24 14 C 36 6 52 10 50 26 C 48 42 34 50 26 44 C 18 38 20 28 28 26" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <path d="M16 64 C 12 46 18 30 30 22 C 40 16 50 22 48 34 C 46 44 36 50 28 44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            <path d="M24 62 C 20 50 24 38 32 32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="card-meta"><span class="card-name">Símbolo</span><span class="card-bg">Negro</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-crema">
+          <div class="lk-h" style="color:var(--bosque);">
+            <svg viewBox="0 0 56 72" fill="none" style="width:42px;height:54px;flex-shrink:0;color:inherit;">
+              <path d="M8 66 C 4 44 10 22 24 14 C 36 6 52 10 50 26 C 48 42 34 50 26 44 C 18 38 20 28 28 26" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M16 64 C 12 46 18 30 30 22 C 40 16 50 22 48 34 C 46 44 36 50 28 44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M24 62 C 20 50 24 38 32 32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Crema</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-bosque">
+          <div class="lk-h" style="color:var(--crema);">
+            <svg viewBox="0 0 56 72" fill="none" style="width:42px;height:54px;flex-shrink:0;color:inherit;">
+              <path d="M8 66 C 4 44 10 22 24 14 C 36 6 52 10 50 26 C 48 42 34 50 26 44 C 18 38 20 28 28 26" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M16 64 C 12 46 18 30 30 22 C 40 16 50 22 48 34 C 46 44 36 50 28 44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M24 62 C 20 50 24 38 32 32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Verde Bosque</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-arena">
+          <div class="lk-v" style="color:var(--bosque);">
+            <svg viewBox="0 0 56 72" fill="none" style="width:46px;height:59px;color:inherit;">
+              <path d="M8 66 C 4 44 10 22 24 14 C 36 6 52 10 50 26 C 48 42 34 50 26 44 C 18 38 20 28 28 26" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M16 64 C 12 46 18 30 30 22 C 40 16 50 22 48 34 C 46 44 36 50 28 44" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M24 62 C 20 50 24 38 32 32" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+            </svg>
+            <div class="lk-rule" style="background:var(--bosque);"></div>
+            <div class="wm" style="text-align:center;"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup V</span><span class="card-bg">Arena</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- A2: Cola con punto de anclaje -->
+  <div style="margin-bottom:10px;">
+    <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px;padding-left:2px;">A2 — Espiral con punto de anclaje (lectura inmediata de cola)</div>
+    <div class="cards c4">
+
+      <div class="card">
+        <div class="card-preview xl bg-dark">
+          <svg viewBox="0 0 64 78" fill="none" style="width:72px;height:88px;color:var(--crema);">
+            <!-- Punto base: donde la cola se une al cuerpo -->
+            <ellipse cx="10" cy="70" rx="8" ry="5" fill="currentColor" opacity="0.55"/>
+            <!-- Trazo principal: cola curva y espiral (trazo grueso) -->
+            <path d="M10 66 C 6 48 12 26 26 16 C 38 8 54 12 52 28 C 50 44 36 52 28 46 C 20 40 22 30 30 28" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+            <!-- Trazo secundario interior (más fino) -->
+            <path d="M18 64 C 14 50 18 32 30 22 C 40 16 52 20 50 32 C 48 42 38 50 30 46" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+            <!-- Trazo más interior -->
+            <path d="M26 62 C 22 52 24 40 34 34" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="card-meta"><span class="card-name">Símbolo</span><span class="card-bg">Negro</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-crema">
+          <div class="lk-h" style="color:var(--bosque);">
+            <svg viewBox="0 0 64 78" fill="none" style="width:44px;height:54px;flex-shrink:0;color:inherit;">
+              <ellipse cx="10" cy="70" rx="8" ry="5" fill="currentColor" opacity="0.55"/>
+              <path d="M10 66 C 6 48 12 26 26 16 C 38 8 54 12 52 28 C 50 44 36 52 28 46 C 20 40 22 30 30 28" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M18 64 C 14 50 18 32 30 22 C 40 16 52 20 50 32 C 48 42 38 50 30 46" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+              <path d="M26 62 C 22 52 24 40 34 34" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Crema</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-bosque">
+          <div class="lk-h" style="color:var(--crema);">
+            <svg viewBox="0 0 64 78" fill="none" style="width:44px;height:54px;flex-shrink:0;color:inherit;">
+              <ellipse cx="10" cy="70" rx="8" ry="5" fill="currentColor" opacity="0.6"/>
+              <path d="M10 66 C 6 48 12 26 26 16 C 38 8 54 12 52 28 C 50 44 36 52 28 46 C 20 40 22 30 30 28" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M18 64 C 14 50 18 32 30 22 C 40 16 52 20 50 32 C 48 42 38 50 30 46" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+              <path d="M26 62 C 22 52 24 40 34 34" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Verde Bosque</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-caramelo">
+          <div class="lk-v" style="color:var(--crema);">
+            <svg viewBox="0 0 64 78" fill="none" style="width:48px;height:58px;color:inherit;">
+              <ellipse cx="10" cy="70" rx="8" ry="5" fill="currentColor" opacity="0.6"/>
+              <path d="M10 66 C 6 48 12 26 26 16 C 38 8 54 12 52 28 C 50 44 36 52 28 46 C 20 40 22 30 30 28" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M18 64 C 14 50 18 32 30 22 C 40 16 52 20 50 32 C 48 42 38 50 30 46" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+              <path d="M26 62 C 22 52 24 40 34 34" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+            </svg>
+            <div class="lk-rule" style="background:var(--crema);"></div>
+            <div class="wm" style="text-align:center;"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup V</span><span class="card-bg">Caramelo</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- A3: Cola + silueta de cuerpo -->
+  <div>
+    <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px;padding-left:2px;">A3 — Cola con silueta de cuerpo (lectura 100% directa)</div>
+    <div class="cards c4">
+
+      <div class="card">
+        <div class="card-preview xl bg-dark">
+          <svg viewBox="0 0 84 80" fill="none" style="width:88px;height:84px;color:var(--crema);">
+            <!-- Cuerpo del perro (silueta simple) -->
+            <ellipse cx="30" cy="60" rx="26" ry="16" fill="currentColor"/>
+            <!-- Cabeza -->
+            <circle cx="8" cy="48" r="13" fill="currentColor"/>
+            <!-- Oreja caída -->
+            <ellipse cx="2" cy="54" rx="5" ry="8" fill="currentColor" transform="rotate(-10,2,54)"/>
+            <!-- Cola: espiral que sale del cuerpo -->
+            <path d="M52 54 C 62 44 68 28 60 18 C 54 10 44 10 42 18 C 40 26 46 34 52 30 C 58 26 58 18 52 16" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-meta"><span class="card-name">Símbolo</span><span class="card-bg">Negro</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-crema">
+          <div class="lk-h" style="color:var(--bosque);">
+            <svg viewBox="0 0 84 80" fill="none" style="width:58px;height:55px;flex-shrink:0;color:inherit;">
+              <ellipse cx="30" cy="60" rx="26" ry="16" fill="currentColor"/>
+              <circle cx="8" cy="48" r="13" fill="currentColor"/>
+              <ellipse cx="2" cy="54" rx="5" ry="8" fill="currentColor" transform="rotate(-10,2,54)"/>
+              <path d="M52 54 C 62 44 68 28 60 18 C 54 10 44 10 42 18 C 40 26 46 34 52 30 C 58 26 58 18 52 16" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <div class="wm sm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Crema</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-bosque">
+          <div class="lk-h" style="color:var(--crema);">
+            <svg viewBox="0 0 84 80" fill="none" style="width:58px;height:55px;flex-shrink:0;color:inherit;">
+              <ellipse cx="30" cy="60" rx="26" ry="16" fill="currentColor"/>
+              <circle cx="8" cy="48" r="13" fill="currentColor"/>
+              <ellipse cx="2" cy="54" rx="5" ry="8" fill="currentColor" transform="rotate(-10,2,54)"/>
+              <path d="M52 54 C 62 44 68 28 60 18 C 54 10 44 10 42 18 C 40 26 46 34 52 30 C 58 26 58 18 52 16" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <div class="wm sm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Verde Bosque</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-arena">
+          <div class="lk-v" style="color:var(--bosque);">
+            <svg viewBox="0 0 84 80" fill="none" style="width:62px;height:59px;color:inherit;">
+              <ellipse cx="30" cy="60" rx="26" ry="16" fill="currentColor"/>
+              <circle cx="8" cy="48" r="13" fill="currentColor"/>
+              <ellipse cx="2" cy="54" rx="5" ry="8" fill="currentColor" transform="rotate(-10,2,54)"/>
+              <path d="M52 54 C 62 44 68 28 60 18 C 54 10 44 10 42 18 C 40 26 46 34 52 30 C 58 26 58 18 52 16" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <div class="lk-rule" style="background:var(--bosque);"></div>
+            <div class="wm" style="text-align:center;"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup V</span><span class="card-bg">Arena</span></div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /group A -->
+
+<!-- ══════════════════════════════════════════
+     GRUPO B — HUELLA DE PERRO
+══════════════════════════════════════════ -->
+<div class="group">
+  <div class="group-header">
+    <div class="g-eyebrow">Grupo B · Huella de perro</div>
+    <div class="g-title">Tres versiones: rellena, con corazón y trazo</div>
+    <div class="g-desc">La huella (paw print) es el símbolo más reconocible del sector. Tres tratamientos que van del clásico al diferenciado: la geométrica rellena, la que integra un corazón en la almohadilla central, y la versión de trazo limpio sin relleno.</div>
+  </div>
+
+  <!-- B1: Huella geométrica clásica -->
+  <div style="margin-bottom:10px;">
+    <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px;padding-left:2px;">B1 — Huella geométrica (clásica y limpia)</div>
+    <div class="cards c4">
+
+      <div class="card">
+        <div class="card-preview xl bg-dark">
+          <svg viewBox="0 0 80 78" style="width:80px;height:78px;color:var(--crema);">
+            <!-- 4 dedos -->
+            <circle cx="16" cy="30" r="9" fill="currentColor"/>
+            <circle cx="31" cy="18" r="9" fill="currentColor"/>
+            <circle cx="49" cy="18" r="9" fill="currentColor"/>
+            <circle cx="64" cy="30" r="9" fill="currentColor"/>
+            <!-- Almohadilla principal -->
+            <ellipse cx="40" cy="56" rx="22" ry="17" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="card-meta"><span class="card-name">Símbolo</span><span class="card-bg">Negro</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-crema">
+          <div class="lk-h" style="color:var(--bosque);">
+            <svg viewBox="0 0 80 78" style="width:52px;height:51px;flex-shrink:0;">
+              <circle cx="16" cy="30" r="9" fill="var(--bosque)"/>
+              <circle cx="31" cy="18" r="9" fill="var(--bosque)"/>
+              <circle cx="49" cy="18" r="9" fill="var(--bosque)"/>
+              <circle cx="64" cy="30" r="9" fill="var(--bosque)"/>
+              <ellipse cx="40" cy="56" rx="22" ry="17" fill="var(--bosque)"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Crema</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-bosque">
+          <div class="lk-h" style="color:var(--crema);">
+            <svg viewBox="0 0 80 78" style="width:52px;height:51px;flex-shrink:0;">
+              <circle cx="16" cy="30" r="9" fill="var(--crema)"/>
+              <circle cx="31" cy="18" r="9" fill="var(--crema)"/>
+              <circle cx="49" cy="18" r="9" fill="var(--crema)"/>
+              <circle cx="64" cy="30" r="9" fill="var(--crema)"/>
+              <ellipse cx="40" cy="56" rx="22" ry="17" fill="var(--crema)"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Verde Bosque</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-arena">
+          <div class="lk-v" style="color:var(--bosque);">
+            <svg viewBox="0 0 80 78" style="width:56px;height:55px;">
+              <circle cx="16" cy="30" r="9" fill="var(--bosque)"/>
+              <circle cx="31" cy="18" r="9" fill="var(--bosque)"/>
+              <circle cx="49" cy="18" r="9" fill="var(--bosque)"/>
+              <circle cx="64" cy="30" r="9" fill="var(--bosque)"/>
+              <ellipse cx="40" cy="56" rx="22" ry="17" fill="var(--bosque)"/>
+            </svg>
+            <div class="lk-rule" style="background:var(--bosque);"></div>
+            <div class="wm" style="text-align:center;"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup V</span><span class="card-bg">Arena</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- B2: Huella con corazón en almohadilla -->
+  <div style="margin-bottom:10px;">
+    <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px;padding-left:2px;">B2 — Huella con corazón (almohadilla central en forma de corazón)</div>
+    <div class="cards c4">
+
+      <div class="card">
+        <div class="card-preview xl bg-dark">
+          <svg viewBox="0 0 80 80" fill="none" style="width:80px;height:80px;color:var(--crema);">
+            <!-- 4 dedos -->
+            <circle cx="16" cy="30" r="9" fill="currentColor"/>
+            <circle cx="31" cy="18" r="9" fill="currentColor"/>
+            <circle cx="49" cy="18" r="9" fill="currentColor"/>
+            <circle cx="64" cy="30" r="9" fill="currentColor"/>
+            <!-- Almohadilla corazón -->
+            <path d="M40,74 C28,66 18,56 18,46 C18,38 24,34 30,36 C34,37.5 37.5,41 40,45 C42.5,41 46,37.5 50,36 C56,34 62,38 62,46 C62,56 52,66 40,74 Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="card-meta"><span class="card-name">Símbolo</span><span class="card-bg">Negro</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-crema">
+          <div class="lk-h" style="color:var(--bosque);">
+            <svg viewBox="0 0 80 80" fill="none" style="width:52px;height:52px;flex-shrink:0;">
+              <circle cx="16" cy="30" r="9" fill="var(--bosque)"/>
+              <circle cx="31" cy="18" r="9" fill="var(--bosque)"/>
+              <circle cx="49" cy="18" r="9" fill="var(--bosque)"/>
+              <circle cx="64" cy="30" r="9" fill="var(--bosque)"/>
+              <path d="M40,74 C28,66 18,56 18,46 C18,38 24,34 30,36 C34,37.5 37.5,41 40,45 C42.5,41 46,37.5 50,36 C56,34 62,38 62,46 C62,56 52,66 40,74 Z" fill="var(--bosque)"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Crema</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-bosque">
+          <div class="lk-h" style="color:var(--crema);">
+            <svg viewBox="0 0 80 80" fill="none" style="width:52px;height:52px;flex-shrink:0;">
+              <circle cx="16" cy="30" r="9" fill="var(--crema)"/>
+              <circle cx="31" cy="18" r="9" fill="var(--crema)"/>
+              <circle cx="49" cy="18" r="9" fill="var(--crema)"/>
+              <circle cx="64" cy="30" r="9" fill="var(--crema)"/>
+              <path d="M40,74 C28,66 18,56 18,46 C18,38 24,34 30,36 C34,37.5 37.5,41 40,45 C42.5,41 46,37.5 50,36 C56,34 62,38 62,46 C62,56 52,66 40,74 Z" fill="var(--crema)"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Verde Bosque</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-pizarra">
+          <div class="lk-v" style="color:var(--crema);">
+            <svg viewBox="0 0 80 80" fill="none" style="width:56px;height:56px;">
+              <circle cx="16" cy="30" r="9" fill="var(--crema)"/>
+              <circle cx="31" cy="18" r="9" fill="var(--crema)"/>
+              <circle cx="49" cy="18" r="9" fill="var(--crema)"/>
+              <circle cx="64" cy="30" r="9" fill="var(--crema)"/>
+              <path d="M40,74 C28,66 18,56 18,46 C18,38 24,34 30,36 C34,37.5 37.5,41 40,45 C42.5,41 46,37.5 50,36 C56,34 62,38 62,46 C62,56 52,66 40,74 Z" fill="var(--crema)"/>
+            </svg>
+            <div class="lk-rule" style="background:var(--crema);"></div>
+            <div class="wm" style="text-align:center;"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup V</span><span class="card-bg">Azul Pizarra</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- B3: Huella trazo (outline) -->
+  <div>
+    <div style="font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:8px;padding-left:2px;">B3 — Huella trazo (outline sin relleno — más refinada)</div>
+    <div class="cards c4">
+
+      <div class="card">
+        <div class="card-preview xl bg-dark">
+          <svg viewBox="0 0 80 78" fill="none" style="width:80px;height:78px;color:var(--crema);">
+            <circle cx="16" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+            <circle cx="31" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+            <circle cx="49" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+            <circle cx="64" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+            <ellipse cx="40" cy="56" rx="21" ry="16" stroke="currentColor" stroke-width="3.5" fill="none"/>
+          </svg>
+        </div>
+        <div class="card-meta"><span class="card-name">Símbolo</span><span class="card-bg">Negro</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-crema">
+          <div class="lk-h" style="color:var(--bosque);">
+            <svg viewBox="0 0 80 78" fill="none" style="width:52px;height:51px;flex-shrink:0;color:inherit;">
+              <circle cx="16" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="31" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="49" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="64" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <ellipse cx="40" cy="56" rx="21" ry="16" stroke="currentColor" stroke-width="3.5" fill="none"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Crema</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-bosque">
+          <div class="lk-h" style="color:var(--crema);">
+            <svg viewBox="0 0 80 78" fill="none" style="width:52px;height:51px;flex-shrink:0;color:inherit;">
+              <circle cx="16" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="31" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="49" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="64" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <ellipse cx="40" cy="56" rx="21" ry="16" stroke="currentColor" stroke-width="3.5" fill="none"/>
+            </svg>
+            <div class="wm"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup H</span><span class="card-bg">Verde Bosque</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-preview xl bg-arena">
+          <div class="lk-v" style="color:var(--bosque);">
+            <svg viewBox="0 0 80 78" fill="none" style="width:56px;height:55px;color:inherit;">
+              <circle cx="16" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="31" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="49" cy="18" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <circle cx="64" cy="30" r="8" stroke="currentColor" stroke-width="3.5" fill="none"/>
+              <ellipse cx="40" cy="56" rx="21" ry="16" stroke="currentColor" stroke-width="3.5" fill="none"/>
+            </svg>
+            <div class="lk-rule" style="background:var(--bosque);"></div>
+            <div class="wm" style="text-align:center;"><span class="l1">Amor</span><span class="l2">Peludito</span></div>
+          </div>
+        </div>
+        <div class="card-meta"><span class="card-name">Lockup V</span><span class="card-bg">Arena</span></div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- /group B -->
+
+<footer>
+  Amor Peludito · Exploración Cola &amp; Huella · Junio 2026 · Uso interno<br>
+  A1 Espiral pura · A2 Espiral + anclaje · A3 Espiral + cuerpo · B1 Huella geométrica · B2 Huella corazón · B3 Huella trazo
+</footer>
+
+</div><!-- /wrap -->
+</body>
+</html>

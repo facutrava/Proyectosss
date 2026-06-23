@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Money — Informe de Mejoras</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0D0D0D;
+  --surface: #1A1A1A;
+  --surface2: #222222;
+  --surface3: #2A2A2A;
+  --border: rgba(255,255,255,0.06);
+  --border2: #333333;
+  --text: #FFFFFF;
+  --text2: #9B9B9B;
+  --text3: #6B6B6B;
+  --accent: #C9A84C;
+  --accent-hover: #E8C97A;
+  --accent-light: rgba(201,168,76,0.12);
+  --green: #4CAF50;
+  --green-light: rgba(76,175,80,0.12);
+  --red: #EF5350;
+  --red-light: rgba(239,83,80,0.12);
+  --blue: #4A9EFF;
+  --blue-light: rgba(74,158,255,0.12);
+  --purple: #9C6FFF;
+  --purple-light: rgba(156,111,255,0.12);
+}
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* HEADER */
+.report-header {
+  background: linear-gradient(135deg, #1A1A1A 0%, #111 100%);
+  border-bottom: 1px solid var(--border2);
+  padding: 48px 24px 40px;
+  text-align: center;
+}
+.report-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.report-header h1 span { color: var(--accent); }
+.report-header p {
+  color: var(--text2);
+  font-size: 15px;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+.header-tags { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+.tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.03em;
+}
+.tag-ref { background: var(--accent-light); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
+.tag-blue { background: var(--blue-light); color: var(--blue); border: 1px solid rgba(74,158,255,0.3); }
+
+/* MAIN */
+.main { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+/* SECTION TITLE */
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 40px 0 20px;
+}
+.section-heading .icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.section-heading .icon.gold { background: var(--accent-light); }
+.section-heading .icon.blue { background: var(--blue-light); }
+.section-heading .icon.green { background: var(--green-light); }
+.section-heading .icon.purple { background: var(--purple-light); }
+.section-heading .icon.red { background: var(--red-light); }
+.section-heading h2 { font-size: 20px; font-weight: 700; }
+.section-heading p { font-size: 13px; color: var(--text3); margin-top: 2px; }
+
+/* GRID */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.grid-wide { display: grid; grid-template-columns: 1fr; gap: 12px; }
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: var(--accent); }
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.card-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.card h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+.card .source { font-size: 11px; color: var(--text3); }
+.card p { font-size: 13px; color: var(--text2); line-height: 1.55; }
+.card .mockup {
+  background: var(--surface3);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text2);
+  font-family: monospace;
+  border: 1px solid var(--border2);
+  line-height: 1.8;
+}
+.card .mockup .mock-green { color: var(--green); }
+.card .mockup .mock-red { color: var(--red); }
+.card .mockup .mock-gold { color: var(--accent); }
+.card .mockup .mock-blue { color: var(--blue); }
+
+/* BADGES */
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+.badge-impact-high { background: rgba(76,175,80,0.15); color: var(--green); }
+.badge-impact-med  { background: rgba(201,168,76,0.15); color: var(--accent); }
+.badge-effort-low  { background: rgba(74,158,255,0.1); color: var(--blue); }
+.badge-effort-med  { background: rgba(156,111,255,0.1); color: var(--purple); }
+.badge-effort-high { background: rgba(239,83,80,0.1); color: var(--red); }
+
+/* MATRIX TABLE */
+.matrix {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+.matrix table { width: 100%; border-collapse: collapse; }
+.matrix th {
+  background: var(--surface2);
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 10px 16px;
+}
+.matrix td {
+  padding: 10px 16px;
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  color: var(--text2);
+}
+.matrix td:first-child { color: var(--text); font-weight: 500; }
+.matrix tr:hover td { background: var(--surface2); }
+.dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.dot-green { background: var(--green); }
+.dot-gold  { background: var(--accent); }
+.dot-red   { background: var(--red); }
+.dot-blue  { background: var(--blue); }
+
+/* ROADMAP */
+.roadmap { display: flex; flex-direction: column; gap: 0; }
+.roadmap-session {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 0;
+}
+.roadmap-label {
+  padding: 16px;
+  border-right: 2px solid var(--border2);
+  position: relative;
+}
+.roadmap-label::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 24px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.roadmap-num { font-size: 11px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; }
+.roadmap-title { font-size: 13px; color: var(--text2); font-weight: 500; margin-top: 4px; }
+.roadmap-items { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.roadmap-item {
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.roadmap-item .ri-num {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+  min-width: 24px;
+}
+
+/* REFERENCE APPS */
+.apps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-top: 16px; }
+.app-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+.app-card .app-icon { font-size: 28px; margin-bottom: 6px; }
+.app-card .app-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.app-card .app-desc { font-size: 11px; color: var(--text3); margin-top: 4px; line-height: 1.4; }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(--border2); margin: 8px 0; }
+
+/* BAR DEMO */
+.bar-demo { margin-top: 10px; }
+.bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 12px; }
+.bar-label { color: var(--text2); min-width: 110px; }
+.bar-track { flex: 1; height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; }
+.bar-val { color: var(--text3); font-size: 11px; min-width: 60px; text-align: right; }
+
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="report-header">
+  <h1>My<span>Money</span> — Informe de Mejoras</h1>
+  <p>Análisis de las 5 mejores apps de finanzas personales traducido en mejoras concretas y priorizadas para el proyecto.</p>
+  <div class="header-tags">
+    <span class="tag tag-ref">Monarch Money</span>
+    <span class="tag tag-ref">YNAB</span>
+    <span class="tag tag-ref">Copilot</span>
+    <span class="tag tag-ref">Empower</span>
+    <span class="tag tag-ref">Quicken Simplifi</span>
+    <span class="tag tag-blue">17 mejoras propuestas</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- APPS DE REFERENCIA -->
+  <div class="section-heading">
+    <div class="icon gold">🏆</div>
+    <div>
+      <h2>Apps de Referencia Analizadas</h2>
+      <p>Las 5 apps más valoradas por usuarios en 2025-2026</p>
+    </div>
+  </div>
+  <div class="apps-grid">
+    <div class="app-card">
+      <div class="app-icon">👑</div>
+      <div class="app-name">Monarch Money</div>
+      <div class="app-desc">La nueva referencia premium. Dark mode impecable, customizable dashboard, goals tracking</div>
+    </div>
+    <div class="app-card">
+      <div class="app-icon">📊</div>
+      <div class="app-name">YNAB</div>
+      <div class="app-desc">Zero-based budgeting. El sistema de presupuestos más robusto del mercado</div>
+    </div>
+    <div class="app-card">
+      <div class="app-icon">✈️</div>
+      <div class="app-name">Copilot Money</div>
+      <div class="app-desc">AI autocategorización, weekly summaries, microinteractions premium</div>
+    </div>
+    <div class="app-card">
+      <div class="app-icon">💼</div>
+      <div class="app-name">Empower</div>
+      <div class="app-desc">Net worth tracking, inversiones, métricas de tendencia mes vs mes</div>
+    </div>
+    <div class="app-card">
+      <div class="app-icon">⚡</div>
+      <div class="app-name">Quicken Simplifi</div>
+      <div class="app-desc">Resumen de filtros, suscripciones recurrentes, cash flow forecasting</div>
+    </div>
+  </div>
+
+  <!-- BLOQUE 1: VISUAL -->
+  <div class="section-heading">
+    <div class="icon gold">🎨</div>
+    <div>
+      <h2>Bloque 1 — Diseño Visual & Estética</h2>
+      <p>Cambios que transforman la percepción de calidad sin agregar complejidad</p>
+    </div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-light)">📈</div>
+        <div>
+          <h3>1.1 Tendencia vs. mes anterior</h3>
+          <div class="source">Inspirado en: Empower, Monarch</div>
+        </div>
+      </div>
+      <p>Cada métrica del dashboard muestra un delta con respecto al mes anterior, convirtiendo números estáticos en información accionable.</p>
+      <div class="mockup">
+        <div><strong>GASTOS</strong></div>
+        <div style="font-size:20px;">$127.500</div>
+        <div class="mock-red">▼ +18% vs octubre</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--accent-light)">💚</div>
+        <div>
+          <h3>1.2 Balance con estado de salud</h3>
+          <div class="source">Inspirado en: Copilot, Monarch</div>
+        </div>
+      </div>
+      <p>La tarjeta de Balance muestra un indicador visual contextual según la proporción ingresos/gastos del mes.</p>
+      <div class="mockup">
+        <div class="mock-green">● Buen mes</div>
+        <div style="font-size:20px;color:white;">+$42.500</div>
+        <div>balance noviembre</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-light)">✨</div>
+        <div>
+          <h3>1.3 Animación numérica en métricas</h3>
+          <div class="source">Inspirado en: Copilot, Monarch</div>
+        </div>
+      </div>
+      <p>Al cargar o cambiar de mes, los montos cuentan animadamente hacia el valor final en ~400ms. Pequeño detalle que transmite app premium.</p>
+      <div class="mockup">
+        <div>$0 → $43.200 → $127.500</div>
+        <div class="mock-gold">duración: ~400ms</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-light)">🎨</div>
+        <div>
+          <h3>1.4 Íconos coloreados por categoría</h3>
+          <div class="source">Inspirado en: Copilot Money</div>
+        </div>
+      </div>
+      <p>Cada categoría tiene su propio color de fondo en el círculo del historial. El ojo identifica el tipo de gasto antes de leer el texto.</p>
+      <div class="mockup">
+        <div><span style="background:#1a3a1a;color:#4CAF50;padding:2px 6px;border-radius:4px;">🛒</span> Supermercado</div>
+        <div><span style="background:#3a1a1a;color:#EF5350;padding:2px 6px;border-radius:4px;">🚗</span> Transporte</div>
+        <div><span style="background:#1a1a3a;color:#4A9EFF;padding:2px 6px;border-radius:4px;">🍕</span> Restaurantes</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card" style="grid-column: span 1;">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--accent-light)">📊</div>
+        <div>
+          <h3>1.5 Progress bars por categoría</h3>
+          <div class="source">Inspirado en: YNAB, Monarch</div>
+        </div>
+      </div>
+      <p>Vista en Gráficos que muestra cada categoría como barra horizontal con monto y % del total.</p>
+      <div class="mockup">
+        <div class="bar-demo">
+          <div class="bar-row">
+            <div class="bar-label">🛒 Supermercado</div>
+            <div class="bar-track"><div class="bar-fill" style="width:65%;background:var(--green);"></div></div>
+            <div class="bar-val mock-green">$45k 35%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">🍽️ Restaurantes</div>
+            <div class="bar-track"><div class="bar-fill" style="width:38%;background:var(--blue);"></div></div>
+            <div class="bar-val mock-blue">$22k 17%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">🚗 Transporte</div>
+            <div class="bar-track"><div class="bar-fill" style="width:18%;background:var(--purple);"></div></div>
+            <div class="bar-val" style="color:var(--purple);">$11k 8%</div>
+          </div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-med">Esfuerzo Medio</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BLOQUE 2: GRÁFICOS -->
+  <div class="section-heading">
+    <div class="icon blue">📊</div>
+    <div>
+      <h2>Bloque 2 — Gráficos Mejorados</h2>
+      <p>Visualizaciones que cuentan la historia financiera del usuario</p>
+    </div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-light)">📉</div>
+        <div>
+          <h3>2.1 Línea de evolución 6 meses</h3>
+          <div class="source">Inspirado en: Monarch, Empower</div>
+        </div>
+      </div>
+      <p>Nuevo gráfico de línea que muestra Ingresos vs. Gastos en los últimos 6 meses, con curvas suaves. Permite ver tendencias de un vistazo.</p>
+      <div class="mockup">
+        <div class="mock-green">── Ingresos (verde)</div>
+        <div class="mock-red">── Gastos (rojo)</div>
+        <div style="margin-top:4px;color:var(--text3);">Jun · Jul · Ago · Sep · Oct · Nov</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-med">Esfuerzo Medio</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--accent-light)">🍩</div>
+        <div>
+          <h3>2.2 Donut chart con total en centro</h3>
+          <div class="source">Inspirado en: Copilot, Monarch</div>
+        </div>
+      </div>
+      <p>El gráfico de torta pasa a ser un donut. El total de gastos se muestra en el centro, convirtiendo el gráfico en una sola visual completa.</p>
+      <div class="mockup">
+        <div style="text-align:center;">
+          <div class="mock-gold">$127.500</div>
+          <div>total gastos</div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-light)">💬</div>
+        <div>
+          <h3>2.3 Tooltip con % y monto</h3>
+          <div class="source">Inspirado en: todos los apps premium</div>
+        </div>
+      </div>
+      <p>El tooltip al hacer hover en el gráfico muestra el porcentaje además del monto, sin necesidad de calcular a mano.</p>
+      <div class="mockup">
+        <div class="mock-gold">● Supermercado</div>
+        <div>$45.000 <span class="mock-green">(35%)</span></div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-med">Impacto Medio</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BLOQUE 3: FORMULARIO -->
+  <div class="section-heading">
+    <div class="icon green">⚡</div>
+    <div>
+      <h2>Bloque 3 — UX del Formulario</h2>
+      <p>Reducir la fricción para registrar gastos — la acción más repetida de la app</p>
+    </div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--accent-light)">⚡</div>
+        <div>
+          <h3>3.1 Quick-add de montos frecuentes</h3>
+          <div class="source">Inspirado en: apps mobile de finanzas</div>
+        </div>
+      </div>
+      <p>Debajo del campo de monto aparecen 3 botones con los importes más usados en el historial reciente. Un tap y ya está llenado.</p>
+      <div class="mockup">
+        <div>Montos frecuentes:</div>
+        <div>
+          <span class="mock-gold">[+$500]</span>
+          <span class="mock-gold"> [+$1.500]</span>
+          <span class="mock-gold"> [+$5.000]</span>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-med">Esfuerzo Medio</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-light)">🔮</div>
+        <div>
+          <h3>3.2 Autocompletado de descripción</h3>
+          <div class="source">Inspirado en: Copilot, Mint</div>
+        </div>
+      </div>
+      <p>Al escribir en "Descripción", se muestran sugerencias de gastos anteriores. Seleccionar una pre-llena también la categoría y subcategoría.</p>
+      <div class="mockup">
+        <div>Descripción: <span class="mock-gold">"Sup..."</span></div>
+        <div class="mock-blue">▸ Supermercado Día</div>
+        <div class="mock-blue">▸ Supermercado Coto</div>
+        <div style="color:var(--text3);">→ auto-llena categoría</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-light)">✅</div>
+        <div>
+          <h3>3.3 Confirmación visual al guardar</h3>
+          <div class="source">Inspirado en: microinteractions premium</div>
+        </div>
+      </div>
+      <p>Al presionar "Registrar", el botón cambia a verde con ✓ "Guardado" por 1 segundo antes de volver a su estado normal. Más satisfactorio.</p>
+      <div class="mockup">
+        <div class="mock-gold">[Registrar gasto]</div>
+        <div style="color:var(--text3);">→ al guardar →</div>
+        <div class="mock-green">[✓ Guardado!]</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-med">Impacto Medio</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--red-light)">🔥</div>
+        <div>
+          <h3>3.4 Racha de días activos</h3>
+          <div class="source">Inspirado en: YNAB (gamification)</div>
+        </div>
+      </div>
+      <p>Pequeño indicador en el header que muestra cuántos días consecutivos el usuario registró al menos un movimiento. Incentiva el hábito.</p>
+      <div class="mockup">
+        <div class="mock-red">🔥 8 días seguidos</div>
+        <div style="color:var(--text3);">registrando gastos</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-med">Impacto Medio</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BLOQUE 4: HISTORIAL -->
+  <div class="section-heading">
+    <div class="icon purple">📋</div>
+    <div>
+      <h2>Bloque 4 — Historial Mejorado</h2>
+      <p>La sección más consultada merece más herramientas</p>
+    </div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-light)">🔍</div>
+        <div>
+          <h3>4.1 Búsqueda por texto</h3>
+          <div class="source">Inspirado en: Monarch, Mint</div>
+        </div>
+      </div>
+      <p>Un input de búsqueda en la barra de filtros del historial que filtra por descripción o nota en tiempo real (debounce 200ms).</p>
+      <div class="mockup">
+        <div class="mock-blue">🔍 Buscar en historial...</div>
+        <div style="color:var(--text3);">filtra descripción y nota</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-light)">📝</div>
+        <div>
+          <h3>4.2 Totales del filtro actual</h3>
+          <div class="source">Inspirado en: Quicken Simplifi</div>
+        </div>
+      </div>
+      <p>Al final del historial filtrado, un resumen muestra cuántas transacciones hay y la suma total de gastos e ingresos del filtro activo.</p>
+      <div class="mockup">
+        <div class="mock-gold">14 movimientos</div>
+        <div class="mock-red">Gastos: $87.300</div>
+        <div class="mock-green">Ingresos: $0</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--accent-light)">👆</div>
+        <div>
+          <h3>4.3 Acciones hover en desktop</h3>
+          <div class="source">Inspirado en: todos los apps premium</div>
+        </div>
+      </div>
+      <p>Al hacer hover sobre una fila del historial, aparecen los botones de editar y eliminar con animación de entrada. Más limpio que siempre visibles.</p>
+      <div class="mockup">
+        <div>🛒 Supermercado $4.500</div>
+        <div class="mock-gold">[✏️ Editar] [🗑️ Eliminar]</div>
+        <div style="color:var(--text3);">→ aparecen al hover</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-med">Impacto Medio</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BLOQUE 5: FEATURES NUEVAS -->
+  <div class="section-heading">
+    <div class="icon red">💡</div>
+    <div>
+      <h2>Bloque 5 — Funcionalidades Nuevas</h2>
+      <p>Las features que diferencian las apps buenas de las excelentes</p>
+    </div>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--accent-light)">🎯</div>
+        <div>
+          <h3>5.1 Presupuesto por categoría</h3>
+          <div class="source">Inspirado en: YNAB (la #1 más valorada)</div>
+        </div>
+      </div>
+      <p>El usuario define un límite mensual por categoría. Las barras de progreso muestran cuánto del presupuesto fue usado, con alertas al acercarse al límite.</p>
+      <div class="mockup">
+        <div class="bar-demo">
+          <div class="bar-row">
+            <div class="bar-label">🛒 Supermercado</div>
+            <div class="bar-track"><div class="bar-fill" style="width:65%;background:var(--green);"></div></div>
+            <div class="bar-val mock-green">65%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">🍽️ Restaurantes</div>
+            <div class="bar-track"><div class="bar-fill" style="width:92%;background:var(--red);"></div></div>
+            <div class="bar-val mock-red">92% ⚠️</div>
+          </div>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Muy Alto</span>
+        <span class="badge badge-effort-high">Esfuerzo Alto</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--green-light)">🏆</div>
+        <div>
+          <h3>5.2 Metas de ahorro (Goals)</h3>
+          <div class="source">Inspirado en: Monarch (feature más amada)</div>
+        </div>
+      </div>
+      <p>Sección de objetivos financieros: nombre, monto objetivo, monto ahorrado, barra de progreso y fecha objetivo opcional.</p>
+      <div class="mockup">
+        <div>✈️ Vacaciones 2026</div>
+        <div class="bar-demo" style="margin-top:6px;">
+          <div class="bar-row" style="margin-bottom:0;">
+            <div class="bar-track" style="flex:1;"><div class="bar-fill" style="width:42%;background:var(--accent);"></div></div>
+            <div class="bar-val mock-gold">42%</div>
+          </div>
+        </div>
+        <div style="color:var(--text3);">$42.000 / $100.000 · Dic 2026</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-high">Esfuerzo Alto</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--blue-light)">📅</div>
+        <div>
+          <h3>5.3 Resumen semanal</h3>
+          <div class="source">Inspirado en: Copilot Money</div>
+        </div>
+      </div>
+      <p>Card en el dashboard que muestra el gasto de la semana actual y el promedio diario. Contexto inmediato sin cambiar de pestaña.</p>
+      <div class="mockup">
+        <div class="mock-gold">Esta semana</div>
+        <div style="font-size:18px;color:white;">$18.400</div>
+        <div style="color:var(--text3);">12 transacciones · $2.628/día</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-med">Impacto Medio</span>
+        <span class="badge badge-effort-low">Esfuerzo Bajo</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon" style="background:var(--purple-light)">🔁</div>
+        <div>
+          <h3>5.4 Gastos recurrentes detectados</h3>
+          <div class="source">Inspirado en: Copilot, Rocket Money</div>
+        </div>
+      </div>
+      <p>La app detecta automáticamente gastos que se repiten (misma descripción ±10% del monto en 2+ meses). Los muestra sin que el usuario configure nada.</p>
+      <div class="mockup">
+        <div>🔁 Gastos recurrentes detectados</div>
+        <div style="color:var(--text3);">Netflix $2.500/mes</div>
+        <div style="color:var(--text3);">Gym $8.000/mes</div>
+        <div style="color:var(--text3);">Spotify $1.200/mes</div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-impact-high">Impacto Alto</span>
+        <span class="badge badge-effort-high">Esfuerzo Alto</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MATRIZ IMPACTO / ESFUERZO -->
+  <div class="section-heading">
+    <div class="icon gold">⚖️</div>
+    <div>
+      <h2>Matriz: Impacto vs. Esfuerzo</h2>
+      <p>Para priorizar qué implementar primero</p>
+    </div>
+  </div>
+  <div class="matrix">
+    <table>
+      <thead>
+        <tr>
+          <th>Mejora</th>
+          <th>Impacto Visual</th>
+          <th>Esfuerzo</th>
+          <th>Prioridad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1.3 Animación numérica en métricas</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐⭐ Hacer primero</td>
+        </tr>
+        <tr>
+          <td>1.1 Tendencia vs. mes anterior</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐⭐ Hacer primero</td>
+        </tr>
+        <tr>
+          <td>4.1 Búsqueda en historial</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐⭐ Hacer primero</td>
+        </tr>
+        <tr>
+          <td>3.2 Autocomplete de descripción</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐⭐ Hacer primero</td>
+        </tr>
+        <tr>
+          <td>2.2 Donut chart con total en centro</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐⭐ Hacer primero</td>
+        </tr>
+        <tr>
+          <td>1.4 Íconos coloreados por categoría</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐⭐ Hacer primero</td>
+        </tr>
+        <tr>
+          <td>4.2 Totales del filtro actual</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐⭐ Hacer primero</td>
+        </tr>
+        <tr>
+          <td>2.1 Gráfico de línea 6 meses</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-gold"></span>Medio</td>
+          <td>⭐⭐ Después</td>
+        </tr>
+        <tr>
+          <td>1.5 Progress bars por categoría</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-gold"></span>Medio</td>
+          <td>⭐⭐ Después</td>
+        </tr>
+        <tr>
+          <td>3.1 Quick-add montos frecuentes</td>
+          <td><span class="dot dot-gold"></span>Medio</td>
+          <td><span class="dot dot-gold"></span>Medio</td>
+          <td>⭐⭐ Después</td>
+        </tr>
+        <tr>
+          <td>5.3 Resumen semanal</td>
+          <td><span class="dot dot-gold"></span>Medio</td>
+          <td><span class="dot dot-blue"></span>Bajo</td>
+          <td>⭐⭐ Después</td>
+        </tr>
+        <tr>
+          <td>5.1 Presupuesto por categoría</td>
+          <td><span class="dot dot-green"></span>Muy Alto</td>
+          <td><span class="dot dot-red"></span>Alto</td>
+          <td>⭐ Cuando haya tiempo</td>
+        </tr>
+        <tr>
+          <td>5.2 Metas de ahorro</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-red"></span>Alto</td>
+          <td>⭐ Cuando haya tiempo</td>
+        </tr>
+        <tr>
+          <td>5.4 Gastos recurrentes</td>
+          <td><span class="dot dot-green"></span>Alto</td>
+          <td><span class="dot dot-red"></span>Alto</td>
+          <td>⭐ Cuando haya tiempo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ROADMAP -->
+  <div class="section-heading">
+    <div class="icon blue">🗺️</div>
+    <div>
+      <h2>Roadmap Sugerido</h2>
+      <p>Dividido en sesiones de trabajo, del más simple al más complejo</p>
+    </div>
+  </div>
+  <div class="matrix" style="padding:8px 0;">
+    <div class="roadmap">
+
+      <div class="roadmap-session">
+        <div class="roadmap-label">
+          <div class="roadmap-num">Sesión 1</div>
+          <div class="roadmap-title">Visual rápido</div>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="ri-num">1.3</span> Animación numérica en métricas</div>
+          <div class="roadmap-item"><span class="ri-num">1.1</span> Tendencia % vs mes anterior</div>
+          <div class="roadmap-item"><span class="ri-num">1.4</span> Íconos coloreados por categoría</div>
+          <div class="roadmap-item"><span class="ri-num">2.2</span> Donut chart con total en el centro</div>
+          <div class="roadmap-item"><span class="ri-num">2.3</span> Tooltip con % y monto</div>
+        </div>
+      </div>
+
+      <div class="roadmap-session">
+        <div class="roadmap-label">
+          <div class="roadmap-num">Sesión 2</div>
+          <div class="roadmap-title">UX formulario</div>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="ri-num">3.2</span> Autocompletado de descripción con precarga de categoría</div>
+          <div class="roadmap-item"><span class="ri-num">3.1</span> Quick-add de montos frecuentes</div>
+          <div class="roadmap-item"><span class="ri-num">3.3</span> Botón animado al guardar</div>
+        </div>
+      </div>
+
+      <div class="roadmap-session">
+        <div class="roadmap-label">
+          <div class="roadmap-num">Sesión 3</div>
+          <div class="roadmap-title">Historial</div>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="ri-num">4.1</span> Búsqueda por texto en historial</div>
+          <div class="roadmap-item"><span class="ri-num">4.2</span> Totales del filtro activo al pie</div>
+          <div class="roadmap-item"><span class="ri-num">4.3</span> Acciones visibles al hover (desktop)</div>
+        </div>
+      </div>
+
+      <div class="roadmap-session">
+        <div class="roadmap-label">
+          <div class="roadmap-num">Sesión 4</div>
+          <div class="roadmap-title">Features nuevas</div>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="ri-num">2.1</span> Gráfico de evolución últimos 6 meses</div>
+          <div class="roadmap-item"><span class="ri-num">1.5</span> Progress bars por categoría en Gráficos</div>
+          <div class="roadmap-item"><span class="ri-num">5.3</span> Resumen semanal en el dashboard</div>
+          <div class="roadmap-item"><span class="ri-num">3.4</span> Racha de días activos</div>
+        </div>
+      </div>
+
+      <div class="roadmap-session">
+        <div class="roadmap-label">
+          <div class="roadmap-num">Sesión 5</div>
+          <div class="roadmap-title">Features complejas</div>
+        </div>
+        <div class="roadmap-items">
+          <div class="roadmap-item"><span class="ri-num">5.1</span> Presupuesto mensual por categoría</div>
+          <div class="roadmap-item"><span class="ri-num">5.2</span> Metas de ahorro (Goals)</div>
+          <div class="roadmap-item"><span class="ri-num">5.4</span> Detección de gastos recurrentes</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:48px 0 0;color:var(--text3);font-size:13px;">
+    <p>My Money — Plan de mejoras basado en análisis de Monarch Money · YNAB · Copilot · Empower · Quicken Simplifi</p>
+    <p style="margin-top:4px;">17 mejoras propuestas · 5 sesiones de implementación</p>
+  </div>
+
+</div>
+</body>
+</html>

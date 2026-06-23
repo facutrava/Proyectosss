@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Marca · Amor Peludito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Nunito:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bosque:#2D4A2A;
+  --pizarra:#4A6B8A;
+  --arena:#D4C4A8;
+  --caramelo:#8B6240;
+  --crema:#F8F4EC;
+  --ink:#1C1814;
+  --muted:#5A5044;
+  --line:#E4DAC8;
+  --max-w:1020px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--crema);
+  color:var(--ink);
+  font-family:'Nunito',sans-serif;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--caramelo);}
+
+/* ── COVER ── */
+.cover{
+  background:var(--bosque);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:60px 40px;
+  position:relative;
+  overflow:hidden;
+}
+.cover::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,rgba(248,244,236,.04) 0,rgba(248,244,236,.04) 1px,transparent 1px,transparent 80px);
+  pointer-events:none;
+}
+.cover::after{
+  content:'';
+  position:absolute;
+  width:600px;height:600px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(139,98,64,.18),transparent 70%);
+  top:-200px;right:-200px;
+  pointer-events:none;
+}
+.cover-inner{position:relative;z-index:1;}
+.cover-symbol{margin-bottom:0px;}
+.cover-symbol svg{width:64px;height:80px;color:var(--crema);}
+.cover-wordmark{font-family:'Fraunces',serif;font-weight:600;color:var(--crema);}
+.cover-wordmark .l1{display:block;font-size:clamp(2.6rem,5.5vw,4rem);letter-spacing:-.02em;line-height:1;}
+.cover-wordmark .l2{display:block;font-size:clamp(1.6rem,3.2vw,2.4rem);letter-spacing:.05em;line-height:1;margin-top:4px;opacity:.88;}
+.cover-rule{width:48px;height:1px;background:rgba(248,244,236,.25);margin:28px auto 20px;}
+.cover-title{
+  font-family:'Nunito',sans-serif;font-weight:300;
+  font-size:.9rem;color:rgba(248,244,236,.65);
+  letter-spacing:.15em;text-transform:uppercase;
+}
+.cover-meta{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:rgba(248,244,236,.38);margin-top:10px;letter-spacing:.06em;
+}
+.cover-bottom{
+  position:absolute;bottom:32px;left:0;right:0;text-align:center;
+  font-family:'DM Mono',monospace;font-size:10.5px;
+  color:rgba(248,244,236,.28);letter-spacing:.1em;text-transform:uppercase;
+}
+
+/* ── LAYOUT ── */
+.wrap{max-width:var(--max-w);margin:0 auto;padding:0 32px;}
+.section{padding:72px 0;border-bottom:1px solid var(--line);}
+.section:last-of-type{border-bottom:none;}
+
+/* ── SECTION HEAD ── */
+.eyebrow{
+  font-family:'DM Mono',monospace;font-size:11.5px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--caramelo);
+  display:flex;align-items:center;gap:12px;margin-bottom:16px;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--caramelo);}
+h2{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(1.8rem,3.2vw,2.3rem);
+  letter-spacing:-.015em;line-height:1.1;color:var(--bosque);margin-bottom:12px;
+}
+h3{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:1.15rem;color:var(--bosque);margin-bottom:8px;
+}
+.intro{font-size:.97rem;color:var(--muted);max-width:62ch;margin-bottom:40px;line-height:1.7;}
+
+/* ── COLOR PALETTE ── */
+.paleta-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:8px;}
+.swatch{border-radius:2px;overflow:hidden;border:1px solid rgba(0,0,0,.06);}
+.swatch-color{height:100px;width:100%;}
+.swatch-info{padding:14px 12px;background:var(--crema);}
+.swatch-name{font-family:'Fraunces',serif;font-size:.9rem;font-weight:600;color:var(--ink);margin-bottom:8px;}
+.swatch-codes{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);line-height:1.9;}
+.swatch-role{
+  font-size:.8rem;color:var(--muted);margin-top:8px;line-height:1.5;
+  border-top:1px solid var(--line);padding-top:8px;
+}
+.primary-badge{
+  display:inline-block;font-family:'DM Mono',monospace;font-size:9.5px;
+  text-transform:uppercase;letter-spacing:.08em;background:var(--caramelo);
+  color:var(--crema);padding:2px 7px;border-radius:1px;margin-bottom:8px;
+}
+
+/* ── TIPOGRAFÍAS ── */
+.typo-blocks{display:flex;flex-direction:column;gap:0;}
+.typo-block{padding:40px 0;border-bottom:1px solid var(--line);}
+.typo-block:last-child{border-bottom:none;padding-bottom:0;}
+.typo-header{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;margin-bottom:22px;flex-wrap:wrap;}
+.typo-meta-left .typo-role{font-family:'DM Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--caramelo);margin-bottom:4px;}
+.typo-meta-left .typo-name{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.typo-meta-left .typo-weights{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+.typo-desc{font-size:.87rem;color:var(--muted);max-width:42ch;line-height:1.65;text-align:right;}
+.typo-sample{background:var(--crema);border:1px solid var(--line);padding:24px 28px;}
+.usage-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.chip{font-family:'DM Mono',monospace;font-size:10px;padding:4px 10px;background:var(--arena);color:var(--bosque);border-radius:2px;}
+
+/* ── LOGO ── */
+.logo-main-showcase{
+  border:1px solid var(--line);padding:200px 137px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:4px;background:var(--crema);
+}
+.logo-dark{background:var(--bosque);}
+.logo-arena{background:var(--arena);}
+
+.logo-lockup{display:flex;align-items:center;gap:18px;}
+.logo-lockup svg{width:100px;height:68px;flex-shrink:0;}
+.logo-wordmark .l1{
+  display:block;font-family:'Fraunces',serif;font-weight:600;
+  font-size:2.8rem;letter-spacing:-.02em;line-height:1;color:var(--bosque);
+}
+.logo-wordmark .l2{
+  display:block;font-family:'Fraunces',serif;font-weight:600;
+  font-size:1.8rem;letter-spacing:.05em;line-height:1;color:var(--bosque);margin-top:3px;
+}
+.logo-dark .logo-wordmark .l1,.logo-dark .logo-wordmark .l2{color:var(--crema);}
+
+.logo-variants-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:14px 0 32px;}
+.lv-card{border:1px solid var(--line);overflow:hidden;}
+.lv-preview{
+  padding:40px 24px;display:flex;
+  align-items:center;justify-content:center;min-height:160px;
+}
+.lv-label{
+  padding:9px 14px;font-family:'DM Mono',monospace;font-size:10px;
+  color:var(--muted);border-top:1px solid var(--line);
+  text-transform:uppercase;letter-spacing:.08em;background:var(--crema);
+}
+.icon-only svg{width:32px;height:40px;}
+.icon-crema-bg{background:var(--crema);}
+.icon-bosque-bg{background:var(--bosque);}
+.icon-arena-bg{background:var(--arena);}
+
+.rule-rows{display:flex;flex-direction:column;gap:10px;margin-top:8px;}
+.rule-row{
+  display:flex;gap:14px;padding:13px 16px;
+  background:var(--crema);border:1px solid var(--line);
+  font-size:.9rem;color:var(--ink);line-height:1.55;
+}
+.rule-tag{
+  flex-shrink:0;font-family:'DM Mono',monospace;font-size:10.5px;
+  color:var(--caramelo);font-weight:500;padding-top:1px;
+}
+.rule-row.prohibido{border-left:3px solid #9B4A3A;}
+.rule-row.prohibido .rule-tag{color:#9B4A3A;}
+
+/* ── IDENTIDAD VERBAL ── */
+.proposito-box{
+  background:var(--bosque);color:var(--crema);
+  padding:40px 44px;margin-bottom:16px;position:relative;overflow:hidden;
+}
+.proposito-box::before{
+  content:'"';position:absolute;top:10px;left:24px;
+  font-family:'Fraunces',serif;font-size:7rem;
+  color:rgba(248,244,236,.1);line-height:1;pointer-events:none;
+}
+.box-label{
+  font-family:'DM Mono',monospace;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:rgba(248,244,236,.5);margin-bottom:10px;position:relative;z-index:1;
+}
+.proposito-box .box-text{
+  font-family:'Fraunces',serif;font-size:1.22rem;line-height:1.6;
+  color:var(--crema);position:relative;z-index:1;
+}
+.promesa-box{
+  background:var(--arena);border-left:4px solid var(--caramelo);
+  padding:28px 36px;margin-bottom:40px;
+}
+.promesa-box .box-label{color:var(--caramelo);}
+.promesa-box .box-text{font-family:'Fraunces',serif;font-size:1.1rem;line-height:1.6;color:var(--ink);}
+
+.valores-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:44px;}
+.valor{
+  background:var(--crema);border:1px solid var(--line);
+  border-top:3px solid var(--bosque);padding:22px 24px;
+}
+.valor-name{font-family:'Fraunces',serif;font-size:1rem;font-weight:600;color:var(--bosque);margin-bottom:8px;}
+.valor-desc{font-size:.88rem;color:var(--muted);line-height:1.65;}
+
+.es-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.es-table{width:100%;border-collapse:collapse;min-width:520px;}
+.es-table th{
+  padding:12px 16px;font-family:'DM Mono',monospace;
+  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;text-align:left;
+}
+.es-table th.es{background:var(--bosque);color:var(--crema);}
+.es-table th.no{background:#6E3A2E;color:var(--crema);}
+.es-table td{padding:11px 16px;font-size:.89rem;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5;}
+.es-table tr:nth-child(even) td.es-col{background:rgba(45,74,42,.04);}
+.es-table tr:nth-child(even) td.no-col{background:rgba(110,58,46,.04);}
+.es-table td.es-col{font-weight:600;color:var(--bosque);}
+.es-table td.no-col{color:var(--muted);}
+
+/* ── APLICACIONES ── */
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
+.app-card{border:1px solid var(--line);overflow:hidden;}
+.app-head{
+  padding:14px 20px;background:var(--bosque);
+  display:flex;align-items:flex-start;gap:14px;
+}
+.app-channel{font-family:'Fraunces',serif;font-size:1.02rem;font-weight:600;color:var(--crema);}
+.app-badge{
+  font-family:'DM Mono',monospace;font-size:9.5px;text-transform:uppercase;
+  letter-spacing:.08em;color:rgba(248,244,236,.5);margin-top:2px;
+}
+.app-body{padding:16px 20px;background:var(--crema);}
+.app-body ul{padding-left:16px;margin:0;}
+.app-body li{font-size:.87rem;color:var(--ink);margin-bottom:7px;line-height:1.55;}
+.app-body li::marker{color:var(--caramelo);}
+.app-body strong{color:var(--bosque);font-weight:700;}
+.app-color-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+.color-chip{
+  font-family:'DM Mono',monospace;font-size:9.5px;
+  padding:3px 8px;border-radius:2px;color:var(--crema);
+}
+
+/* ── LOCAL FÍSICO ── */
+.local-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
+.local-card{background:var(--crema);border:1px solid var(--line);padding:20px 22px;}
+.local-card-title{
+  font-family:'DM Mono',monospace;font-size:10.5px;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--caramelo);margin-bottom:10px;
+}
+.local-card p{font-size:.88rem;color:var(--ink);line-height:1.65;}
+.color-strip{display:flex;gap:6px;margin-top:10px;}
+.cs-item{display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);}
+.cs-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;}
+
+/* ── COPY CARDS ── */
+.copy-grid{display:flex;flex-direction:column;gap:16px;margin-top:8px;}
+.copy-card{border:1px solid var(--line);overflow:hidden;}
+.copy-head{
+  background:var(--bosque);padding:10px 18px;
+  display:flex;align-items:center;gap:12px;
+}
+.copy-title{
+  font-family:'DM Mono',monospace;font-size:11px;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--arena);font-weight:500;
+}
+.copy-channel{font-family:'DM Mono',monospace;font-size:10px;color:rgba(248,244,236,.4);}
+.copy-body{
+  padding:22px 24px;background:#FDFAF5;
+  font-size:.95rem;line-height:1.85;color:var(--ink);
+  white-space:pre-line;font-family:'Nunito',sans-serif;
+}
+.copy-cta{
+  font-family:'DM Mono',monospace;font-size:10.5px;
+  color:var(--caramelo);display:block;margin-top:14px;
+}
+
+.sobre-box{
+  background:var(--arena);border-left:4px solid var(--bosque);
+  padding:28px 32px;font-size:.94rem;line-height:1.85;color:var(--ink);
+  white-space:pre-line;margin-top:8px;
+}
+
+/* ── TAKEAWAY ── */
+.takeaway{
+  background:var(--bosque);color:var(--crema);
+  padding:40px 44px;margin-top:32px;position:relative;
+}
+.takeaway::before{content:"☞";font-size:1.5rem;color:var(--arena);display:block;margin-bottom:12px;}
+.takeaway h3{font-family:'Fraunces',serif;font-size:1.2rem;margin-bottom:10px;color:var(--crema);}
+.takeaway p{font-size:.94rem;color:rgba(248,244,236,.8);line-height:1.7;max-width:62ch;}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bosque);color:rgba(248,244,236,.35);
+  text-align:center;padding:36px 32px 56px;
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;
+}
+footer span{color:rgba(248,244,236,.55);}
+
+/* ── PRINT ── */
+@media print{
+  .cover{page-break-after:always;min-height:unset;padding:80px;}
+  .section{page-break-inside:avoid;}
+  .paleta-grid{grid-template-columns:repeat(5,1fr);}
+  .logo-variants-grid{grid-template-columns:repeat(3,1fr);}
+  .valores-grid{grid-template-columns:1fr 1fr;}
+  .app-grid{grid-template-columns:1fr 1fr;}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .paleta-grid{grid-template-columns:repeat(2,1fr);}
+  .valores-grid{grid-template-columns:1fr;}
+  .app-grid{grid-template-columns:1fr;}
+  .local-grid{grid-template-columns:1fr;}
+  .logo-variants-grid{grid-template-columns:1fr;}
+  .typo-header{flex-direction:column;}
+  .typo-desc{text-align:left;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ PORTADA ══════════ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-symbol">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 502" preserveAspectRatio="xMidYMid meet" style="width:200px;height:137px;"><g transform="translate(0,502) scale(0.1,-0.1)" fill="#F8F4EC" stroke="none"><path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z m154 -92 c25 -12 73 -53 108 -90 209 -221 247 -634 71 -784 -81 -69 -223 -94 -329 -58 -88 30 -162 124 -203 259 -26 86 -26 354 0 440 39 130 115 232 191 255 42 13 110 4 162 -22z"/><path d="M3124 3980 c-24 -9 -78 -69 -98 -108 -55 -106 -83 -284 -66 -413 14 -109 48 -226 68 -234 31 -12 36 13 14 82 -12 37 -26 106 -32 152 -29 220 61 481 167 481 50 0 94 -22 135 -68 42 -47 68 -54 68 -19 0 29 -72 101 -122 122 -40 16 -100 19 -134 5z"/><path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z m211 -76 c113 -61 157 -302 95 -526 -75 -270 -173 -379 -342 -380 -131 0 -251 73 -298 181 -110 257 125 696 400 748 56 10 94 4 145 -23z"/><path d="M4161 3905 c-71 -31 -211 -174 -253 -257 -75 -152 -82 -172 -86 -259 -5 -97 11 -163 52 -214 20 -25 26 -27 39 -17 14 12 12 19 -14 69 -73 138 -13 347 151 526 70 76 126 113 186 122 34 6 45 3 71 -19 17 -14 38 -26 47 -26 27 0 18 36 -15 64 -25 21 -40 26 -87 26 -31 -1 -72 -7 -91 -15z"/><path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z m184 -80 c133 -67 255 -246 305 -447 30 -119 24 -273 -12 -343 -48 -93 -155 -148 -291 -148 -165 0 -270 117 -314 352 -24 127 -15 353 17 439 58 155 168 211 295 147z"/><path d="M2424 3280 c-11 -4 -37 -27 -56 -49 -113 -133 -116 -456 -5 -680 12 -25 28 -47 34 -49 26 -8 24 29 -5 105 -87 226 -79 486 17 595 34 38 40 40 72 34 20 -3 55 -22 78 -42 41 -35 71 -40 71 -10 0 18 -65 75 -106 92 -37 16 -69 17 -100 4z"/><path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z m181 -92 c37 -42 53 -123 46 -238 -7 -109 -18 -158 -58 -284 -54 -165 -98 -233 -172 -269 -50 -24 -119 -27 -192 -7 -148 39 -229 106 -240 199 -8 63 13 169 48 249 94 212 326 396 486 385 46 -3 59 -9 82 -35z"/><path d="M4877 3130 c-93 -36 -237 -169 -297 -273 -68 -117 -91 -277 -50 -344 20 -34 74 -68 90 -58 20 12 9 40 -23 60 l-32 21 0 90 c0 85 3 95 39 169 29 59 59 99 120 160 99 100 159 137 228 141 58 3 77 16 58 39 -17 20 -74 18 -133 -5z"/><path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z m375 -72 c252 -69 349 -206 349 -487 -1 -122 -20 -213 -60 -282 -28 -49 -50 -63 -95 -63 -63 0 -128 62 -166 160 -27 71 -24 312 6 450 29 134 29 130 8 144 -31 19 -52 -22 -78 -151 -45 -234 -27 -448 47 -557 26 -38 26 -40 9 -50 -10 -6 -37 -28 -60 -48 -23 -21 -47 -38 -53 -38 -6 0 -18 13 -26 29 -20 38 -100 107 -158 137 -73 37 -180 62 -335 78 -78 8 -151 20 -163 26 -26 14 -47 56 -61 119 -9 42 -8 54 5 73 9 12 16 32 16 44 0 28 3 31 162 113 78 41 143 82 152 96 9 14 16 45 16 72 0 89 46 130 175 153 72 13 229 4 310 -18z"/><path d="M3552 2775 c-58 -30 -92 -76 -72 -100 13 -15 40 -9 40 9 0 6 19 24 42 39 36 23 52 27 118 27 41 0 89 -4 107 -9 24 -7 35 -6 44 5 10 12 9 18 -3 31 -12 11 -44 16 -119 20 -98 4 -107 3 -157 -22z"/><path d="M3496 2577 c-30 -30 -31 -36 -13 -61 21 -28 87 -32 120 -6 15 12 27 27 27 34 0 21 -35 46 -73 53 -29 4 -40 1 -61 -20z"/><path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z m79 -153 l29 -90 81 0 c121 0 173 -19 228 -83 46 -54 117 -100 174 -112 42 -9 103 -70 110 -110 7 -42 -12 -108 -42 -143 -14 -17 -53 -40 -97 -57 -182 -71 -277 -169 -278 -287 0 -26 -4 -49 -8 -52 -15 -9 -185 54 -245 91 -84 51 -156 128 -197 209 -31 62 -34 79 -38 170 -4 110 7 168 54 270 47 102 168 284 190 284 5 0 23 -40 39 -90z"/><path d="M2830 1928 c-22 -35 -52 -100 -66 -146 -35 -108 -32 -228 8 -312 30 -66 102 -150 128 -150 34 0 27 25 -21 78 -111 122 -120 302 -23 479 15 26 33 55 40 64 21 23 17 49 -6 49 -14 0 -33 -20 -60 -62z"/><path d="M3266 1804 c-13 -33 -6 -44 27 -44 30 0 67 15 57 22 -20 16 -61 38 -69 38 -5 0 -12 -7 -15 -16z"/><path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/><path d="M4055 1735 c-70 -28 -126 -84 -144 -145 -26 -88 19 -109 48 -22 23 66 49 94 113 122 43 18 66 21 166 19 90 -2 117 0 120 11 10 29 -30 40 -137 40 -89 0 -116 -4 -166 -25z"/></g></svg>
+    </div>
+    <div class="cover-wordmark">
+      <span class="l1">Amor</span>
+      <span class="l2">Peludito</span>
+    </div>
+    <div class="cover-rule"></div>
+    <div class="cover-title">Manual de Marca</div>
+    <div class="cover-meta">Versión 1.0 · Junio 2026 · Uso Interno</div>
+  </div>
+  <div class="cover-bottom">Pet Shop · San Salvador de Jujuy · NOA · Argentina</div>
+</div>
+
+<!-- ══════════ MAIN ══════════ -->
+<main>
+<div class="wrap">
+
+<!-- ══ 01 PALETA ══ -->
+<section class="section">
+  <div class="eyebrow">01 · Identidad Visual</div>
+  <h2>Paleta de colores</h2>
+  <p class="intro">Cinco colores que forman el sistema completo de la marca. Construidos dentro de la familia verde-azul-beige/marrón para diferenciarse de las paletas genéricas del sector pet y transmitir calidez natural, confianza y modernidad.</p>
+
+  <div class="paleta-grid">
+
+    <div class="swatch">
+      <div class="swatch-color" style="background:#2D4A2A;"></div>
+      <div class="swatch-info">
+        <div class="primary-badge">Primario</div>
+        <div class="swatch-name">Verde Bosque</div>
+        <div class="swatch-codes">
+          HEX &nbsp;#2D4A2A<br>
+          RGB &nbsp;45 / 74 / 42<br>
+          CMYK &nbsp;39 · 0 · 43 · 71
+        </div>
+        <div class="swatch-role">Logo, header ecommerce, pared principal, packaging, pie de página.</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background:#4A6B8A;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Azul Pizarra</div>
+        <div class="swatch-codes">
+          HEX &nbsp;#4A6B8A<br>
+          RGB &nbsp;74 / 107 / 138<br>
+          CMYK &nbsp;46 · 22 · 0 · 46
+        </div>
+        <div class="swatch-role">Botones secundarios, UI ecommerce, elementos de confianza y asesoramiento.</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D4C4A8;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Arena Cálida</div>
+        <div class="swatch-codes">
+          HEX &nbsp;#D4C4A8<br>
+          RGB &nbsp;212 / 196 / 168<br>
+          CMYK &nbsp;0 · 7 · 21 · 17
+        </div>
+        <div class="swatch-role">Fondos de cards, secciones alternadas, etiquetas de producto, packaging.</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8B6240;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Caramelo</div>
+        <div class="swatch-codes">
+          HEX &nbsp;#8B6240<br>
+          RGB &nbsp;139 / 98 / 64<br>
+          CMYK &nbsp;0 · 29 · 54 · 45
+        </div>
+        <div class="swatch-role">CTAs principales, highlights, stickers de cierre, énfasis tipográfico.</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F8F4EC;border-bottom:1px solid #E4DAC8;"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Crema</div>
+        <div class="swatch-codes">
+          HEX &nbsp;#F8F4EC<br>
+          RGB &nbsp;248 / 244 / 236<br>
+          CMYK &nbsp;0 · 2 · 5 · 3
+        </div>
+        <div class="swatch-role">Fondo general en todos los canales. Nunca blanco puro — siempre este crema cálido.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ 02 TIPOGRAFÍAS ══ -->
+<section class="section">
+  <div class="eyebrow">02 · Identidad Visual</div>
+  <h2>Tipografías</h2>
+  <p class="intro">Sistema de tres tipografías con roles diferenciados: carácter editorial (Fraunces), calidez digital (Nunito) y precisión técnica (DM Mono). Todas disponibles gratuitamente en Google Fonts.</p>
+
+  <div class="typo-blocks">
+
+    <div class="typo-block">
+      <div class="typo-header">
+        <div class="typo-meta-left">
+          <div class="typo-role">Tipografía primaria</div>
+          <div class="typo-name" style="font-family:'Fraunces',serif;font-size:1.15rem;">Fraunces</div>
+          <div class="typo-weights" style="font-family:'DM Mono',monospace;">Pesos: 400 · 600 · 700 · Variable opsz</div>
+        </div>
+        <div class="typo-desc">Serif variable con ópticas. A tamaño grande tiene carácter editorial cálido. Diferente a la serif corporativa clásica y a la sans genérica. La tipografía del logo y todos los titulares.</div>
+      </div>
+      <div class="typo-sample" style="background:var(--bosque);">
+        <div style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.2rem,5vw,3.8rem);color:var(--crema);letter-spacing:-.02em;line-height:1.1;">Amor Peludito</div>
+        <div style="font-family:'Fraunces',serif;font-weight:400;font-size:1.15rem;color:rgba(248,244,236,.65);margin-top:10px;">La tienda que entiende de qué lado está el amor.</div>
+      </div>
+      <div class="usage-chips">
+        <span class="chip">Logo</span>
+        <span class="chip">Titulares H1 / H2</span>
+        <span class="chip">Subtítulos</span>
+        <span class="chip">Precios destacados</span>
+        <span class="chip">Citas en copy</span>
+      </div>
+    </div>
+
+    <div class="typo-block">
+      <div class="typo-header">
+        <div class="typo-meta-left">
+          <div class="typo-role">Tipografía secundaria</div>
+          <div class="typo-name" style="font-family:'Nunito',sans-serif;font-size:1.15rem;">Nunito</div>
+          <div class="typo-weights" style="font-family:'DM Mono',monospace;">Pesos: 300 · 400 · 500 · 600 · 700 · 800</div>
+        </div>
+        <div class="typo-desc">Terminaciones redondeadas que refuerzan el tono cálido. Altamente legible en mobile. Funciona en todos los tamaños sin perder carácter. La voz cotidiana de la marca.</div>
+      </div>
+      <div class="typo-sample">
+        <div style="font-family:'Nunito',sans-serif;font-weight:700;font-size:1.2rem;color:var(--bosque);margin-bottom:6px;">Detecté algo nuevo en la alacena.</div>
+        <div style="font-family:'Nunito',sans-serif;font-weight:400;font-size:1rem;color:var(--ink);line-height:1.7;">Lo olí tres veces. Esperé. Lo olí de nuevo. Aprobado. Mis humanos saben elegir.</div>
+        <div style="font-family:'Nunito',sans-serif;font-weight:300;font-size:.9rem;color:var(--muted);margin-top:8px;">Envío hoy en Jujuy · Amor Peludito</div>
+      </div>
+      <div class="usage-chips">
+        <span class="chip">Cuerpo de texto</span>
+        <span class="chip">Copy redes</span>
+        <span class="chip">UI ecommerce</span>
+        <span class="chip">Descripciones</span>
+        <span class="chip">Botones CTA</span>
+        <span class="chip">WhatsApp</span>
+      </div>
+    </div>
+
+    <div class="typo-block">
+      <div class="typo-header">
+        <div class="typo-meta-left">
+          <div class="typo-role">Tipografía terciaria</div>
+          <div class="typo-name" style="font-family:'DM Mono',monospace;font-size:1.15rem;">DM Mono</div>
+          <div class="typo-weights" style="font-family:'DM Mono',monospace;">Pesos: 400 · 500 · Italic</div>
+        </div>
+        <div class="typo-desc">Monoespaciada para datos técnicos. El contraste con Fraunces y Nunito crea jerarquía visual clara. Nunca para texto corrido — solo para datos, etiquetas y metadatos.</div>
+      </div>
+      <div class="typo-sample" style="background:var(--arena);">
+        <div style="font-family:'DM Mono',monospace;font-size:.85rem;color:var(--bosque);line-height:2;">
+          SKU · AP-2024-001 &nbsp;&nbsp;|&nbsp;&nbsp; $8.900<br>
+          Peso · 7.5 kg &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp; Royal Canin Adult<br>
+          Envío · HOY SSJ &nbsp;&nbsp;|&nbsp;&nbsp; Stock disponible
+        </div>
+      </div>
+      <div class="usage-chips">
+        <span class="chip">Precios</span>
+        <span class="chip">Pesos / medidas</span>
+        <span class="chip">Labels de sección</span>
+        <span class="chip">Eyebrows</span>
+        <span class="chip">Metadata</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ 03 LOGO ══ -->
+<section class="section">
+  <div class="eyebrow">03 · Identidad Visual</div>
+  <h2>Logo</h2>
+  <p class="intro">El logo combina un símbolo abstracto (cola en espiral) con el wordmark en Fraunces. El símbolo representa el movimiento de una cola contenta — no un ícono literal de mascota. Los tres trazos curvos de grosor uniforme sugieren alegría, calidez y movimiento sin recurrir a los clichés del sector.</p>
+
+  <!-- Versión principal -->
+  <div class="logo-main-showcase">
+    <div class="logo-lockup">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 502" preserveAspectRatio="xMidYMid meet" style="width:200px;height:137px;flex-shrink:0;"><g transform="translate(0,502) scale(0.1,-0.1)" fill="#2D4A2A" stroke="none"><path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z m154 -92 c25 -12 73 -53 108 -90 209 -221 247 -634 71 -784 -81 -69 -223 -94 -329 -58 -88 30 -162 124 -203 259 -26 86 -26 354 0 440 39 130 115 232 191 255 42 13 110 4 162 -22z"/><path d="M3124 3980 c-24 -9 -78 -69 -98 -108 -55 -106 -83 -284 -66 -413 14 -109 48 -226 68 -234 31 -12 36 13 14 82 -12 37 -26 106 -32 152 -29 220 61 481 167 481 50 0 94 -22 135 -68 42 -47 68 -54 68 -19 0 29 -72 101 -122 122 -40 16 -100 19 -134 5z"/><path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z m211 -76 c113 -61 157 -302 95 -526 -75 -270 -173 -379 -342 -380 -131 0 -251 73 -298 181 -110 257 125 696 400 748 56 10 94 4 145 -23z"/><path d="M4161 3905 c-71 -31 -211 -174 -253 -257 -75 -152 -82 -172 -86 -259 -5 -97 11 -163 52 -214 20 -25 26 -27 39 -17 14 12 12 19 -14 69 -73 138 -13 347 151 526 70 76 126 113 186 122 34 6 45 3 71 -19 17 -14 38 -26 47 -26 27 0 18 36 -15 64 -25 21 -40 26 -87 26 -31 -1 -72 -7 -91 -15z"/><path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z m184 -80 c133 -67 255 -246 305 -447 30 -119 24 -273 -12 -343 -48 -93 -155 -148 -291 -148 -165 0 -270 117 -314 352 -24 127 -15 353 17 439 58 155 168 211 295 147z"/><path d="M2424 3280 c-11 -4 -37 -27 -56 -49 -113 -133 -116 -456 -5 -680 12 -25 28 -47 34 -49 26 -8 24 29 -5 105 -87 226 -79 486 17 595 34 38 40 40 72 34 20 -3 55 -22 78 -42 41 -35 71 -40 71 -10 0 18 -65 75 -106 92 -37 16 -69 17 -100 4z"/><path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z m181 -92 c37 -42 53 -123 46 -238 -7 -109 -18 -158 -58 -284 -54 -165 -98 -233 -172 -269 -50 -24 -119 -27 -192 -7 -148 39 -229 106 -240 199 -8 63 13 169 48 249 94 212 326 396 486 385 46 -3 59 -9 82 -35z"/><path d="M4877 3130 c-93 -36 -237 -169 -297 -273 -68 -117 -91 -277 -50 -344 20 -34 74 -68 90 -58 20 12 9 40 -23 60 l-32 21 0 90 c0 85 3 95 39 169 29 59 59 99 120 160 99 100 159 137 228 141 58 3 77 16 58 39 -17 20 -74 18 -133 -5z"/><path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z m375 -72 c252 -69 349 -206 349 -487 -1 -122 -20 -213 -60 -282 -28 -49 -50 -63 -95 -63 -63 0 -128 62 -166 160 -27 71 -24 312 6 450 29 134 29 130 8 144 -31 19 -52 -22 -78 -151 -45 -234 -27 -448 47 -557 26 -38 26 -40 9 -50 -10 -6 -37 -28 -60 -48 -23 -21 -47 -38 -53 -38 -6 0 -18 13 -26 29 -20 38 -100 107 -158 137 -73 37 -180 62 -335 78 -78 8 -151 20 -163 26 -26 14 -47 56 -61 119 -9 42 -8 54 5 73 9 12 16 32 16 44 0 28 3 31 162 113 78 41 143 82 152 96 9 14 16 45 16 72 0 89 46 130 175 153 72 13 229 4 310 -18z"/><path d="M3552 2775 c-58 -30 -92 -76 -72 -100 13 -15 40 -9 40 9 0 6 19 24 42 39 36 23 52 27 118 27 41 0 89 -4 107 -9 24 -7 35 -6 44 5 10 12 9 18 -3 31 -12 11 -44 16 -119 20 -98 4 -107 3 -157 -22z"/><path d="M3496 2577 c-30 -30 -31 -36 -13 -61 21 -28 87 -32 120 -6 15 12 27 27 27 34 0 21 -35 46 -73 53 -29 4 -40 1 -61 -20z"/><path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z m79 -153 l29 -90 81 0 c121 0 173 -19 228 -83 46 -54 117 -100 174 -112 42 -9 103 -70 110 -110 7 -42 -12 -108 -42 -143 -14 -17 -53 -40 -97 -57 -182 -71 -277 -169 -278 -287 0 -26 -4 -49 -8 -52 -15 -9 -185 54 -245 91 -84 51 -156 128 -197 209 -31 62 -34 79 -38 170 -4 110 7 168 54 270 47 102 168 284 190 284 5 0 23 -40 39 -90z"/><path d="M2830 1928 c-22 -35 -52 -100 -66 -146 -35 -108 -32 -228 8 -312 30 -66 102 -150 128 -150 34 0 27 25 -21 78 -111 122 -120 302 -23 479 15 26 33 55 40 64 21 23 17 49 -6 49 -14 0 -33 -20 -60 -62z"/><path d="M3266 1804 c-13 -33 -6 -44 27 -44 30 0 67 15 57 22 -20 16 -61 38 -69 38 -5 0 -12 -7 -15 -16z"/><path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/><path d="M4055 1735 c-70 -28 -126 -84 -144 -145 -26 -88 19 -109 48 -22 23 66 49 94 113 122 43 18 66 21 166 19 90 -2 117 0 120 11 10 29 -30 40 -137 40 -89 0 -116 -4 -166 -25z"/></g></svg>
+      <div class="logo-wordmark">
+        <span class="l1">Amor</span>
+        <span class="l2">Peludito</span>
+      </div>
+    </div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:24px;padding:8px 12px;border:1px solid var(--line);display:inline-block;">Versión principal · Verde Bosque sobre Crema</div>
+
+  <!-- Variantes -->
+  <div class="logo-variants-grid">
+
+    <div class="lv-card">
+      <div class="lv-preview icon-bosque-bg">
+        <div class="logo-lockup logo-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 502" preserveAspectRatio="xMidYMid meet" style="width:120px;height:82px;"><g transform="translate(0,502) scale(0.1,-0.1)" fill="#F8F4EC" stroke="none"><path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z m154 -92 c25 -12 73 -53 108 -90 209 -221 247 -634 71 -784 -81 -69 -223 -94 -329 -58 -88 30 -162 124 -203 259 -26 86 -26 354 0 440 39 130 115 232 191 255 42 13 110 4 162 -22z"/><path d="M3124 3980 c-24 -9 -78 -69 -98 -108 -55 -106 -83 -284 -66 -413 14 -109 48 -226 68 -234 31 -12 36 13 14 82 -12 37 -26 106 -32 152 -29 220 61 481 167 481 50 0 94 -22 135 -68 42 -47 68 -54 68 -19 0 29 -72 101 -122 122 -40 16 -100 19 -134 5z"/><path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z m211 -76 c113 -61 157 -302 95 -526 -75 -270 -173 -379 -342 -380 -131 0 -251 73 -298 181 -110 257 125 696 400 748 56 10 94 4 145 -23z"/><path d="M4161 3905 c-71 -31 -211 -174 -253 -257 -75 -152 -82 -172 -86 -259 -5 -97 11 -163 52 -214 20 -25 26 -27 39 -17 14 12 12 19 -14 69 -73 138 -13 347 151 526 70 76 126 113 186 122 34 6 45 3 71 -19 17 -14 38 -26 47 -26 27 0 18 36 -15 64 -25 21 -40 26 -87 26 -31 -1 -72 -7 -91 -15z"/><path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z m184 -80 c133 -67 255 -246 305 -447 30 -119 24 -273 -12 -343 -48 -93 -155 -148 -291 -148 -165 0 -270 117 -314 352 -24 127 -15 353 17 439 58 155 168 211 295 147z"/><path d="M2424 3280 c-11 -4 -37 -27 -56 -49 -113 -133 -116 -456 -5 -680 12 -25 28 -47 34 -49 26 -8 24 29 -5 105 -87 226 -79 486 17 595 34 38 40 40 72 34 20 -3 55 -22 78 -42 41 -35 71 -40 71 -10 0 18 -65 75 -106 92 -37 16 -69 17 -100 4z"/><path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z m181 -92 c37 -42 53 -123 46 -238 -7 -109 -18 -158 -58 -284 -54 -165 -98 -233 -172 -269 -50 -24 -119 -27 -192 -7 -148 39 -229 106 -240 199 -8 63 13 169 48 249 94 212 326 396 486 385 46 -3 59 -9 82 -35z"/><path d="M4877 3130 c-93 -36 -237 -169 -297 -273 -68 -117 -91 -277 -50 -344 20 -34 74 -68 90 -58 20 12 9 40 -23 60 l-32 21 0 90 c0 85 3 95 39 169 29 59 59 99 120 160 99 100 159 137 228 141 58 3 77 16 58 39 -17 20 -74 18 -133 -5z"/><path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z m375 -72 c252 -69 349 -206 349 -487 -1 -122 -20 -213 -60 -282 -28 -49 -50 -63 -95 -63 -63 0 -128 62 -166 160 -27 71 -24 312 6 450 29 134 29 130 8 144 -31 19 -52 -22 -78 -151 -45 -234 -27 -448 47 -557 26 -38 26 -40 9 -50 -10 -6 -37 -28 -60 -48 -23 -21 -47 -38 -53 -38 -6 0 -18 13 -26 29 -20 38 -100 107 -158 137 -73 37 -180 62 -335 78 -78 8 -151 20 -163 26 -26 14 -47 56 -61 119 -9 42 -8 54 5 73 9 12 16 32 16 44 0 28 3 31 162 113 78 41 143 82 152 96 9 14 16 45 16 72 0 89 46 130 175 153 72 13 229 4 310 -18z"/><path d="M3552 2775 c-58 -30 -92 -76 -72 -100 13 -15 40 -9 40 9 0 6 19 24 42 39 36 23 52 27 118 27 41 0 89 -4 107 -9 24 -7 35 -6 44 5 10 12 9 18 -3 31 -12 11 -44 16 -119 20 -98 4 -107 3 -157 -22z"/><path d="M3496 2577 c-30 -30 -31 -36 -13 -61 21 -28 87 -32 120 -6 15 12 27 27 27 34 0 21 -35 46 -73 53 -29 4 -40 1 -61 -20z"/><path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z m79 -153 l29 -90 81 0 c121 0 173 -19 228 -83 46 -54 117 -100 174 -112 42 -9 103 -70 110 -110 7 -42 -12 -108 -42 -143 -14 -17 -53 -40 -97 -57 -182 -71 -277 -169 -278 -287 0 -26 -4 -49 -8 -52 -15 -9 -185 54 -245 91 -84 51 -156 128 -197 209 -31 62 -34 79 -38 170 -4 110 7 168 54 270 47 102 168 284 190 284 5 0 23 -40 39 -90z"/><path d="M2830 1928 c-22 -35 -52 -100 -66 -146 -35 -108 -32 -228 8 -312 30 -66 102 -150 128 -150 34 0 27 25 -21 78 -111 122 -120 302 -23 479 15 26 33 55 40 64 21 23 17 49 -6 49 -14 0 -33 -20 -60 -62z"/><path d="M3266 1804 c-13 -33 -6 -44 27 -44 30 0 67 15 57 22 -20 16 -61 38 -69 38 -5 0 -12 -7 -15 -16z"/><path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/><path d="M4055 1735 c-70 -28 -126 -84 -144 -145 -26 -88 19 -109 48 -22 23 66 49 94 113 122 43 18 66 21 166 19 90 -2 117 0 120 11 10 29 -30 40 -137 40 -89 0 -116 -4 -166 -25z"/></g></svg>
+          <div style="margin-left:14px;">
+            <div style="font-family:'Fraunces',serif;font-weight:600;font-size:1.8rem;color:var(--crema);letter-spacing:-.02em;line-height:1;">Amor</div>
+            <div style="font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;color:var(--crema);letter-spacing:.05em;line-height:1;margin-top:3px;">Peludito</div>
+          </div>
+        </div>
+      </div>
+      <div class="lv-label">Versión invertida · Crema sobre Bosque</div>
+    </div>
+
+    <div class="lv-card">
+      <div class="lv-preview icon-crema-bg" style="flex-direction:column;gap:4px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 502" preserveAspectRatio="xMidYMid meet" style="width:120px;height:82px;"><g transform="translate(0,502) scale(0.1,-0.1)" fill="#2D4A2A" stroke="none"><path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z m154 -92 c25 -12 73 -53 108 -90 209 -221 247 -634 71 -784 -81 -69 -223 -94 -329 -58 -88 30 -162 124 -203 259 -26 86 -26 354 0 440 39 130 115 232 191 255 42 13 110 4 162 -22z"/><path d="M3124 3980 c-24 -9 -78 -69 -98 -108 -55 -106 -83 -284 -66 -413 14 -109 48 -226 68 -234 31 -12 36 13 14 82 -12 37 -26 106 -32 152 -29 220 61 481 167 481 50 0 94 -22 135 -68 42 -47 68 -54 68 -19 0 29 -72 101 -122 122 -40 16 -100 19 -134 5z"/><path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z m211 -76 c113 -61 157 -302 95 -526 -75 -270 -173 -379 -342 -380 -131 0 -251 73 -298 181 -110 257 125 696 400 748 56 10 94 4 145 -23z"/><path d="M4161 3905 c-71 -31 -211 -174 -253 -257 -75 -152 -82 -172 -86 -259 -5 -97 11 -163 52 -214 20 -25 26 -27 39 -17 14 12 12 19 -14 69 -73 138 -13 347 151 526 70 76 126 113 186 122 34 6 45 3 71 -19 17 -14 38 -26 47 -26 27 0 18 36 -15 64 -25 21 -40 26 -87 26 -31 -1 -72 -7 -91 -15z"/><path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z m184 -80 c133 -67 255 -246 305 -447 30 -119 24 -273 -12 -343 -48 -93 -155 -148 -291 -148 -165 0 -270 117 -314 352 -24 127 -15 353 17 439 58 155 168 211 295 147z"/><path d="M2424 3280 c-11 -4 -37 -27 -56 -49 -113 -133 -116 -456 -5 -680 12 -25 28 -47 34 -49 26 -8 24 29 -5 105 -87 226 -79 486 17 595 34 38 40 40 72 34 20 -3 55 -22 78 -42 41 -35 71 -40 71 -10 0 18 -65 75 -106 92 -37 16 -69 17 -100 4z"/><path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z m181 -92 c37 -42 53 -123 46 -238 -7 -109 -18 -158 -58 -284 -54 -165 -98 -233 -172 -269 -50 -24 -119 -27 -192 -7 -148 39 -229 106 -240 199 -8 63 13 169 48 249 94 212 326 396 486 385 46 -3 59 -9 82 -35z"/><path d="M4877 3130 c-93 -36 -237 -169 -297 -273 -68 -117 -91 -277 -50 -344 20 -34 74 -68 90 -58 20 12 9 40 -23 60 l-32 21 0 90 c0 85 3 95 39 169 29 59 59 99 120 160 99 100 159 137 228 141 58 3 77 16 58 39 -17 20 -74 18 -133 -5z"/><path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z m375 -72 c252 -69 349 -206 349 -487 -1 -122 -20 -213 -60 -282 -28 -49 -50 -63 -95 -63 -63 0 -128 62 -166 160 -27 71 -24 312 6 450 29 134 29 130 8 144 -31 19 -52 -22 -78 -151 -45 -234 -27 -448 47 -557 26 -38 26 -40 9 -50 -10 -6 -37 -28 -60 -48 -23 -21 -47 -38 -53 -38 -6 0 -18 13 -26 29 -20 38 -100 107 -158 137 -73 37 -180 62 -335 78 -78 8 -151 20 -163 26 -26 14 -47 56 -61 119 -9 42 -8 54 5 73 9 12 16 32 16 44 0 28 3 31 162 113 78 41 143 82 152 96 9 14 16 45 16 72 0 89 46 130 175 153 72 13 229 4 310 -18z"/><path d="M3552 2775 c-58 -30 -92 -76 -72 -100 13 -15 40 -9 40 9 0 6 19 24 42 39 36 23 52 27 118 27 41 0 89 -4 107 -9 24 -7 35 -6 44 5 10 12 9 18 -3 31 -12 11 -44 16 -119 20 -98 4 -107 3 -157 -22z"/><path d="M3496 2577 c-30 -30 -31 -36 -13 -61 21 -28 87 -32 120 -6 15 12 27 27 27 34 0 21 -35 46 -73 53 -29 4 -40 1 -61 -20z"/><path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z m79 -153 l29 -90 81 0 c121 0 173 -19 228 -83 46 -54 117 -100 174 -112 42 -9 103 -70 110 -110 7 -42 -12 -108 -42 -143 -14 -17 -53 -40 -97 -57 -182 -71 -277 -169 -278 -287 0 -26 -4 -49 -8 -52 -15 -9 -185 54 -245 91 -84 51 -156 128 -197 209 -31 62 -34 79 -38 170 -4 110 7 168 54 270 47 102 168 284 190 284 5 0 23 -40 39 -90z"/><path d="M2830 1928 c-22 -35 -52 -100 -66 -146 -35 -108 -32 -228 8 -312 30 -66 102 -150 128 -150 34 0 27 25 -21 78 -111 122 -120 302 -23 479 15 26 33 55 40 64 21 23 17 49 -6 49 -14 0 -33 -20 -60 -62z"/><path d="M3266 1804 c-13 -33 -6 -44 27 -44 30 0 67 15 57 22 -20 16 -61 38 -69 38 -5 0 -12 -7 -15 -16z"/><path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/><path d="M4055 1735 c-70 -28 -126 -84 -144 -145 -26 -88 19 -109 48 -22 23 66 49 94 113 122 43 18 66 21 166 19 90 -2 117 0 120 11 10 29 -30 40 -137 40 -89 0 -116 -4 -166 -25z"/></g></svg>
+      </div>
+      <div class="lv-label">Versión reducida · Solo símbolo</div>
+    </div>
+
+    <div class="lv-card">
+      <div class="lv-preview" style="background:#1A1814;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 502" preserveAspectRatio="xMidYMid meet" style="width:120px;height:82px;opacity:.9;"><g transform="translate(0,502) scale(0.1,-0.1)" fill="#F8F4EC" stroke="none"><path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z m154 -92 c25 -12 73 -53 108 -90 209 -221 247 -634 71 -784 -81 -69 -223 -94 -329 -58 -88 30 -162 124 -203 259 -26 86 -26 354 0 440 39 130 115 232 191 255 42 13 110 4 162 -22z"/><path d="M3124 3980 c-24 -9 -78 -69 -98 -108 -55 -106 -83 -284 -66 -413 14 -109 48 -226 68 -234 31 -12 36 13 14 82 -12 37 -26 106 -32 152 -29 220 61 481 167 481 50 0 94 -22 135 -68 42 -47 68 -54 68 -19 0 29 -72 101 -122 122 -40 16 -100 19 -134 5z"/><path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z m211 -76 c113 -61 157 -302 95 -526 -75 -270 -173 -379 -342 -380 -131 0 -251 73 -298 181 -110 257 125 696 400 748 56 10 94 4 145 -23z"/><path d="M4161 3905 c-71 -31 -211 -174 -253 -257 -75 -152 -82 -172 -86 -259 -5 -97 11 -163 52 -214 20 -25 26 -27 39 -17 14 12 12 19 -14 69 -73 138 -13 347 151 526 70 76 126 113 186 122 34 6 45 3 71 -19 17 -14 38 -26 47 -26 27 0 18 36 -15 64 -25 21 -40 26 -87 26 -31 -1 -72 -7 -91 -15z"/><path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z m184 -80 c133 -67 255 -246 305 -447 30 -119 24 -273 -12 -343 -48 -93 -155 -148 -291 -148 -165 0 -270 117 -314 352 -24 127 -15 353 17 439 58 155 168 211 295 147z"/><path d="M2424 3280 c-11 -4 -37 -27 -56 -49 -113 -133 -116 -456 -5 -680 12 -25 28 -47 34 -49 26 -8 24 29 -5 105 -87 226 -79 486 17 595 34 38 40 40 72 34 20 -3 55 -22 78 -42 41 -35 71 -40 71 -10 0 18 -65 75 -106 92 -37 16 -69 17 -100 4z"/><path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z m181 -92 c37 -42 53 -123 46 -238 -7 -109 -18 -158 -58 -284 -54 -165 -98 -233 -172 -269 -50 -24 -119 -27 -192 -7 -148 39 -229 106 -240 199 -8 63 13 169 48 249 94 212 326 396 486 385 46 -3 59 -9 82 -35z"/><path d="M4877 3130 c-93 -36 -237 -169 -297 -273 -68 -117 -91 -277 -50 -344 20 -34 74 -68 90 -58 20 12 9 40 -23 60 l-32 21 0 90 c0 85 3 95 39 169 29 59 59 99 120 160 99 100 159 137 228 141 58 3 77 16 58 39 -17 20 -74 18 -133 -5z"/><path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z m375 -72 c252 -69 349 -206 349 -487 -1 -122 -20 -213 -60 -282 -28 -49 -50 -63 -95 -63 -63 0 -128 62 -166 160 -27 71 -24 312 6 450 29 134 29 130 8 144 -31 19 -52 -22 -78 -151 -45 -234 -27 -448 47 -557 26 -38 26 -40 9 -50 -10 -6 -37 -28 -60 -48 -23 -21 -47 -38 -53 -38 -6 0 -18 13 -26 29 -20 38 -100 107 -158 137 -73 37 -180 62 -335 78 -78 8 -151 20 -163 26 -26 14 -47 56 -61 119 -9 42 -8 54 5 73 9 12 16 32 16 44 0 28 3 31 162 113 78 41 143 82 152 96 9 14 16 45 16 72 0 89 46 130 175 153 72 13 229 4 310 -18z"/><path d="M3552 2775 c-58 -30 -92 -76 -72 -100 13 -15 40 -9 40 9 0 6 19 24 42 39 36 23 52 27 118 27 41 0 89 -4 107 -9 24 -7 35 -6 44 5 10 12 9 18 -3 31 -12 11 -44 16 -119 20 -98 4 -107 3 -157 -22z"/><path d="M3496 2577 c-30 -30 -31 -36 -13 -61 21 -28 87 -32 120 -6 15 12 27 27 27 34 0 21 -35 46 -73 53 -29 4 -40 1 -61 -20z"/><path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z m79 -153 l29 -90 81 0 c121 0 173 -19 228 -83 46 -54 117 -100 174 -112 42 -9 103 -70 110 -110 7 -42 -12 -108 -42 -143 -14 -17 -53 -40 -97 -57 -182 -71 -277 -169 -278 -287 0 -26 -4 -49 -8 -52 -15 -9 -185 54 -245 91 -84 51 -156 128 -197 209 -31 62 -34 79 -38 170 -4 110 7 168 54 270 47 102 168 284 190 284 5 0 23 -40 39 -90z"/><path d="M2830 1928 c-22 -35 -52 -100 -66 -146 -35 -108 -32 -228 8 -312 30 -66 102 -150 128 -150 34 0 27 25 -21 78 -111 122 -120 302 -23 479 15 26 33 55 40 64 21 23 17 49 -6 49 -14 0 -33 -20 -60 -62z"/><path d="M3266 1804 c-13 -33 -6 -44 27 -44 30 0 67 15 57 22 -20 16 -61 38 -69 38 -5 0 -12 -7 -15 -16z"/><path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/><path d="M4055 1735 c-70 -28 -126 -84 -144 -145 -26 -88 19 -109 48 -22 23 66 49 94 113 122 43 18 66 21 166 19 90 -2 117 0 120 11 10 29 -30 40 -137 40 -89 0 -116 -4 -166 -25z"/></g></svg>
+      </div>
+      <div class="lv-label">Versión monocromática · Crema sobre negro</div>
+    </div>
+
+  </div>
+
+  <h3 style="margin-bottom:16px;margin-top:8px;">Reglas de uso</h3>
+  <div class="rule-rows">
+    <div class="rule-row"><span class="rule-tag">MIN</span>Tamaño mínimo digital: 120 px de ancho. Tamaño mínimo impresión: 30 mm. Por debajo de esos valores, usar solo el símbolo.</div>
+    <div class="rule-row"><span class="rule-tag">ESP</span>Espacio de respeto: en todos los lados, un margen libre equivalente a la altura de la "A" de "Amor". Ningún otro elemento entra en esa zona.</div>
+    <div class="rule-row prohibido"><span class="rule-tag">✗</span>No rotar, deformar, ni aplicar efectos (sombra, bisel, degradado, contorno).</div>
+    <div class="rule-row prohibido"><span class="rule-tag">✗</span>No usar sobre fondos que no sean Crema, Verde Bosque, Arena Cálida o negro puro.</div>
+    <div class="rule-row prohibido"><span class="rule-tag">✗</span>No cambiar los colores fuera de la paleta oficial. No separar símbolo del wordmark salvo en la versión reducida.</div>
+  </div>
+</section>
+
+<!-- ══ 04 IDENTIDAD VERBAL ══ -->
+<section class="section">
+  <div class="eyebrow">04 · Identidad Verbal</div>
+  <h2>Propósito, promesa y valores</h2>
+  <p class="intro">La identidad verbal define qué dice la marca, cómo lo dice y qué nunca dice. El narrador siempre es la mascota.</p>
+
+  <div class="proposito-box">
+    <div class="box-label">Propósito de marca</div>
+    <div class="box-text">Existimos para que cada mascota reciba lo que necesita — y cada dueño sienta que alguien genuinamente los entiende.</div>
+  </div>
+
+  <div class="promesa-box">
+    <div class="box-label">Promesa de marca</div>
+    <div class="box-text">Lo que tu peludito necesita, lo encontrás. Y si no sabés qué necesita, te ayudamos a descubrirlo — sin venta agresiva ni tecnicismos innecesarios.</div>
+  </div>
+
+  <h3 style="margin-bottom:18px;">Valores</h3>
+  <div class="valores-grid">
+    <div class="valor">
+      <div class="valor-name">Amor genuino</div>
+      <div class="valor-desc">No es marketing. Hablamos desde la perspectiva del animal porque nos importa el animal. Cada decisión de producto, tono y servicio parte de esa convicción.</div>
+    </div>
+    <div class="valor">
+      <div class="valor-name">Honestidad sin rodeos</div>
+      <div class="valor-desc">Precio claro, información clara, sin cobros sorpresa. Si algo no es lo mejor para tu mascota, lo decimos aunque signifique vender menos.</div>
+    </div>
+    <div class="valor">
+      <div class="valor-name">Cercanía real</div>
+      <div class="valor-desc">Somos de Jujuy. Conocemos el NOA, los tiempos, cómo se mueve esta región. No somos una cadena porteña que abrió una sucursal.</div>
+    </div>
+    <div class="valor">
+      <div class="valor-name">Confianza que se gana</div>
+      <div class="valor-desc">No pedimos que confíen desde el primer día. Lo demostramos con cada entrega puntual, cada mensaje respondido y cada recomendación honesta.</div>
+    </div>
+    <div class="valor">
+      <div class="valor-name">Curiosidad activa</div>
+      <div class="valor-desc">Aprendemos constantemente sobre nutrición, bienestar y cuidado animal. El asesoramiento es un diferencial real, no un slogan.</div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:16px;">La marca ES y NO ES</h3>
+  <div class="es-table-wrap">
+    <table class="es-table">
+      <thead>
+        <tr><th class="es">Amor Peludito ES</th><th class="no">Amor Peludito NO ES</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="es-col">La voz de la mascota</td><td class="no-col">La voz del vendedor</td></tr>
+        <tr><td class="es-col">Asesoramiento honesto</td><td class="no-col">Venta agresiva</td></tr>
+        <tr><td class="es-col">Digital primero</td><td class="no-col">Local primero</td></tr>
+        <tr><td class="es-col">Precio visible desde el inicio</td><td class="no-col">Precio sorpresa en el checkout</td></tr>
+        <tr><td class="es-col">Respuesta en el día</td><td class="no-col">Silencio hasta que el cliente insiste</td></tr>
+        <tr><td class="es-col">Marca local con ambición NOA</td><td class="no-col">Copia de una cadena de Buenos Aires</td></tr>
+        <tr><td class="es-col">Cálido y directo</td><td class="no-col">Corporativo y distante</td></tr>
+        <tr><td class="es-col">Concreto y útil</td><td class="no-col">Aspiracional y vacío</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ 05 APLICACIONES ══ -->
+<section class="section">
+  <div class="eyebrow">05 · Aplicaciones de Marca</div>
+  <h2>Canales digitales</h2>
+  <p class="intro">Cómo se aplica la identidad visual en cada canal. Todos los canales comparten paleta y tipografía — lo que varía es el tono y el formato de contenido.</p>
+
+  <div class="app-grid">
+
+    <div class="app-card">
+      <div class="app-head">
+        <div>
+          <div class="app-channel">Instagram</div>
+          <div class="app-badge">Prioritario · Canal principal de marca</div>
+        </div>
+      </div>
+      <div class="app-body">
+        <ul>
+          <li><strong>Fondo base del feed:</strong> Crema (#F8F4EC) para gráficas de texto</li>
+          <li><strong>Fotos:</strong> luz natural cálida, mascotas reales de clientes — nunca estudio artificial</li>
+          <li><strong>Grilla (patrón de 3 columnas):</strong> col. izq. foto de mascota · col. centro gráfica de texto · col. der. producto o detrás de escena</li>
+          <li><strong>Acento en gráficas:</strong> Caramelo para subrayados y énfasis</li>
+          <li><strong>Tipografía:</strong> Fraunces para titular, Nunito para cuerpo</li>
+        </ul>
+        <div class="app-color-chips" style="margin-top:12px;">
+          <span class="color-chip" style="background:#2D4A2A;">Bosque</span>
+          <span class="color-chip" style="background:#8B6240;">Caramelo</span>
+          <span class="color-chip" style="background:#D4C4A8;color:var(--ink);">Arena</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-head">
+        <div>
+          <div class="app-channel">TikTok</div>
+          <div class="app-badge">Prioritario · First mover en Jujuy</div>
+        </div>
+      </div>
+      <div class="app-body">
+        <ul>
+          <li><strong>Texto en pantalla:</strong> Nunito Bold, color Crema sobre fondo Verde Bosque</li>
+          <li><strong>Opening frame:</strong> siempre incluye el símbolo en esquina superior derecha</li>
+          <li><strong>Subtítulos automáticos:</strong> activados siempre — accesibilidad y consumo sin audio</li>
+          <li><strong>Voz del narrador:</strong> siempre en primera persona de la mascota</li>
+          <li><strong>Referencia:</strong> ningún competidor local tiene TikTok activo hoy</li>
+        </ul>
+        <div class="app-color-chips" style="margin-top:12px;">
+          <span class="color-chip" style="background:#2D4A2A;">Bosque</span>
+          <span class="color-chip" style="background:#F8F4EC;color:var(--ink);border:1px solid #E4DAC8;">Crema</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-head">
+        <div>
+          <div class="app-channel">Ecommerce</div>
+          <div class="app-badge">Tiendanube · Canal principal de venta</div>
+        </div>
+      </div>
+      <div class="app-body">
+        <ul>
+          <li><strong>Fondo general:</strong> Crema (#F8F4EC)</li>
+          <li><strong>Header / navegación:</strong> Verde Bosque con logo en Crema</li>
+          <li><strong>Botón CTA principal:</strong> Caramelo, texto Crema, Nunito Bold</li>
+          <li><strong>Botón secundario:</strong> outline Azul Pizarra</li>
+          <li><strong>Cards de producto:</strong> fondo Arena Cálida, precio en DM Mono Caramelo</li>
+          <li><strong>Imágenes:</strong> fondo blanco puro para el producto + foto en uso con mascota real</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="app-card">
+      <div class="app-head">
+        <div>
+          <div class="app-channel">WhatsApp Business</div>
+          <div class="app-badge">Operativo esencial · Canal de conversión</div>
+        </div>
+      </div>
+      <div class="app-body">
+        <ul>
+          <li><strong>Foto de perfil:</strong> símbolo (versión reducida) en Crema, fondo Verde Bosque</li>
+          <li><strong>Nombre de cuenta:</strong> Amor Peludito</li>
+          <li><strong>Descripción:</strong> "La tienda de tu peludito en Jujuy. Respondemos todos los días."</li>
+          <li><strong>Estándar de respuesta:</strong> menos de 4 horas, todos los días</li>
+          <li><strong>Catálogo:</strong> activado con los productos más consultados, precio siempre visible</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <h2 style="margin-top:56px;margin-bottom:12px;">Packaging y local físico</h2>
+  <p class="intro" style="margin-bottom:28px;">El packaging refuerza la identidad al momento de la entrega. El local físico es un punto de experiencia — debe sentirse como la marca.</p>
+
+  <div class="local-grid">
+
+    <div class="local-card">
+      <div class="local-card-title">Bolsa de envío</div>
+      <p>Material: papel kraft natural (marrón). El marrón del papel refuerza la paleta earth-tone sin costo de impresión.<br><br>
+      Impresión frontal: logo completo en Verde Bosque, centrado.<br><br>
+      Impresión trasera: frase de cierre en Fraunces: <em>"Ya llegué. Y vine con mucho amor."</em><br><br>
+      Sticker de cierre: círculo Verde Bosque con símbolo en Crema. Diámetro: 4 cm.<br><br>
+      Interior: papel de seda en Arena Cálida o Crema.</p>
+    </div>
+
+    <div class="local-card">
+      <div class="local-card-title">Pared principal · Bienvenida</div>
+      <p>Fondo Verde Bosque de piso a techo. Logo en Crema centrado a altura de ojos. Esta es la foto del local en todas las redes sociales.</p>
+      <div class="color-strip" style="margin-top:14px;">
+        <div class="cs-item"><div class="cs-dot" style="background:#2D4A2A;"></div>Pared</div>
+        <div class="cs-item"><div class="cs-dot" style="background:#F8F4EC;border:1px solid #E4DAC8;"></div>Logo</div>
+      </div>
+    </div>
+
+    <div class="local-card">
+      <div class="local-card-title">Paredes secundarias y mobiliario</div>
+      <p>Paredes: Crema (#F8F4EC) — amplitud, luz, limpieza.<br><br>
+      Mobiliario: madera natural sin pintar o tono miel. Sin plástico ni melamina blanca. El material habla el mismo idioma que la paleta.<br><br>
+      Mostrador: madera natural con logo en vinilo Crema sobre frente Verde Bosque.</p>
+    </div>
+
+    <div class="local-card">
+      <div class="local-card-title">Señalética e iluminación</div>
+      <p>Carteles de sección: papel kraft con tipografía Verde Bosque en Fraunces, colgados con hilo natural.<br><br>
+      Iluminación: <strong>cálida obligatoria</strong> — entre 2700 K y 3000 K. Nunca luz blanca fría (4000 K+). La luz cálida hace que todo se vea mejor y refuerza el tono emocional de la marca.<br><br>
+      Aroma opcional: difusor con esencia de madera o cedro suave.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ 06 TONO EN ACCIÓN ══ -->
+<section class="section">
+  <div class="eyebrow">06 · Tono en Acción</div>
+  <h2>Ejemplos de copy</h2>
+  <p class="intro">El narrador siempre es la mascota. Cálido, breve, concreto. Sin superlativo vacío. Lo que el copy dice, la marca lo cumple.</p>
+
+  <div class="copy-grid">
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 01</span>
+        <span class="copy-channel">Instagram · Feed · Producto</span>
+      </div>
+      <div class="copy-body">Detecté algo nuevo en la alacena.
+Lo olí tres veces. Esperé. Lo olí de nuevo.
+Aprobado.
+Mis humanos saben elegir.<span class="copy-cta">→ Amor Peludito · Envío hoy en Jujuy.</span></div>
+    </div>
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 02</span>
+        <span class="copy-channel">Instagram · Feed · Asesoramiento</span>
+      </div>
+      <div class="copy-body">Mi veterinaria dice que soy "un caso particular".
+Mis humanos estaban perdidos eligiendo alimento.
+Hasta que preguntaron.
+
+Contanos qué come tu peludito, cuánto pesa y cómo se porta.
+Te decimos exactamente qué necesita — sin venderte lo que no es.<span class="copy-cta">→ WhatsApp directo en bio.</span></div>
+    </div>
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 03</span>
+        <span class="copy-channel">Instagram · Story · Comunidad</span>
+      </div>
+      <div class="copy-body">¿Cuántos segundos tardás en notar que llegaste a casa?
+Exacto. Ni uno.
+Eso somos para ellos.
+
+Etiquetá a tu peludito favorito.</div>
+    </div>
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 04</span>
+        <span class="copy-channel">Instagram · Feed · Emoción</span>
+      </div>
+      <div class="copy-body">Antes de que entres por la puerta, ya sé que llegaste.
+Lo sé hace tres cuadras.
+Así te quiero yo.
+Así te queremos nosotros.</div>
+    </div>
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 05</span>
+        <span class="copy-channel">Instagram · Story · Confianza</span>
+      </div>
+      <div class="copy-body">Precio que ves = precio que pagás.
+Sin sorpresas en el checkout.
+Sin envío que aparece al final.
+Así de simple.</div>
+    </div>
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 06</span>
+        <span class="copy-channel">TikTok · Humor desde la mascota</span>
+      </div>
+      <div class="copy-body">POV: tu humano tardó tres semanas en darse cuenta de que se acabó el alimento.
+Yo llevo tres semanas mirándolo con cara de "ya sé que sabés".<span class="copy-cta">→ Próxima vez: Amor Peludito. Envío a domicilio. Sin drama.</span></div>
+    </div>
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 07</span>
+        <span class="copy-channel">TikTok · Asesoramiento rápido</span>
+      </div>
+      <div class="copy-body">3 cosas que tu perro necesita que nadie te dice:
+1. Agua fresca siempre — no cada tanto
+2. Alimento por peso, no por apetito
+3. Que lo mires a los ojos cuando le hablás
+
+Para la número 2, te ayudamos.
+Para la 3, eso ya lo sabés.</div>
+    </div>
+
+    <div class="copy-card">
+      <div class="copy-head">
+        <span class="copy-title">Copy 08</span>
+        <span class="copy-channel">WhatsApp Business · Mensaje de bienvenida</span>
+      </div>
+      <div class="copy-body">¡Hola! Soy Amor Peludito.
+Contame: ¿quién vive en casa? (perro, gato, los dos, algún otro compañero)
+Con eso te ayudo a encontrar exactamente lo que necesita — sin rodeos.
+Respondemos todos los días.</div>
+    </div>
+
+  </div>
+
+  <h3 style="margin-top:48px;margin-bottom:10px;">Texto "Sobre nosotros" · Ecommerce</h3>
+  <div class="sobre-box">Amor Peludito nació en Jujuy con una idea simple: si vos tratás a tu mascota como un miembro de la familia, nosotros también.
+
+No somos una cadena. No vendemos de todo sin saber nada. Somos una tienda que conoce el NOA, que entrega en el día en San Salvador, que responde cuando preguntás y que te dice la verdad sobre lo que tu peludito necesita — aunque eso signifique recomendarte algo más económico.
+
+Creemos que el mejor negocio es el cliente que vuelve porque confía.
+Y para que confíe, primero hay que merecerlo.
+
+Bienvenido a la tienda de tu peludito.</div>
+
+  <div class="takeaway">
+    <h3>Regla de oro del tono</h3>
+    <p>Si el copy suena a algo que un vendedor diría para cerrar una venta, está mal. Si suena a algo que una mascota feliz o un amigo honesto diría, está bien. Ante la duda: más corto, más concreto, más real.</p>
+  </div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <div style="margin-bottom:8px;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 735 502" preserveAspectRatio="xMidYMid meet" style="width:38px;height:26px;opacity:.35;display:inline-block;vertical-align:middle;margin-right:8px;"><g transform="translate(0,502) scale(0.1,-0.1)" fill="#F8F4EC" stroke="none"><path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z m154 -92 c25 -12 73 -53 108 -90 209 -221 247 -634 71 -784 -81 -69 -223 -94 -329 -58 -88 30 -162 124 -203 259 -26 86 -26 354 0 440 39 130 115 232 191 255 42 13 110 4 162 -22z"/><path d="M3124 3980 c-24 -9 -78 -69 -98 -108 -55 -106 -83 -284 -66 -413 14 -109 48 -226 68 -234 31 -12 36 13 14 82 -12 37 -26 106 -32 152 -29 220 61 481 167 481 50 0 94 -22 135 -68 42 -47 68 -54 68 -19 0 29 -72 101 -122 122 -40 16 -100 19 -134 5z"/><path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z m211 -76 c113 -61 157 -302 95 -526 -75 -270 -173 -379 -342 -380 -131 0 -251 73 -298 181 -110 257 125 696 400 748 56 10 94 4 145 -23z"/><path d="M4161 3905 c-71 -31 -211 -174 -253 -257 -75 -152 -82 -172 -86 -259 -5 -97 11 -163 52 -214 20 -25 26 -27 39 -17 14 12 12 19 -14 69 -73 138 -13 347 151 526 70 76 126 113 186 122 34 6 45 3 71 -19 17 -14 38 -26 47 -26 27 0 18 36 -15 64 -25 21 -40 26 -87 26 -31 -1 -72 -7 -91 -15z"/><path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z m184 -80 c133 -67 255 -246 305 -447 30 -119 24 -273 -12 -343 -48 -93 -155 -148 -291 -148 -165 0 -270 117 -314 352 -24 127 -15 353 17 439 58 155 168 211 295 147z"/><path d="M2424 3280 c-11 -4 -37 -27 -56 -49 -113 -133 -116 -456 -5 -680 12 -25 28 -47 34 -49 26 -8 24 29 -5 105 -87 226 -79 486 17 595 34 38 40 40 72 34 20 -3 55 -22 78 -42 41 -35 71 -40 71 -10 0 18 -65 75 -106 92 -37 16 -69 17 -100 4z"/><path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z m181 -92 c37 -42 53 -123 46 -238 -7 -109 -18 -158 -58 -284 -54 -165 -98 -233 -172 -269 -50 -24 -119 -27 -192 -7 -148 39 -229 106 -240 199 -8 63 13 169 48 249 94 212 326 396 486 385 46 -3 59 -9 82 -35z"/><path d="M4877 3130 c-93 -36 -237 -169 -297 -273 -68 -117 -91 -277 -50 -344 20 -34 74 -68 90 -58 20 12 9 40 -23 60 l-32 21 0 90 c0 85 3 95 39 169 29 59 59 99 120 160 99 100 159 137 228 141 58 3 77 16 58 39 -17 20 -74 18 -133 -5z"/><path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z m375 -72 c252 -69 349 -206 349 -487 -1 -122 -20 -213 -60 -282 -28 -49 -50 -63 -95 -63 -63 0 -128 62 -166 160 -27 71 -24 312 6 450 29 134 29 130 8 144 -31 19 -52 -22 -78 -151 -45 -234 -27 -448 47 -557 26 -38 26 -40 9 -50 -10 -6 -37 -28 -60 -48 -23 -21 -47 -38 -53 -38 -6 0 -18 13 -26 29 -20 38 -100 107 -158 137 -73 37 -180 62 -335 78 -78 8 -151 20 -163 26 -26 14 -47 56 -61 119 -9 42 -8 54 5 73 9 12 16 32 16 44 0 28 3 31 162 113 78 41 143 82 152 96 9 14 16 45 16 72 0 89 46 130 175 153 72 13 229 4 310 -18z"/><path d="M3552 2775 c-58 -30 -92 -76 -72 -100 13 -15 40 -9 40 9 0 6 19 24 42 39 36 23 52 27 118 27 41 0 89 -4 107 -9 24 -7 35 -6 44 5 10 12 9 18 -3 31 -12 11 -44 16 -119 20 -98 4 -107 3 -157 -22z"/><path d="M3496 2577 c-30 -30 -31 -36 -13 -61 21 -28 87 -32 120 -6 15 12 27 27 27 34 0 21 -35 46 -73 53 -29 4 -40 1 -61 -20z"/><path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z m79 -153 l29 -90 81 0 c121 0 173 -19 228 -83 46 -54 117 -100 174 -112 42 -9 103 -70 110 -110 7 -42 -12 -108 -42 -143 -14 -17 -53 -40 -97 -57 -182 -71 -277 -169 -278 -287 0 -26 -4 -49 -8 -52 -15 -9 -185 54 -245 91 -84 51 -156 128 -197 209 -31 62 -34 79 -38 170 -4 110 7 168 54 270 47 102 168 284 190 284 5 0 23 -40 39 -90z"/><path d="M2830 1928 c-22 -35 -52 -100 -66 -146 -35 -108 -32 -228 8 -312 30 -66 102 -150 128 -150 34 0 27 25 -21 78 -111 122 -120 302 -23 479 15 26 33 55 40 64 21 23 17 49 -6 49 -14 0 -33 -20 -60 -62z"/><path d="M3266 1804 c-13 -33 -6 -44 27 -44 30 0 67 15 57 22 -20 16 -61 38 -69 38 -5 0 -12 -7 -15 -16z"/><path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/><path d="M4055 1735 c-70 -28 -126 -84 -144 -145 -26 -88 19 -109 48 -22 23 66 49 94 113 122 43 18 66 21 166 19 90 -2 117 0 120 11 10 29 -30 40 -137 40 -89 0 -116 -4 -166 -25z"/></g></svg>
+    <span>Amor Peludito</span>
+  </div>
+  Manual de Marca · Versión 1.0 · Junio 2026<br>
+  Documento de uso interno — distribuir a diseñadores, community managers y proveedores.<br>
+  San Salvador de Jujuy · NOA · Argentina
+</footer>
+
+</body>
+</html>
