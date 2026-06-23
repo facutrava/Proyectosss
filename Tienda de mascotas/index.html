@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amor Peludito · Pet Shop en Jujuy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Nunito:wght@300;400;500;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bosque: #2D4A2A;
+  --bosque-deep: #1A2C17;
+  --pizarra: #4A6B8A;
+  --arena: #D4C4A8;
+  --arena-dark: #C4B08E;
+  --caramelo: #8B6240;
+  --crema: #F8F4EC;
+  --ink: #1C1814;
+  --muted: #5A5044;
+  --line: #E4DAC8;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--crema);
+  color: var(--ink);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── NAV ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 22px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.45s var(--ease), padding 0.3s var(--ease), backdrop-filter 0.45s;
+}
+.nav.scrolled {
+  background: rgba(26, 44, 23, 0.88);
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  padding: 14px 48px;
+}
+.nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.nav-logo svg { width: 38px; height: 26px; }
+.nav-wordmark { font-family: 'Fraunces', serif; font-weight: 600; color: var(--crema); line-height: 1; }
+.nav-wordmark span:first-child { display: block; font-size: 1.15rem; letter-spacing: -.01em; }
+.nav-wordmark span:last-child { display: block; font-size: .73rem; letter-spacing: .07em; opacity: .6; margin-top: 2px; }
+.nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+.nav-links a {
+  font-size: .86rem; font-weight: 600; color: rgba(248,244,236,.65);
+  text-decoration: none; letter-spacing: .03em;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--crema); }
+.nav-cta {
+  font-size: .84rem; font-weight: 700; background: var(--caramelo);
+  color: var(--crema); padding: 10px 24px; text-decoration: none;
+  letter-spacing: .03em; transition: background 0.2s, transform 0.18s var(--ease-spring);
+}
+.nav-cta:hover { background: #7a5535; transform: translateY(-1px); }
+.nav-burger { display: none; background: none; border: none; cursor: pointer; color: var(--crema); padding: 4px; }
+
+/* ── MOBILE MENU ── */
+.mobile-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: var(--bosque); flex-direction: column;
+  padding: 80px 40px 40px;
+}
+.mobile-overlay.open { display: flex; }
+.mobile-close {
+  position: absolute; top: 24px; right: 40px;
+  background: none; border: none; color: var(--crema);
+  cursor: pointer; font-size: 1.5rem; line-height: 1;
+}
+.mobile-overlay ul { list-style: none; }
+.mobile-overlay ul li { border-bottom: 1px solid rgba(248,244,236,.07); }
+.mobile-overlay ul a {
+  display: block; font-family: 'Fraunces', serif; font-size: 2rem;
+  font-weight: 600; color: var(--crema); text-decoration: none; padding: 20px 0;
+}
+.mobile-overlay .mob-cta {
+  margin-top: 32px; display: inline-block;
+  background: var(--caramelo); color: var(--crema);
+  padding: 14px 32px; font-weight: 700; font-size: 1rem;
+  text-decoration: none;
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; background: var(--bosque);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 120px 40px 96px;
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(248,244,236,.025) 0, rgba(248,244,236,.025) 1px, transparent 1px, transparent 96px),
+    repeating-linear-gradient(0deg,  rgba(248,244,236,.025) 0, rgba(248,244,236,.025) 1px, transparent 1px, transparent 96px);
+}
+.hero-orb {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  animation: orbDrift 12s ease-in-out infinite;
+}
+.hero-orb-1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(139,98,64,.16) 0%, transparent 68%);
+  top: -200px; right: -180px; animation-delay: 0s;
+}
+.hero-orb-2 {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(74,107,138,.13) 0%, transparent 68%);
+  bottom: -120px; left: -100px; animation-delay: -5s; animation-duration: 15s;
+}
+.hero-orb-3 {
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(212,196,168,.09) 0%, transparent 68%);
+  top: 38%; left: 12%; animation-delay: -9s; animation-duration: 18s;
+}
+@keyframes orbDrift {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(28px,-18px) scale(1.04); }
+  66%      { transform: translate(-18px,24px) scale(0.97); }
+}
+.hero-inner { position: relative; z-index: 2; max-width: 820px; }
+.hero-symbol {
+  margin-bottom: 36px;
+  opacity: 0; transform: translateY(20px) scale(0.88);
+  animation: popIn .9s var(--ease) .15s forwards;
+}
+.hero-symbol svg {
+  width: 90px; height: 62px;
+  filter: drop-shadow(0 0 36px rgba(212,196,168,.22));
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .75rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(212,196,168,.55); margin-bottom: 22px;
+  opacity: 0; animation: fadeUp .8s var(--ease) .45s forwards;
+}
+.hero-title {
+  font-family: 'Fraunces', serif; font-weight: 600;
+  font-size: clamp(2.8rem, 5.8vw, 5.2rem);
+  color: var(--crema); line-height: 1.04; letter-spacing: -.03em;
+  margin-bottom: 28px;
+  opacity: 0; animation: fadeUp .8s var(--ease) .65s forwards;
+}
+.hero-title em { font-style: italic; color: var(--arena); }
+.hero-sub {
+  font-weight: 400; font-size: clamp(.95rem, 1.8vw, 1.18rem);
+  color: rgba(248,244,236,.55); max-width: 46ch; margin: 0 auto 44px;
+  line-height: 1.75;
+  opacity: 0; animation: fadeUp .8s var(--ease) .85s forwards;
+}
+.hero-actions {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  opacity: 0; animation: fadeUp .8s var(--ease) 1.05s forwards;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: .94rem; background: var(--caramelo);
+  color: var(--crema); padding: 15px 34px; text-decoration: none;
+  letter-spacing: .025em; border: none; cursor: pointer;
+  transition: background .2s, transform .2s var(--ease-spring), box-shadow .2s;
+}
+.btn-primary:hover { background: #7a5535; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(139,98,64,.4); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: .94rem;
+  color: rgba(248,244,236,.65); padding: 15px 34px; text-decoration: none;
+  border: 1px solid rgba(248,244,236,.18); letter-spacing: .025em;
+  background: none; cursor: pointer;
+  transition: color .2s, border-color .2s, transform .2s;
+}
+.btn-ghost:hover { color: var(--crema); border-color: rgba(248,244,236,.4); transform: translateY(-1px); }
+.hero-scroll {
+  position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%);
+  z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  opacity: 0; animation: fadeUp .8s var(--ease) 1.4s forwards;
+}
+.hero-scroll-label {
+  font-family: 'DM Mono', monospace; font-size: .66rem;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: rgba(248,244,236,.28);
+}
+.hero-scroll-line {
+  width: 1px; height: 52px;
+  background: linear-gradient(to bottom, rgba(248,244,236,.3), transparent);
+  animation: scrollLine 2.2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%,100% { opacity:.3; transform: scaleY(1); }
+  50%      { opacity:.65; transform: scaleY(1.08); }
+}
+@keyframes popIn   { to { opacity:1; transform: translateY(0) scale(1); } }
+@keyframes fadeUp  { from { opacity:0; transform: translateY(26px); } to { opacity:1; transform: translateY(0); } }
+
+/* ── TRUST BAR ── */
+.trust-bar { background: var(--bosque-deep); padding: 20px 48px; }
+.trust-inner {
+  max-width: 1120px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 52px; flex-wrap: wrap;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'DM Mono', monospace; font-size: .73rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(248,244,236,.42);
+}
+.trust-item svg { color: var(--caramelo); flex-shrink: 0; }
+.trust-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(248,244,236,.12); }
+
+/* ── SHARED ── */
+.section { padding: 104px 48px; }
+.wrap { max-width: 1120px; margin: 0 auto; }
+.eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .74rem;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--caramelo);
+  display: flex; align-items: center; gap: 12px; margin-bottom: 18px;
+}
+.eyebrow::before { content:''; width: 22px; height: 1px; background: var(--caramelo); flex-shrink: 0; }
+.section-title {
+  font-family: 'Fraunces', serif; font-weight: 600;
+  font-size: clamp(1.9rem, 3.2vw, 2.9rem);
+  color: var(--bosque); line-height: 1.08; letter-spacing: -.02em; margin-bottom: 16px;
+}
+.section-intro { font-size: .97rem; color: var(--muted); max-width: 56ch; line-height: 1.78; margin-bottom: 56px; }
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: .08s; }
+.d2 { transition-delay: .18s; }
+.d3 { transition-delay: .28s; }
+.d4 { transition-delay: .38s; }
+.d5 { transition-delay: .48s; }
+
+/* ── CATEGORÍAS ── */
+.cats-section { background: var(--crema); }
+.cats-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+}
+.cat-card {
+  background: var(--arena); padding: 40px 28px;
+  text-decoration: none; position: relative; overflow: hidden;
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+  display: block;
+}
+.cat-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--caramelo);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s var(--ease);
+}
+.cat-card:hover::after { transform: scaleX(1); }
+.cat-card:hover { transform: translateY(-5px); box-shadow: 0 20px 52px rgba(45,74,42,.13); }
+.cat-icon {
+  width: 50px; height: 50px; background: var(--bosque);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+  transition: transform .3s var(--ease-spring);
+}
+.cat-card:hover .cat-icon { transform: scale(1.1) rotate(-4deg); }
+.cat-icon svg { color: var(--crema); }
+.cat-name {
+  font-family: 'Fraunces', serif; font-weight: 600;
+  font-size: 1.12rem; color: var(--bosque); margin-bottom: 8px;
+}
+.cat-desc { font-size: .84rem; color: var(--muted); line-height: 1.62; }
+.cat-arrow {
+  position: absolute; top: 28px; right: 24px;
+  color: var(--caramelo); opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity .25s, transform .25s var(--ease);
+}
+.cat-card:hover .cat-arrow { opacity: 1; transform: translateX(0); }
+
+/* ── PRODUCTOS ── */
+.products-section { background: #F0EAE0; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.product-card {
+  background: var(--crema); border: 1px solid var(--line);
+  overflow: hidden;
+  transition: transform .35s var(--ease), box-shadow .35s;
+  cursor: pointer;
+}
+.product-card:hover { transform: translateY(-8px); box-shadow: 0 24px 64px rgba(45,74,42,.13); }
+.product-img {
+  height: 230px; background: var(--arena);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.product-img-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--arena) 0%, var(--arena-dark) 100%);
+}
+.product-img-icon {
+  position: relative; z-index: 1; opacity: .22;
+}
+.product-img-icon svg { width: 88px; height: 88px; color: var(--bosque); }
+.product-badge {
+  position: absolute; top: 16px; left: 16px; z-index: 2;
+  font-family: 'DM Mono', monospace; font-size: .66rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  background: var(--bosque); color: var(--crema); padding: 4px 10px;
+}
+.product-badge-hot { background: var(--caramelo); }
+.product-body { padding: 24px 24px 0; }
+.product-brand {
+  font-family: 'DM Mono', monospace; font-size: .7rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 6px;
+}
+.product-name {
+  font-family: 'Fraunces', serif; font-weight: 600;
+  font-size: 1.05rem; color: var(--bosque);
+  margin-bottom: 8px; line-height: 1.3;
+}
+.product-desc { font-size: .84rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+.product-footer {
+  padding: 0 24px 22px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.product-price {
+  font-family: 'DM Mono', monospace; font-size: 1.12rem;
+  font-weight: 500; color: var(--caramelo);
+}
+.product-btn {
+  font-family: 'Nunito', sans-serif; font-weight: 700;
+  font-size: .82rem; background: var(--bosque);
+  color: var(--crema); padding: 9px 20px;
+  border: none; cursor: pointer; letter-spacing: .02em;
+  text-decoration: none; display: inline-block;
+  transition: background .2s, transform .15s var(--ease-spring);
+}
+.product-btn:hover { background: var(--caramelo); transform: scale(1.03); }
+.products-footer { text-align: center; margin-top: 48px; }
+
+/* ── VALORES ── */
+.valores-section {
+  background: var(--bosque); position: relative; overflow: hidden;
+}
+.valores-section::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgba(248,244,236,.03) 0, rgba(248,244,236,.03) 1px, transparent 1px, transparent 96px),
+    repeating-linear-gradient(0deg,  rgba(248,244,236,.03) 0, rgba(248,244,236,.03) 1px, transparent 1px, transparent 96px);
+}
+.valores-section .eyebrow { color: var(--arena); }
+.valores-section .eyebrow::before { background: var(--arena); }
+.valores-section .section-title { color: var(--crema); }
+.valores-section .section-intro { color: rgba(248,244,236,.5); margin-bottom: 48px; }
+.valores-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; background: rgba(248,244,236,.07);
+}
+.valor-card {
+  background: var(--bosque); padding: 48px 38px;
+  position: relative; overflow: hidden;
+}
+.valor-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(248,244,236,.035); opacity: 0;
+  transition: opacity .3s;
+}
+.valor-card:hover::before { opacity: 1; }
+.valor-num {
+  font-family: 'Fraunces', serif; font-size: 4rem; font-weight: 700;
+  color: rgba(248,244,236,.06); line-height: 1; margin-bottom: 28px;
+  letter-spacing: -.06em; pointer-events: none;
+}
+.valor-icon {
+  width: 44px; height: 44px;
+  border: 1px solid rgba(248,244,236,.14);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 22px; position: relative; z-index: 1;
+}
+.valor-icon svg { color: var(--arena); }
+.valor-name {
+  font-family: 'Fraunces', serif; font-weight: 600;
+  font-size: 1.18rem; color: var(--crema);
+  margin-bottom: 12px; position: relative; z-index: 1;
+}
+.valor-desc {
+  font-size: .88rem; color: rgba(248,244,236,.52);
+  line-height: 1.72; position: relative; z-index: 1;
+}
+
+/* ── NOSOTROS ── */
+.sobre-section { background: var(--crema); }
+.sobre-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+}
+.sobre-quote {
+  border-left: 3px solid var(--caramelo);
+  padding: 20px 28px; background: var(--arena);
+  margin: 28px 0 32px;
+}
+.sobre-quote p {
+  font-family: 'Fraunces', serif; font-size: 1.06rem;
+  line-height: 1.65; color: var(--ink);
+}
+.sobre-quote cite {
+  font-family: 'DM Mono', monospace; font-size: .7rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); display: block; margin-top: 10px;
+}
+.sobre-visual { position: relative; }
+.sobre-card {
+  background: var(--bosque); padding: 52px 44px;
+  position: relative; z-index: 1;
+}
+.sobre-card-symbol { margin-bottom: 28px; }
+.sobre-card-symbol svg { width: 64px; height: 44px; }
+.sobre-card-title {
+  font-family: 'Fraunces', serif; font-weight: 600;
+  font-size: 1.7rem; color: var(--crema);
+  margin-bottom: 12px; line-height: 1.2;
+}
+.sobre-card-sub {
+  font-size: .9rem; color: rgba(248,244,236,.5);
+  line-height: 1.7; margin-bottom: 32px;
+}
+.sobre-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(248,244,236,.08);
+}
+.stat {
+  background: rgba(248,244,236,.04); padding: 22px 24px;
+}
+.stat-num {
+  font-family: 'Fraunces', serif; font-size: 2.2rem;
+  font-weight: 600; color: var(--arena); line-height: 1; margin-bottom: 6px;
+}
+.stat-label {
+  font-family: 'DM Mono', monospace; font-size: .68rem;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(248,244,236,.35);
+}
+.sobre-accent {
+  position: absolute; bottom: -20px; right: -20px;
+  width: 130px; height: 130px;
+  background: var(--caramelo); opacity: .1; z-index: 0;
+}
+
+/* ── TESTIMONIOS ── */
+.testimonios-section { background: var(--arena); }
+.testimonios-section .section-title { color: var(--bosque); }
+.testimonios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.testimonio {
+  background: var(--crema); padding: 36px 32px;
+  border-bottom: 3px solid var(--bosque);
+  transition: transform .3s var(--ease), box-shadow .3s;
+}
+.testimonio:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(45,74,42,.1); }
+.testimonio-stars { display: flex; gap: 4px; margin-bottom: 18px; }
+.testimonio-stars svg { color: var(--caramelo); }
+.testimonio-text {
+  font-family: 'Fraunces', serif; font-size: 1rem;
+  line-height: 1.72; color: var(--ink); margin-bottom: 24px;
+}
+.testimonio-author {
+  font-family: 'DM Mono', monospace; font-size: .7rem;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--muted);
+}
+.testimonio-pet {
+  font-weight: 700; font-size: .82rem; color: var(--bosque);
+  display: block; margin-top: 4px; font-family: 'Nunito', sans-serif;
+}
+
+/* ── WHATSAPP CTA ── */
+.wsp-section { background: var(--caramelo); padding: 88px 48px; }
+.wsp-inner {
+  max-width: 1120px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 48px;
+}
+.wsp-text .eyebrow { color: rgba(248,244,236,.5); }
+.wsp-text .eyebrow::before { background: rgba(248,244,236,.5); }
+.wsp-title {
+  font-family: 'Fraunces', serif; font-weight: 600;
+  font-size: clamp(1.9rem, 3vw, 2.8rem); color: var(--crema);
+  line-height: 1.12; letter-spacing: -.02em; margin-bottom: 14px;
+}
+.wsp-sub {
+  font-size: .96rem; color: rgba(248,244,236,.68);
+  max-width: 44ch; line-height: 1.72;
+}
+.wsp-btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: 'Nunito', sans-serif; font-weight: 700;
+  font-size: 1rem; background: var(--crema);
+  color: var(--caramelo); padding: 20px 40px;
+  text-decoration: none; white-space: nowrap; flex-shrink: 0;
+  transition: transform .2s var(--ease-spring), box-shadow .2s;
+}
+.wsp-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 44px rgba(0,0,0,.22); }
+
+/* ── FOOTER ── */
+footer { background: var(--bosque-deep); padding: 60px 48px 36px; }
+.footer-inner {
+  max-width: 1120px; margin: 0 auto;
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 52px;
+  padding-bottom: 44px; border-bottom: 1px solid rgba(248,244,236,.07);
+  margin-bottom: 36px;
+}
+.footer-brand .nav-logo { display: inline-flex; margin-bottom: 18px; text-decoration: none; }
+.footer-brand p {
+  font-size: .87rem; color: rgba(248,244,236,.4); line-height: 1.72; margin-bottom: 24px;
+}
+.footer-socials { display: flex; gap: 10px; }
+.footer-socials a {
+  width: 36px; height: 36px; border: 1px solid rgba(248,244,236,.1);
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(248,244,236,.38); text-decoration: none;
+  transition: color .2s, border-color .2s;
+}
+.footer-socials a:hover { color: var(--crema); border-color: rgba(248,244,236,.28); }
+.footer-col-title {
+  font-weight: 700; font-size: .84rem; color: var(--crema);
+  margin-bottom: 18px; letter-spacing: .025em;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul a {
+  font-size: .83rem; color: rgba(248,244,236,.36);
+  text-decoration: none; transition: color .2s;
+}
+.footer-col ul a:hover { color: rgba(248,244,236,.7); }
+.footer-bottom {
+  max-width: 1120px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+}
+.footer-bottom p {
+  font-family: 'DM Mono', monospace; font-size: .7rem;
+  letter-spacing: .07em; color: rgba(248,244,236,.22);
+}
+.footer-bottom p span { color: rgba(248,244,236,.38); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .cats-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
+  .sobre-inner { gap: 48px; }
+}
+@media (max-width: 768px) {
+  .nav { padding: 18px 24px; }
+  .nav.scrolled { padding: 12px 24px; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-burger { display: flex; }
+  .section { padding: 72px 24px; }
+  .hero { padding: 100px 24px 80px; }
+  .trust-bar { padding: 18px 24px; }
+  .trust-inner { gap: 28px; }
+  .trust-dot { display: none; }
+  .cats-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .products-grid { grid-template-columns: 1fr; }
+  .valores-grid { grid-template-columns: 1fr; }
+  .sobre-inner { grid-template-columns: 1fr; gap: 40px; }
+  .testimonios-grid { grid-template-columns: 1fr; }
+  .wsp-inner { flex-direction: column; text-align: center; }
+  .wsp-sub { margin: 0 auto; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .wsp-section { padding: 72px 24px; }
+  footer { padding: 56px 24px 32px; }
+}
+@media (max-width: 480px) {
+  .cats-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 2.5rem; }
+  .hero-actions { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 300px; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav class="nav" id="nav" role="navigation" aria-label="Navegación principal">
+  <a href="#inicio" class="nav-logo" aria-label="Amor Peludito - Inicio">
+    <svg viewBox="0 0 735 502" xmlns="http://www.w3.org/2000/svg" fill="#F8F4EC" aria-hidden="true">
+      <g transform="translate(0,502) scale(0.1,-0.1)">
+        <path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z"/>
+        <path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z"/>
+        <path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z"/>
+        <path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z"/>
+        <path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z"/>
+        <path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z"/>
+        <path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/>
+      </g>
+    </svg>
+    <div class="nav-wordmark">
+      <span>Amor</span>
+      <span>Peludito</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#categorias">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/5493884000000" class="nav-cta">Escribinos</a>
+  <button class="nav-burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M3 12h18M3 6h18M3 18h18"/>
+    </svg>
+  </button>
+</nav>
+
+<div class="mobile-overlay" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menú">
+  <button class="mobile-close" id="mobileClose" aria-label="Cerrar menú">✕</button>
+  <ul>
+    <li><a href="#categorias" onclick="closeMobile()">Productos</a></li>
+    <li><a href="#nosotros" onclick="closeMobile()">Nosotros</a></li>
+    <li><a href="#contacto" onclick="closeMobile()">Contacto</a></li>
+  </ul>
+  <a href="https://wa.me/5493884000000" class="mob-cta" onclick="closeMobile()">Escribinos por WhatsApp</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero" id="inicio" aria-label="Portada">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="hero-symbol" aria-hidden="true">
+      <svg viewBox="0 0 735 502" xmlns="http://www.w3.org/2000/svg" fill="#F8F4EC">
+        <g transform="translate(0,502) scale(0.1,-0.1)">
+          <path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z"/>
+          <path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z"/>
+          <path d="M2372 3385 c-65 -29 -108 -73 -146 -147 -54 -108 -69 -194 -63 -363 11 -282 88 -457 239 -541 50 -27 60 -29 163 -29 92 1 120 4 169 24 77 31 151 100 185 171 24 51 26 65 25 190 0 117 -4 147 -27 223 -64 209 -191 383 -332 454 -63 32 -164 41 -213 18z"/>
+          <path d="M4890 3264 c-171 -46 -372 -235 -451 -423 -111 -267 -54 -426 186 -516 144 -54 260 -42 349 36 114 100 210 384 210 619 1 116 -10 157 -55 220 -53 73 -129 94 -239 64z"/>
+          <path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z"/>
+          <path d="M2896 2233 c-315 -366 -362 -699 -135 -947 60 -66 136 -118 228 -156 77 -32 193 -60 245 -60 34 0 35 0 25 33 -15 47 -12 132 5 165 29 57 134 127 238 161 59 19 113 65 136 115 29 61 30 169 2 260 l-21 66 -54 -6 c-75 -9 -130 13 -188 75 -25 27 -59 58 -76 70 -33 24 -142 51 -208 51 l-42 0 -36 112 c-20 62 -40 119 -44 126 -6 10 -27 -8 -75 -65z"/>
+          <path d="M4366 2155 c-3 -8 0 -29 6 -47 28 -81 81 -139 244 -266 115 -90 158 -142 180 -220 14 -48 15 -66 5 -120 -43 -231 -146 -313 -446 -353 -66 -9 -168 -9 -385 -3 -162 5 -361 9 -442 9 l-148 -1 0 26 c0 29 28 75 59 96 12 9 68 22 125 29 114 15 156 29 202 68 40 34 64 84 80 169 23 121 72 190 163 230 62 28 202 33 361 15 133 -15 154 -11 148 27 -3 23 -23 28 -173 45 -128 14 -239 14 -284 -1 -99 -32 -125 -44 -166 -80 -56 -49 -89 -106 -105 -178 -25 -115 -33 -136 -63 -168 -35 -37 -107 -62 -174 -62 -77 0 -133 -20 -178 -64 -49 -46 -65 -92 -65 -179 l0 -58 53 8 c55 8 174 9 687 2 294 -3 321 -2 414 18 111 25 224 74 279 123 42 37 98 146 117 228 18 78 9 197 -19 251 -32 62 -100 131 -216 222 -134 104 -157 130 -194 222 -12 30 -54 38 -65 12z"/>
+        </g>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">Pet Shop · San Salvador de Jujuy · Argentina</p>
+    <h1 class="hero-title">Lo que tu <em>peludito</em><br>necesita, lo encontrás.</h1>
+    <p class="hero-sub">Alimento, accesorios y asesoramiento honesto — sin venta agresiva ni precios sorpresa. Con envío hoy en Jujuy.</p>
+    <div class="hero-actions">
+      <a href="#categorias" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+        Ver productos
+      </a>
+      <a href="#nosotros" class="btn-ghost">
+        Conocer la tienda
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span class="hero-scroll-label">Explorar</span>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar" role="complementary" aria-label="Beneficios">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+      Envío hoy en SSJ
+    </div>
+    <div class="trust-dot" aria-hidden="true"></div>
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+      Respuesta en el día
+    </div>
+    <div class="trust-dot" aria-hidden="true"></div>
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Precio visible desde el inicio
+    </div>
+    <div class="trust-dot" aria-hidden="true"></div>
+    <div class="trust-item">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      Asesoramiento honesto
+    </div>
+  </div>
+</div>
+
+<!-- ══ CATEGORÍAS ══ -->
+<section class="section cats-section" id="categorias">
+  <div class="wrap">
+    <div class="eyebrow reveal">Productos</div>
+    <h2 class="section-title reveal d1">Todo lo que necesita,<br>en un solo lugar.</h2>
+    <p class="section-intro reveal d2">Selección cuidada de las mejores marcas. Porque cada animal merece lo que realmente necesita, no lo más barato que haya en stock.</p>
+    <div class="cats-grid">
+      <a href="#" class="cat-card reveal d1" aria-label="Alimentos - Ver productos">
+        <div class="cat-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="cat-name">Alimentos</div>
+        <div class="cat-desc">Royal Canin, Purina Pro Plan, Hills y más. Seco, húmedo y snacks naturales.</div>
+      </a>
+      <a href="#" class="cat-card reveal d2" aria-label="Accesorios - Ver productos">
+        <div class="cat-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"/></svg>
+        </div>
+        <div class="cat-name">Accesorios</div>
+        <div class="cat-desc">Collares, correas, camas, juguetes y todo lo que hace más cómoda la vida de tu compañero.</div>
+      </a>
+      <a href="#" class="cat-card reveal d3" aria-label="Higiene y salud - Ver productos">
+        <div class="cat-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M9 9h.01M15 9h.01M8 13s1.5 2 4 2 4-2 4-2"/></svg>
+        </div>
+        <div class="cat-name">Higiene y salud</div>
+        <div class="cat-desc">Shampoos, antiparasitarios, suplementos y cuidado veterinario del día a día.</div>
+      </a>
+      <a href="#" class="cat-card reveal d4" aria-label="Aves y pequeños animales - Ver productos">
+        <div class="cat-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+        <div class="cat-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        </div>
+        <div class="cat-name">Aves y otros</div>
+        <div class="cat-desc">Semillas, jaulas, acuarios, roedores y todo para los compañeros menos convencionales.</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRODUCTOS DESTACADOS ══ -->
+<section class="section products-section" id="productos">
+  <div class="wrap">
+    <div class="eyebrow reveal">Más consultados</div>
+    <h2 class="section-title reveal d1">Productos que recomendamos<br>con nombre propio.</h2>
+    <p class="section-intro reveal d2">No vendemos lo que más margen deja. Vendemos lo que les funciona a los animales de nuestros clientes.</p>
+    <div class="products-grid">
+
+      <div class="product-card reveal d1">
+        <div class="product-img">
+          <div class="product-img-bg"></div>
+          <div class="product-img-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <span class="product-badge product-badge-hot">Más vendido</span>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">Royal Canin</div>
+          <div class="product-name">Adult Maxi · Perro adulto raza grande</div>
+          <div class="product-desc">Fórmula específica para razas grandes. Mantiene articulaciones y peso ideal.</div>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">$ 28.900</div>
+          <a href="https://wa.me/5493884000000?text=Hola!%20me%20interesa%20el%20Royal%20Canin%20Adult%20Maxi" class="product-btn">Consultar</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal d2">
+        <div class="product-img">
+          <div class="product-img-bg"></div>
+          <div class="product-img-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85"/></svg>
+          </div>
+          <span class="product-badge">Nuevo</span>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">Purina Pro Plan</div>
+          <div class="product-name">Sensitive Skin & Stomach · Gato adulto</div>
+          <div class="product-desc">Para gatos con sensibilidades digestivas. Salmón y arroz. Altamente digestible.</div>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">$ 18.500</div>
+          <a href="https://wa.me/5493884000000?text=Hola!%20me%20interesa%20el%20Purina%20Pro%20Plan%20Sensitive" class="product-btn">Consultar</a>
+        </div>
+      </div>
+
+      <div class="product-card reveal d3">
+        <div class="product-img">
+          <div class="product-img-bg"></div>
+          <div class="product-img-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          </div>
+          <span class="product-badge">Stock limitado</span>
+        </div>
+        <div class="product-body">
+          <div class="product-brand">Hills Science Diet</div>
+          <div class="product-name">Perfect Weight · Perro con sobrepeso</div>
+          <div class="product-desc">Clínicamente probado: el 70% de los perros pierden peso en 10 semanas.</div>
+        </div>
+        <div class="product-footer">
+          <div class="product-price">$ 34.200</div>
+          <a href="https://wa.me/5493884000000?text=Hola!%20me%20interesa%20el%20Hills%20Perfect%20Weight" class="product-btn">Consultar</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="products-footer reveal">
+      <a href="https://wa.me/5493884000000?text=Hola!%20quiero%20ver%20el%20catálogo%20completo" class="btn-primary" style="background:var(--bosque);">
+        Ver catálogo completo
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VALORES ══ -->
+<section class="section valores-section">
+  <div class="wrap">
+    <div class="eyebrow reveal">Por qué elegirnos</div>
+    <h2 class="section-title reveal d1">La tienda que entiende<br>de qué lado está el amor.</h2>
+    <p class="section-intro reveal d2">No somos una cadena. Somos de Jujuy, conocemos el NOA y cada decisión de producto parte del animal, no del margen.</p>
+    <div class="valores-grid">
+      <div class="valor-card reveal d1">
+        <div class="valor-num" aria-hidden="true">01</div>
+        <div class="valor-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="valor-name">Amor genuino</div>
+        <div class="valor-desc">Hablamos desde la perspectiva del animal porque nos importa el animal. No es marketing, es de dónde partimos cada vez que elegimos un producto.</div>
+      </div>
+      <div class="valor-card reveal d2">
+        <div class="valor-num" aria-hidden="true">02</div>
+        <div class="valor-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="valor-name">Honestidad sin rodeos</div>
+        <div class="valor-desc">Precio claro, información clara, sin cobros sorpresa. Si algo no es lo mejor para tu mascota, lo decimos aunque signifique vender menos.</div>
+      </div>
+      <div class="valor-card reveal d3">
+        <div class="valor-num" aria-hidden="true">03</div>
+        <div class="valor-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="valor-name">Cercanía real</div>
+        <div class="valor-desc">Somos de Jujuy. Conocemos el NOA, los tiempos, cómo se mueve esta región. No somos una cadena porteña que abrió una sucursal.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ NOSOTROS ══ -->
+<section class="section sobre-section" id="nosotros">
+  <div class="wrap">
+    <div class="sobre-inner">
+      <div class="sobre-text">
+        <div class="eyebrow reveal">Nuestra historia</div>
+        <h2 class="section-title reveal d1">Una tienda que nació<br>del amor, no del negocio.</h2>
+        <p class="section-intro reveal d2" style="margin-bottom:0;">Amor Peludito arrancó en Jujuy con una convicción simple: que los animales merecen lo mejor, y sus dueños merecen una tienda que los trate como adultos — con precios reales, información honesta y alguien que responde cuando escribís.</p>
+        <div class="sobre-quote reveal d3">
+          <p>Lo que tu peludito necesita, lo encontrás. Y si no sabés qué necesita, te ayudamos a descubrirlo — sin venta agresiva ni tecnicismos innecesarios.</p>
+          <cite>Promesa de marca · Amor Peludito</cite>
+        </div>
+        <a href="https://wa.me/5493884000000?text=Hola!%20quiero%20saber%20más%20sobre%20la%20tienda" class="btn-primary reveal d4" style="display:inline-flex;">
+          Hablar con nosotros
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="sobre-visual reveal d2">
+        <div class="sobre-card">
+          <div class="sobre-card-symbol" aria-hidden="true">
+            <svg viewBox="0 0 735 502" xmlns="http://www.w3.org/2000/svg" fill="#F8F4EC">
+              <g transform="translate(0,502) scale(0.1,-0.1)">
+                <path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z"/>
+                <path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z"/>
+                <path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z"/>
+              </g>
+            </svg>
+          </div>
+          <div class="sobre-card-title">Pet Shop local.<br>Corazón jujeño.</div>
+          <div class="sobre-card-sub">Atendemos todos los días. Respondemos en el día. Enviamos hoy si pedís antes de las 15hs.</div>
+          <div class="sobre-stats">
+            <div class="stat">
+              <div class="stat-num">+500</div>
+              <div class="stat-label">Clientes activos</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">Hoy</div>
+              <div class="stat-label">Envío en SSJ</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">&lt;4h</div>
+              <div class="stat-label">Respuesta WS</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">100%</div>
+              <div class="stat-label">Precio visible</div>
+            </div>
+          </div>
+        </div>
+        <div class="sobre-accent" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIOS ══ -->
+<section class="section testimonios-section">
+  <div class="wrap">
+    <div class="eyebrow reveal">Lo que dicen</div>
+    <h2 class="section-title reveal d1">La voz de los que más importan.</h2>
+    <p class="section-intro reveal d2">No los de los dueños. Los de las mascotas — que curiosamente siempre están contentos cuando llega el pedido.</p>
+    <div class="testimonios-grid">
+      <div class="testimonio reveal d1">
+        <div class="testimonio-stars" aria-label="5 estrellas">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonio-text">"Llegué a Amor Peludito sin saber qué darle a mi perra que tenía problemas digestivos. Me explicaron todo sin apuro, me recomendaron lo que necesitaba y el pedido llegó ese mismo día."</p>
+        <div class="testimonio-author">
+          Valeria R. · Jujuy
+          <span class="testimonio-pet">Dueña de Luna, border collie de 3 años</span>
+        </div>
+      </div>
+      <div class="testimonio reveal d2">
+        <div class="testimonio-stars" aria-label="5 estrellas">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonio-text">"Me mandé a comprar el alimento más barato en otro lugar y mi gato lo rechazó. Acá me explicaron por qué y me dieron tres opciones con precios reales. Desde entonces no me muevo de Amor Peludito."</p>
+        <div class="testimonio-author">
+          Martín G. · Alto Comedero
+          <span class="testimonio-pet">Dueño de Copito, gato persa de 5 años</span>
+        </div>
+      </div>
+      <div class="testimonio reveal d3">
+        <div class="testimonio-stars" aria-label="5 estrellas">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <p class="testimonio-text">"Compré una cama para mi perro y cuando llegó era más chica de lo que esperaba. Me la cambiaron sin drama, sin preguntas raras, y encima me avisaron antes de que yo dijera nada. Eso es confianza."</p>
+        <div class="testimonio-author">
+          Florencia M. · San Salvador
+          <span class="testimonio-pet">Dueña de Thor, labrador de 2 años</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA WHATSAPP ══ -->
+<section class="wsp-section" id="contacto">
+  <div class="wsp-inner">
+    <div class="wsp-text">
+      <div class="eyebrow reveal">Hablemos</div>
+      <h2 class="wsp-title reveal d1">¿No encontrás lo que<br>buscás para tu peludito?</h2>
+      <p class="wsp-sub reveal d2">Escribinos por WhatsApp. Respondemos todos los días, en el día. Sin bots, sin formularios, sin esperas.</p>
+    </div>
+    <a href="https://wa.me/5493884000000?text=Hola!%20necesito%20ayuda%20para%20encontrar%20algo%20para%20mi%20mascota" class="wsp-btn reveal d3" aria-label="Contactar por WhatsApp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escribir por WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#inicio" class="nav-logo" aria-label="Amor Peludito - Inicio">
+        <svg viewBox="0 0 735 502" xmlns="http://www.w3.org/2000/svg" fill="#F8F4EC" width="36" height="25" aria-hidden="true">
+          <g transform="translate(0,502) scale(0.1,-0.1)">
+            <path d="M3540 2884 c-124 -34 -177 -94 -179 -204 l-1 -45 -178 -92 -177 -91 -3 -59 c-6 -112 27 -221 85 -274 37 -35 42 -36 213 -54 80 -8 172 -21 204 -30 145 -38 237 -121 281 -251 l22 -66 36 64 c71 126 121 151 262 133 47 -7 54 -5 94 26 85 66 131 202 131 388 0 300 -122 473 -385 547 -85 24 -331 29 -405 8z"/>
+            <path d="M3133 4090 c-60 -12 -93 -32 -145 -88 -57 -60 -93 -129 -120 -230 -29 -106 -31 -344 -4 -447 57 -215 183 -334 367 -343 271 -14 449 211 410 518 -15 114 -60 257 -109 340 -46 80 -143 180 -202 210 -39 20 -136 52 -150 49 -3 -1 -24 -5 -47 -9z"/>
+            <path d="M4134 4022 c-157 -55 -321 -238 -388 -434 -92 -270 -27 -478 182 -580 62 -30 74 -33 167 -33 114 0 153 15 231 87 122 113 205 338 207 563 1 119 -15 192 -57 271 -67 126 -200 175 -342 126z"/>
+          </g>
+        </svg>
+        <div class="nav-wordmark">
+          <span>Amor</span>
+          <span>Peludito</span>
+        </div>
+      </a>
+      <p>La tienda que entiende de qué lado está el amor. Pet shop local, con envío en Jujuy y asesoramiento honesto todos los días.</p>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram de Amor Peludito">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok de Amor Peludito">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.29 6.29 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34l-.01-8.86a8.23 8.23 0 004.84 1.56V4.56a4.85 4.85 0 01-1.06-.13z"/></svg>
+        </a>
+        <a href="https://wa.me/5493884000000" aria-label="WhatsApp de Amor Peludito">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Productos</div>
+      <ul>
+        <li><a href="#">Alimentos para perros</a></li>
+        <li><a href="#">Alimentos para gatos</a></li>
+        <li><a href="#">Accesorios</a></li>
+        <li><a href="#">Higiene y salud</a></li>
+        <li><a href="#">Aves y otros</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Tienda</div>
+      <ul>
+        <li><a href="#nosotros">Quiénes somos</a></li>
+        <li><a href="#">Cómo comprar</a></li>
+        <li><a href="#">Envíos en Jujuy</a></li>
+        <li><a href="#">Cambios y devoluciones</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Contacto</div>
+      <ul>
+        <li><a href="https://wa.me/5493884000000">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="mailto:hola@amorpeludito.com.ar">Email</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>Amor Peludito</span> · San Salvador de Jujuy · Argentina</p>
+    <p><span>Pet Shop local con corazón jujeño</span></p>
+  </div>
+</footer>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 48);
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// Mobile menu
+const burger = document.getElementById('navBurger');
+const menu   = document.getElementById('mobileMenu');
+const close  = document.getElementById('mobileClose');
+burger.addEventListener('click', () => {
+  menu.classList.add('open');
+  burger.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+});
+function closeMobile() {
+  menu.classList.remove('open');
+  burger.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+close.addEventListener('click', closeMobile);
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
